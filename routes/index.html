@@ -1,0 +1,161 @@
+<svelte:head>
+  <title>MAMBA</title>
+</svelte:head>
+
+<div class='Hero'>
+  <div class="Intro">
+    <div class="Intro-vstack">
+      <div class="logo">
+        <img src="logo.svg" alt="Mamba">
+      </div>
+      <div class="Intro-subtitle">
+        <span>Mamba é um sistema e framework desenvolvido dentro da Stone especificamente para o POS (Point of Sale)!</span>
+      <br>Com ele é possível usar programação web para desenvolver aplicativos, usando web, de acordo com a necessidade do cliente
+      </div>
+      
+      <div class="Cards Cards-wrapper">
+          <a rel='prefetch' class='box learn-mamba' href='guide'>
+            <h3>Começando com o MAMBA</h3>
+            <p>Você é um desenvolvedor da web?<br/>Então você já sabe como desenvolver para o Mamba</p>
+          </a>
+          <a rel='prefetch' class='box components-pos' href='guide'>
+            <h3>Componentes e Interface POS</h3>
+            <p>Veja os componentes e pacotes para iniciar seu desenvolvimento e criar rapidamente aplicativos no POS</p>
+          </a>
+          <a rel='prefetch' class='box stone-payments' href='https://devcenter.stone.com.br/'>
+            <h3>Stone Pagamentos</h3>
+            <p>Aqui você encontra as documentações necessárias para se integrar conosco e a nossa tecnologia</p>
+          </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="Intro-footer">
+  <a href="https://www.stone.com.br/"><img class="stone-logo" src="logoStone.svg" alt="Stone" /></a>
+</div>
+
+<style>
+
+  :global(body) {
+    background-color: #fff;
+  }
+
+  .Intro {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 960px;
+    position: relative;
+    margin: 0px auto;
+    padding: 0px 8px;
+
+    &-vstack {
+      -webkit-box-flex: 1;
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: auto;
+      max-width: calc(100% - 16px);
+      min-width: calc(8.33333% - 16px);
+      word-wrap: break-word;
+      margin: 0px 8px;
+    }
+
+    &-footer {
+      text-align: center;
+      padding: 30px 0 30px 0;
+      background-color: #fff;
+      .stone-logo {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .Hero {
+    position: relative;
+    padding: 2em 1em;
+    color: #003920;
+    min-height: calc(100vh - 7em);
+    text-align: center;
+    background-color: #d6ebce;
+    margin: 30px 30px 0 30px;
+  }
+
+  .Intro-subtitle {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 0;
+    margin-top: 24px;
+    max-width: 640px;
+    line-height: 30px;
+
+    > span {
+      font-weight: 600;
+    }
+  }
+
+  .Cards {
+
+    &-wrapper {
+      display: block;
+      max-width: 980px;
+      -webkit-box-pack: center;
+      justify-content: center;
+      box-sizing: border-box;
+      margin-top: 38px;
+    }
+    
+    > div {
+      flex: 0 0 0px;
+    }
+
+    a {
+      display: inline-block;
+      width: 320px;
+      cursor: pointer;
+      position: relative;
+      background-color: rgb(255, 255, 255);
+      opacity: 1;
+      color: rgb(9, 30, 66);
+      box-sizing: border-box;
+      text-align: left;
+      z-index: 100;
+      box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.25) 0px 0px 0.5px 0px;
+      background-size: contain;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 8px;
+      background-repeat: no-repeat;
+      transition: all 0.3s cubic-bezier(0.15, 1, 0.33, 1);
+      background-position: center bottom;
+      padding: 20px;
+      min-height: 130px;
+
+      h3 {
+        font-size: 17px;
+        color: #639412;
+        font-weight: 500;
+      }
+      
+      p {
+        padding: 10px 0 0 0;
+        font-size: 15px;
+        line-height: 18px;
+      }
+
+      &:hover{
+        box-shadow: 2px 2px 8px rgba(90, 100, 100, 0.5);
+      }
+    }
+
+  }
+
+  .logo {
+    padding-top: 30px;
+    img {
+      max-height: 200px;
+    }
+  }
+
+</style>

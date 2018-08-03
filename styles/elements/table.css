@@ -1,0 +1,32 @@
+.Component table {
+  tr td:first-child {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  td {
+    border-bottom: 1px solid color-mod(black alpha(5%));
+    padding: 8px 16px 8px 8px;
+    text-align: left;
+    letter-spacing: -0.3px;
+  }
+
+  th {
+    opacity: 0.7;
+    font-weight: 600;
+    font-size: 1.4rem;
+    font-family: var(--code-font);
+    padding-top: 13px;
+    padding-bottom: 10px;
+  }
+
+  th,
+  td {
+    font-size: 13px;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 10px;
+  }
+}

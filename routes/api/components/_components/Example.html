@@ -1,0 +1,35 @@
+<div class="Example">
+Example {test}
+  <div class='iframe-container'>
+    <iframe title='Result' ref:child srcdoc='
+      <!doctype html>
+      <html>
+        <head>
+          
+        </head>
+        <body>
+          body
+          
+        </body>
+      </html>
+    '></iframe>
+  </div>
+</div>
+
+<script>
+  import { observe } from 'svelte-extras';
+
+  const workerPromise = process.browser && import('workerize-loader!../../../components/_worker.js').then(async ({ default: getWorker }) => getWorker());
+
+  export default {
+    data() {
+      return { test: "Variable" }
+    },
+  };
+</script>
+
+<style>
+  div {
+    background: red;
+  }
+</style>

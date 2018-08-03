@@ -1,0 +1,548 @@
+<svelte:head>
+	<title>Svelte REPL</title>
+</svelte:head>
+
+<div class='repl-outer'>
+	<AppControls
+		{examples}
+		{bundle}
+		{components}
+		{data}
+		{json5}
+		{gist}
+		bind:name
+		on:select='set({ demo: event.slug, gist: null })'
+		on:forked='set({ gist: event.gist })'
+	/>
+
+	<div class='repl-inner'>
+		<SplitPane type=horizontal on:resize='resizePanes(["editor", "data"])'>
+			<section slot=a class='input'>
+				<ComponentSelector
+					ref:selector
+					{components}
+					bind:selectedComponent
+					on:create='createComponent()'
+					on:remove='removeComponent()'
+				/>
+
+				<ModuleEditor
+					ref:editor
+					bind:selectedComponent
+					{compiled}
+					error='{sourceError}'
+					errorLoc='{sourceErrorLoc || runtimeErrorLoc}'
+					{warningCount}
+					on:navigate='navigate(event)'
+				/>
+			</section>
+
+			<div slot=b style='height: 100%;'>
+				<SplitPane type=vertical on:resize='resizePanes(["data"])'>
+					<div class=pane slot=a >
+						<h2 class='show-if-mobile'>Rendered component</h2>
+
+						{#if compilerReady}
+							<Viewer
+								{bundle}
+								{dom}
+								{ssr}
+								{data}
+								{sourceError}
+								bind:error='runtimeError'
+								on:data='updateData(event.current)'
+								on:navigate='navigate(event)'
+							/>
+						{:else}
+							<p class='loading'>loading Svelte compiler...</p>
+						{/if}
+					</div>
+
+					<div class=pane slot=b >
+						<h2 class='show-if-mobile'>data.json5</h2>
+
+						<CodeMirror ref:data mode='json' bind:code='json5' error='{dataError}' errorLoc='{dataErrorLoc}'/>
+					</div>
+				</SplitPane>
+			</div>
+		</SplitPane>
+	</div>
+</div>
+
+<style>
+	.repl-outer {
+		min-height: calc(100vh - 3em);
+		padding: 3em 0 0 0;
+		background-color: #f4f4f4;
+	}
+
+	.repl-inner {
+		height: 100%;
+	}
+
+	.pane {
+		width: 100%;
+		height: 100%;
+	}
+
+	h2 {
+		margin: 1em 0 0 0;
+		padding: 0 8px;
+		font-weight: 500;
+		font-size: 1.2em;
+	}
+
+	@media (min-width: 768px) {
+		.show-if-mobile {
+			display: none;
+		}
+
+		.repl-outer {
+			min-height: auto;
+			height: calc(100vh - 4em);
+			background-color: white;
+			overflow: hidden;
+		}
+
+		section {
+			height: 100%;
+		}
+	}
+
+	.loading {
+		text-align: center;
+		color: #999;
+		font-weight: 300;
+		margin: 2em 0 0 0;
+		opacity: 0;
+		animation: fade-in 0.4s;
+		animation-delay: 0.2s;
+		animation-fill-mode: both;
+	}
+
+	@keyframes fade-in {
+		0% { opacity: 0 };
+		100% { opacity: 1 };
+	}
+
+	.input {
+		padding: 2.4em 0 0 0;
+		perspective: 1500px;
+		perspective-origin: 50% 0%;
+	}
+
+	@media (min-width: 768px) {
+		.input {
+			perspective-origin: 50% 50%;
+		}
+	}
+
+	.repl-outer :global(button) {
+		font-family: Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		font-size: inherit;
+		/* background-color: white;
+		cursor: pointer; */
+		outline: none;
+		line-height: 1;
+		border: none;
+	}
+
+	.repl-outer :global(.btn) {
+		display: block;
+		float: right;
+		padding: calc(0.5em - 1px) 1em;
+		margin: 0 0 0 0.5em;
+		border-radius: 2px;
+		color: rgb(170,30,30);
+		border: 1px solid rgba(170,30,30,0.3);
+		font-weight: 500;
+		box-sizing: border-box;
+	}
+
+	.repl-inner :global(.message) {
+		position: relative;
+		border-radius: 0.2em;
+		margin: 0;
+		padding: 0.5em 0.5em 0.5em 2.5em;
+		color: white;
+	}
+
+	.repl-inner :global(.message::before) {
+		content: '!';
+		position: absolute;
+		left: 0.7em;
+		top: 0.55em;
+		font-size: 0.8em;
+		font-weight: 800;
+		width: 1em;
+		height: 1em;
+		text-align: center;
+		line-height: 1;
+		padding: 0.2em 0.15em 0.1em 0.15em;
+		border-radius: 50%;
+		color: white;
+		border: 2px solid white;
+	}
+
+	.repl-inner :global(.error.message) {
+		background-color: rgb(170,30,30);
+	}
+
+	.repl-inner :global(.warning.message) {
+		background-color: rgb(160,100,30);
+	}
+
+	.repl-inner :global(.info.message) {
+		background-color: #666;
+		animation: fade-in 0.4s 0.2s both;
+	}
+
+	.repl-inner :global(.error) :global(.filename) {
+		cursor: pointer;
+	}
+</style>
+
+<script>
+	import { observe } from 'svelte-extras';
+	import { locate } from 'locate-character';
+	import * as fleece from 'golden-fleece';
+	import CodeMirror from './_components/CodeMirror.html';
+	import ModuleEditor from './_components/ModuleEditor.html';
+	import Viewer from './_components/Viewer.html';
+	import ComponentSelector from './_components/ComponentSelector.html';
+	import AppControls from './_components/AppControls.html';
+	import SplitPane from './_components/SplitPane.html';
+	import examples from '../../content/examples/manifest.json';
+
+	const slugs = new Set();
+	examples.forEach(group => {
+		group.examples.forEach(example => {
+			slugs.add(example.slug);
+		});
+	});
+
+	function tryParseData(encoded) {
+		try {
+			const base64 = decodeURIComponent(encoded);
+			const json = atob(base64);
+			return JSON.parse(json);
+		} catch (err) {
+			console.error(err.message);
+			return {};
+		}
+	}
+
+	const workerPromise = process.browser && import('workerize-loader!./_worker.js').then(async ({ default: getWorker }) => getWorker());
+
+	export default {
+		async preload({ query }) {
+			return {
+				examples,
+
+				version: query.version || 'latest',
+
+				components: [],
+				data: {},
+				name: 'loading...',
+				json5: '{}',
+				gist: null
+			};
+		},
+
+		computed: {
+			sourceErrorLoc({ sourceError, selectedComponent }) {
+				if (!sourceError || !selectedComponent) return null;
+
+				if (sourceError.filename !== `${selectedComponent.name}.${selectedComponent.type}`) return;
+
+				return sourceError.start;
+			},
+
+			runtimeErrorLoc({ runtimeError, selectedComponent }) {
+				if (!runtimeError || !selectedComponent) return null;
+
+				if (runtimeError.filename !== `${selectedComponent.name}.${selectedComponent.type}`) return;
+
+				return runtimeError.start;
+			},
+
+			url: ({ version, gist, query, demo }) => {
+				const params = [];
+				if (version !== 'latest') params.push(`version=${version}`);
+				if (gist) params.push(`gist=${gist.id}`);
+				else if (demo) params.push(`demo=${demo}`);
+				else if (query.gist) params.push(`gist=${query.gist}`);
+				else if (query.data) params.push(`data=${query.data}`);
+				else if (query.demo) params.push(`demo=${query.demo}`);
+
+				return params.length > 0
+					? `repl?${params.join('&')}`
+					: 'repl';
+			}
+		},
+
+		methods: {
+			createComponent() {
+				const { components } = this.get();
+				console.log('createComponent components: ', components);
+				const newComponent = {
+					name: this.uid++ ? `Component${this.uid}` : 'Component1',
+					type: 'html',
+					source: '',
+					edit: true
+				};
+
+				components.push(newComponent);
+
+				this.set({
+					components,
+
+					// for some reason we need to unset selectedComponent before
+					// resetting it, otherwise the editor remains bound to the
+					// previous component. TODO look into this bug
+					selectedComponent: null
+				});
+
+				this.set({
+					selectedComponent: newComponent
+				});
+				document.getElementById(newComponent.name).scrollIntoView(false);
+				this.refs.selector.focusLast();
+			},
+
+			removeComponent() {
+				const component = this.get().selectedComponent; // TODO doesn't seem to work as argument...
+				const { components } = this.get();
+
+				let selectedComponent;
+
+				if (component.name === 'App') {
+					// App.html can't be removed
+					component.source = '';
+					selectedComponent = component;
+				} else {
+					const index = components.indexOf(component);
+					if (~index) {
+						components.splice(index, 1);
+					} else {
+						console.error(`Could not find component! That's... odd`);
+					}
+
+					selectedComponent = components[index] || components[components.length - 1];
+				}
+
+				this.set({
+					components,
+					selectedComponent
+				});
+			},
+
+			resizePanes(panes) {
+				panes.forEach(pane => {
+					this.refs[pane].resize();
+				});
+			},
+
+			updateData(current) {
+				const { json5 } = this.get();
+				const data = fleece.evaluate(json5);
+
+				for (const key in data) {
+					data[key] = current[key];
+				}
+
+				const patched = fleece.patch(json5, data);
+				this.set({ json5: patched });
+			},
+
+			navigate(filename) {
+				const name = filename.replace(/\.html$/, '');
+				const { components, selectedComponent } = this.get();
+
+				if (selectedComponent.name === name) return;
+
+				this.set({
+					selectedComponent: components.find(c => c.name === name)
+				});
+			},
+
+			observe
+		},
+
+		async oncreate() {
+			console.log('oncreate: ');
+			
+			workerPromise.then(async worker => {
+				
+				let { version } = this.get();
+				
+				console.log('version: ', version);
+
+				version = await worker.init(version);
+				
+				this.set({ version });
+
+				const updateBundle = async () => {
+					const { components } = this.get();
+
+					if (components.length === 0) return;
+					console.trace('updateBundle components: ', components);
+					const { bundle, dom, ssr, warningCount, error } = await worker.bundle(components);
+
+					if (error) {
+						this.set({
+							bundle: null,
+							dom: null,
+							ssr: null,
+							sourceError: error,
+							runtimeError: null,
+							warningCount,
+							compilerReady: true
+						});
+					} else {
+						this.set({
+							bundle,
+							dom,
+							ssr,
+							sourceError: null,
+							runtimeError: null,
+							warningCount,
+							compilerReady: true
+						});
+					}
+				};
+
+				this.observe('components', updateBundle);
+				this.observe('selectedComponent', async (n, o) => {
+					// slightly counterintuitively, we only want to recompile if
+					// this is the *same* component — not if we've just selected
+					// a different one
+					console.log('n, o: ', n, o);
+					if (n === o) updateBundle();
+
+					if (n) {
+						console.log('n: ', n);
+						const compiled = n.type === 'html'
+							? await worker.compile(n)
+							: n.source;
+
+						this.set({ compiled });
+					}
+				});
+			});
+			// End workerPromise.then
+
+			this.uid = 0;
+
+			const { query, components, version } = this.get();
+			console.log("query components, version", query, components, version);
+			
+			if (query.gist) {
+				fetch(`gist/${query.gist}`).then(r => r.json()).then(gist => {
+					this.set({ gist });
+				});
+			} else {
+				this.set({ demo: query.demo || 'hello-world' }); // ?example is for legacy reasons
+			}
+
+			this.observe('demo', async demo => {
+
+				console.log('observer demo: ', demo);
+
+				if (!demo) return;
+				console.log('slugs: ', slugs);
+				const r = slugs.has(demo)
+					? await fetch(`api/examples/${demo}`)
+					: await fetch(`api/guide/demo/${demo}`);
+
+				if (r.status === 200) {
+					const { title, components, json5 } = await r.json();
+
+					this.set({
+						name: title,
+						json5: json5 || '{}',
+						components,
+						selectedComponent: components[0]
+					});
+				}
+			});
+
+			this.observe('gist', gist => {
+				if (!gist) return;
+
+				let json5 = '{}';
+				const components = Object.keys(gist.files)
+					.map(file => {
+						const dot = file.lastIndexOf('.');
+						if (!~dot) return;
+
+						const source = gist.files[file].content;
+
+						// while we're here...
+						if (file === 'data.json' || file === 'data.json5') json5 = source;
+
+						return {
+							name: file.slice(0, dot),
+							type: file.slice(dot + 1),
+							source
+						};
+					})
+					.filter(x => x.type === 'html' || x.type === 'js')
+					.sort((a, b) => {
+						if (a.name === 'App' && a.type === 'html') return -1;
+						if (b.name === 'App' && b.type === 'html') return 1;
+
+						if (a.type !== b.type) return a.type === 'html' ? -1 : 1;
+
+						return a.name < b.name ? -1 : 1;
+					});
+
+				this.set({
+					name: gist.description,
+					selectedComponent: components[0],
+					components,
+					json5
+				});
+			});
+
+			this.observe('json5', json5 => {
+				try {
+					this.set({
+						data: fleece.evaluate(json5),
+						dataError: null,
+						dataErrorLoc: null
+					});
+				} catch (err) {
+					this.set({
+						dataError: err,
+						dataErrorLoc: err && err.loc
+					});
+				}
+			});
+
+			this.observe('url', url => {
+				history.replaceState({}, 'x', url);
+			});
+		},
+
+		components: {
+			ModuleEditor,
+			CodeMirror,
+			Viewer,
+			ComponentSelector,
+			AppControls,
+			SplitPane
+		}
+	};
+
+	function stringifyComponents(components) {
+		return JSON.stringify(
+			components.map(component => {
+				return {
+					name: component.name,
+					source: component.source
+				};
+			})
+		);
+	}
+</script>

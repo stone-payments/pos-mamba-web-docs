@@ -3,7 +3,7 @@
 ## Running
 
 ```
-git clone https://github.com/stone-payments/pos-mamba-web-docs.git
+git clone https://github.com/stone-payments/pos-mamba-sdk-docs.git
 cd pos-mamba-web-docs
 yarn # Install dependencies 
 yarn run dev # Run development

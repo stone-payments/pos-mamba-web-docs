@@ -1,25 +1,17 @@
-<Nav segment={child.segment}/>
-
-<div>
-  <svelte:component this={child.component} {...child.props}/>
-</div>
-
-<style>
-  div {
-    position: relative;
-    padding: 3em 0 0 0;
-    overflow-x: hidden;
-  }
-
-  @media (min-width: 768px) {
-    div {
-      padding: 4em 0 0 0;
-    }
-  }
-</style>
+{#if child.props.path === "/"}
+  <div>
+    <svelte:component this={child.component} {...child.props}/>
+  </div>
+{:else}
+  <RouteTemplate path={child.props.path}>
+    <svelte:component this={child.component} {...child.props}/>
+  </RouteTemplate>
+{/if}
 
 <script>
+  import RouteTemplate from '../layout/RouteTemplate';
+
   export default {
-    
+    components: { RouteTemplate },
   };
 </script>

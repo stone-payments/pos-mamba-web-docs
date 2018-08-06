@@ -58,7 +58,7 @@
   </div>
 
 {:else}
-
+ Not Found
 {/if}
 
 <script>
@@ -68,7 +68,6 @@
 
   // JSON.stringify(docs, null, 2)
   export default {
-    components: { NotFound },
     
     async oncreate() {
       workerPromise.then(async worker => {

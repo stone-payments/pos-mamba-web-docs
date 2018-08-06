@@ -1,15 +1,14 @@
-import dotenv from 'dotenv'
-import express from 'express'
-import sapper from 'sapper'
-import serve from 'serve-static'
-import compression from 'compression'
-import { Store } from 'svelte/store.js'
-import { manifest } from './manifest/server.js'
-// import App from './App.html'
+import dotenv from 'dotenv';
+import express from 'express';
+import sapper from 'sapper';
+import serve from 'serve-static';
+import compression from 'compression';
+import { Store } from 'svelte/store.js';
+import { manifest } from './manifest/server.js';
 
-dotenv.config()
+dotenv.config();
 
-const app = express()
+const app = express();
 
 app
   .use(
@@ -24,4 +23,4 @@ app
       },
     }),
   )
-  .listen(process.env.PORT)
+  .listen(process.env.PORT);

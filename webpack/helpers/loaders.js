@@ -1,5 +1,5 @@
 const { IS_DEV } = require('quickenv')
-const { fromProject } = require('../../../tools/utils/paths')
+const { fromProject } = require('./paths')
 
 /** Read the project's .babelrc.js to enforce it in 'babel-loader' */
 const babelrc = require(fromProject('.babelrc.js'))

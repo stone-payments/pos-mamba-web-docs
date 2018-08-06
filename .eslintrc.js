@@ -10,7 +10,7 @@ module.exports = {
   parser: 'babel-eslint',
   plugins: ['standard', 'prettier', 'jest', 'html'],
   settings: {
-    'html/html-extensions': ['.html', '.svelte'],
+    'html/html-extensions': ['.html'],
   },
   env: {
     browser: true,

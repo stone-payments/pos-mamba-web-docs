@@ -33,7 +33,7 @@ export default [
       { title: 'App', to: '/app' },
       { title: 'Cookie', to: '/cookie' },
       { title: 'Http', to: '/http' },
-      { title: 'Keyboard', to: '/native/keyboard' },
+      { title: 'Keyboard', to: '/keyboard' },
       { title: 'Merchant', to: '/merchant' },
       { title: 'Payment', to: '/payment' },
       { title: 'Printer', to: '/printer' },

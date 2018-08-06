@@ -20,7 +20,7 @@ export async function get(req, res) {
     
     try {
       if (slug === 'progress') {
-        packagePath = path.resolve(path.dirname(__non_webpack_require__.resolve(`@mamba/${slug}/package.json`)));
+        packagePath = path.resolve(path.dirname(__non_webpack_require__.resolve(`/Users/jaimecostamarques/Workspace/pos-mamba-web/packages/components/Progress/package.json`)));
       }
       else {
         packagePath = path.resolve(path.dirname(__non_webpack_require__.resolve(`${constants.npmScope}/${slug}/package.json`)));

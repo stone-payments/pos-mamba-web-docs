@@ -29,6 +29,7 @@ module.exports = function createWebpackConfig(type) {
         {
           test: /\.js?$/,
           exclude: [/assets/],
+          include: [],
           use: [loaders.babel, loaders.eslint],
         },
         {

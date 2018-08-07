@@ -113,8 +113,9 @@
   
   /* Check if table have four or more columns to use this class below */
   :global(table) thead th {
-    background-color: rgba(0, 0, 0, 0.028);
+    background-color: color-mod(black alpha(0.028));
     font-family: var(--code-font);
+    border-top: 1px solid color-mod(#ebf0ed alpha(50%));
   }
 
   :global(table) tr td:nth-child(3) {
@@ -203,10 +204,6 @@
     border: none;
   }
 
-  :global(h2) +  :global(p) {
-    margin-top: 20px;
-  }
-
   section:not(.Examples-example) {
     border-bottom: 2px solid #f4f6f7;
     padding: 39px 0;
@@ -237,6 +234,13 @@
 
     & :global(h4) {
       margin-top: 30px;
+    }
+  }
+  
+  :global(section) {
+    :global(h2) + :global(h3) {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
     }
   }
 

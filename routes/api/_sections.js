@@ -258,6 +258,7 @@ export default function(dir) {
         html,
         'span',
         'counter',
+        'h3'
       )
 
       // Add Span to tables td content to allow customization

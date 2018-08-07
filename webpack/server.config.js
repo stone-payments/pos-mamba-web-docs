@@ -7,7 +7,7 @@ const server = {
   entry: config.server.entry(),
   output: config.server.output(),
   target: 'node',
-  externals: Object.keys(pkg.dependencies).filter(d => d !== 'svelte'),
+  externals: new RegExp(`^${Object.keys(pkg.dependencies).filter(d => d !== 'svelte').join('|')}`),
   performance: {
     hints: false, // it doesn't matter if server.js is large
   },

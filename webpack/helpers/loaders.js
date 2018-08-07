@@ -38,18 +38,7 @@ module.exports = {
     loader: 'postcss-loader',
     options: {
       ident: 'postcss',
-      plugins: [
-        require('postcss-easy-import')(),
-        require('postcss-advanced-variables')(),
-        require('postcss-nested')(),
-        require('postcss-preset-env')({
-          stage: 0,
-          features: {
-            'nesting-rules': true,
-          },
-        }),
-        require('autoprefixer')(),
-      ],
+      plugins: [...require('../../postcss.config.js').plugins],
       sourceMap: true,
     },
   },

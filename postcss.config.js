@@ -1,12 +1,13 @@
 module.exports = {
   plugins: [
-    require('postcss-easy-import')({
-      extensions: ['.css', '.pcss'],
-    }),
+    require('postcss-easy-import'),
     require('postcss-extend-rule'),
     require('postcss-advanced-variables'),
     require('postcss-preset-env')({
-      stage: 2 /** Defaults postcss-preset-env to stage 2 */,
+      stage: 0,
+      features: {
+        'nesting-rules': true,
+      },
     }),
     require('postcss-atroot'),
     require('postcss-property-lookup'),

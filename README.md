@@ -19,6 +19,3 @@ Make sure all dependencies have been installed before moving on:
 ### Commands
 
 * `yarn run start` - Start the project's dev website;
-* `yarn run lint` - Lint all style and script files;
-* `yarn run format` - Format all style and script files;
-* `yarn run link:packages` - Create a local link of every package for local developing;

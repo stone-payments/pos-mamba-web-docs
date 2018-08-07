@@ -1,5 +1,6 @@
 const loaders = require('./helpers/loaders');
 const { fromWorkspace, fromProject } = require('./helpers/paths');
+const pkg = require('../package.json');
 
 const mode = process.env.NODE_ENV
 
@@ -13,16 +14,15 @@ module.exports = function createWebpackConfig(type) {
       children: false,
     },
     resolve: {
-      symlinks: true,
       mainFields: ['svelte', 'browser', 'module', 'main'],
-      extensions: ['.js', '.json', '.css', '.pcss', '.html'],
-      /** Make webpack also resolve modules from './' */
+      extensions: ['.js', '.json', '.css', '.html'],
       modules: [
         fromWorkspace('./'),
         fromWorkspace('node_modules'),
         fromProject('node_modules'),
       ],
     },
+    externals: new RegExp(`^${Object.keys(pkg.dependencies).filter(d => d.startsWith('@mambasdk')).join('|')}`),
     module: {
       rules: [
         /** Run babel and eslint on projects src files only */

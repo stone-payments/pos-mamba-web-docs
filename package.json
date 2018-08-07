@@ -6,11 +6,13 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "sapper dev",
-    "build": "sapper build",
+    "build": "cross-env NODE_ENV=production sapper build",
     "export": "sapper export",
-    "start": "yarn run dev",
+    "start": "node build",
     "debug": "DEBUG=express:*, sapper dev",
     "cy:run": "cypress run",
+    "stage": "npm run build",
+    "deploy": "npm run stage && surge build",
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run",
     "lint": "npm run lint:js",
@@ -127,6 +129,7 @@
     "svelte-loader": "^2.9.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.14.0",
+    "webpack-cli": "^3.1.0",
     "webpack-merge": "^4.1.3",
     "workerize-loader": "^1.0.3"
   }

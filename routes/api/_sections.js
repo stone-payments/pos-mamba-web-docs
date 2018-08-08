@@ -51,10 +51,10 @@ const SELECTOR = 'pre>code[class*="language-"]'
 
 export const demos = new Map()
 
-export default function(dir, fileSlug = 'README') {
+export default function(dir, fileSlug) {
   return fs
     .readdirSync(dir)
-    .filter(file => file[0] !== '.' && file === `${fileSlug}.md` && path.extname(file) === '.md')
+    .filter(file => file[0] !== '.' && (!fileSlug && true || file === `${fileSlug}.md`) && path.extname(file) === '.md')
     .map(file => {
       const markdown = fs.readFileSync(`${dir}/${file}`, 'utf-8')
       

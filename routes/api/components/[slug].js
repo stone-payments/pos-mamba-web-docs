@@ -55,7 +55,7 @@ export async function get(req, res) {
     });
     
     // Get directory README.md and CHANGELOG.md sections
-    const sections = getSections(packagePath);
+    const sections = getSections(packagePath, 'README');
 
     const components = files
       .reduce((pkg, file) => {

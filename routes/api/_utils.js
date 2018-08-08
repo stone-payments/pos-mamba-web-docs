@@ -19,6 +19,13 @@ function createGlob(glob) {
   ]
 }
 
+function createApiGlob() {
+  return [
+    `docs/*.md`,
+    `README.md`,
+  ]
+}
+
 function unescape(str) {
   return String(str).replace(/&.+?;/g, match => unescaped[match] || match)
 }
@@ -43,4 +50,4 @@ function insertTag(regex, content, tag, spanClass = '', parentTag = null) {
   })
 }
 
-export { createGlob, unescape, insertTag, unescaped, replaceTag }
+export { createGlob, createApiGlob, unescape, insertTag, unescaped, replaceTag }

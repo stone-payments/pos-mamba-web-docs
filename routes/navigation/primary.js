@@ -23,7 +23,6 @@ export default [
       { title: 'Merchant', to: '/merchant' },
       { title: 'Payment', to: '/payment' },
       { title: 'Printer', to: '/printer' },
-      { title: 'Signal', to: '/signal' },
       { title: 'System', to: '/system' },
     ],
   },

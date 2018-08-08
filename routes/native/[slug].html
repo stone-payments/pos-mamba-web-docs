@@ -1,11 +1,354 @@
 <svelte:head>
-  <title>API Nativa</title>
+  <title>{manifest.docs.metadata.title}</title>
 </svelte:head>
+
+{#if manifest}
+
+  <div class="Component">
+    <header>
+      <h1>
+        {manifest.docs.metadata.title}
+        <small><a href='https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/pos/docs/{manifest.info.slug}'>editar esta seção</a></small>
+      </h1>
+      <div class="code-block code-block-container install-block">
+        <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
+          <code class="language-bash">yarn add <span class="token string">{manifest.info.package.name}</span>
+            <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
+          </code>
+        </pre>
+        <div class="links">
+          <a class="github-link" href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/pos" target="_blank"><i class="fab fa-github"></i>Github</a>
+          <a class="npm-link" href="https://www.npmjs.com/package/{manifest.info.package.name}" target="_blank"><i class="fas fa-external-link-alt"></i>NPM</a>
+        </div>
+      </div>
+      <div class="version-block">
+        <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
+      </div>
+    </header>
+
+    
+    <div class="Examples">
+      <div class="Examples-boxes">
+        <section class="Examples-example">
+          <header>
+            Header
+          </header>
+          <div class="Code-run">
+            <iframe title='Result' ref:child class='{error || pending || pendingImports ? "greyed-out" : ""}' srcdoc='
+              <!doctype html>
+              <html><head>
+        <link rel="stylesheet" href="/repl-viewer.css">
+      </head>
+      <body><h2>Example</h2></body></html>
+            '></iframe>
+          </div>
+          <div class="Source-wrapper">
+            source
+          </div>
+        </section>
+
+      </div>
+      
+    </div>
+    <section>
+      <div class="part">
+        {@html manifest.docs.html}
+      </div>
+    </section>
+  </div>
+  <pre>{JSON.stringify(docs, null, 2)}</pre>
+  
+{:else}
+ Not Found
+{/if}
 
 <script>
   export default {
-    preload({ params }) {
-
-    },
+    async preload({ params, query }) {
+      return await this.fetch(`api/native/${params.slug}`).then(r => r.json()).then(manifest => {
+        return {
+          manifest: manifest,
+          version: query.version || 'latest',
+          components: [],
+        };
+      });
+    }
   }
 </script>
+
+<style>
+  @import '../../styles/shared/colors.css';
+  
+  /* Check if table have four or more columns to use this class below */
+  :global(table) thead th {
+    background-color: color-mod(black alpha(0.028));
+    font-family: var(--code-font);
+    border-top: 1px solid color-mod(#ebf0ed alpha(50%));
+  }
+
+  :global(table) tr td:nth-child(3) {
+    color: #800051;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  :global(article) :global(table) {
+    
+    tbody {
+      font-size: 80%;
+    }
+    
+    tr td {
+      font-size: 14px;
+      font-family: var(--code-font);
+    }
+  }
+
+  :global(.Component) {
+    position: relative;
+
+    & table tr {
+      transition: all 0.3s ease-out;
+      &:hover {
+        background-color: rgba(192, 192, 192, 0.09);
+      }
+    }
+  }
+
+  .Component > header {
+    border-bottom: 2px solid #f4f6f7;
+    position: relative;
+    min-height: 140px;
+  }
+
+  h1 {
+    font-size: 31px;
+    color: #0d2b3e;
+    font-weight: 400;
+  }
+
+  small:not(.unique) {
+    font-size: 14px;
+    opacity: 0.5;
+    float: right;
+    line-height: 3.4rem;
+    pointer-events: all;
+  }
+  
+  section :global(.code-block) {
+    position: relative;
+  }
+
+  section :global(.filename) {
+    font-size: 13px;
+    font-weight: 500; 
+    padding: 6px 12px 8px 7px;
+    display: inline-block;
+    top: 0;
+    color: #0099e5;
+    line-height: 1;
+    text-shadow: 0 0 0.1px rgba(0, 0, 0, 0.21);
+  }
+
+  section :global(a) {
+    border-bottom: 1px solid #e3d9d9;
+  }
+
+  section :global(strong) {
+    font-weight: 500;
+  }
+
+  section :global(code) {
+    background-color: #f9f9f9;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+  }
+
+  section :global(pre) :global(code) {
+    padding: 0;
+  }
+
+  section:first-child :global(h3) {
+    border: none;
+  }
+
+  section:not(.Examples-example) {
+    border-bottom: 2px solid #f4f6f7;
+    padding: 39px 0;
+
+    & :global(h3:not(:first-child)) {
+      margin-top: 18px;
+      padding-top: 16px;
+
+      & :global(.counter) {
+        font-weight: 500;
+        color: color-mod(var(--primary) alpha(80%));
+      }
+
+      & + :global(table) {
+        margin-top: 20px;
+      }
+    }
+
+    & :global(table) + :global(h3:not(:first-child)),
+    & :global(h2) + :global(h3) {
+       margin-top: 30px;
+       color: var(--secondary);
+    }
+
+    & :global(.code-block-container) {
+      margin-top: 18px;
+    }
+
+    & :global(h4) {
+      margin-top: 30px;
+    }
+  }
+  
+  :global(section) {
+    :global(h2) + :global(h3) {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+  }
+
+  :global(h3) + hr {
+    margin-top: 10px;
+  }
+
+  :global(h3) + hr + table {
+    margin-top: -10px;
+  }
+
+  section:last-child {
+    border: none;
+  }
+
+  section :global(.code-block) :global(pre),
+  section :global(.CodeMirror) {
+    background-color: #f7f9f8;
+    padding: 8px;
+    margin: 0 0 1em 0;
+    border-radius: 6px;
+  }
+
+  section :global(.code-block) :global(pre) {
+    padding: 12px 8px 12px 40px;
+  }
+
+  header .install-block,
+  header .version-block {
+    bottom: 22px;
+  }
+
+  header .install-block {
+    position: absolute;
+    left: 0;
+    right: auto;
+
+    pre {
+      margin: 0;
+      display: block;
+      white-space: nowrap;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 25px;
+      padding-right: 19px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 10 , 0, 0.01);
+    }
+
+    .token.string {
+      color: color-mod(var(--primary) alpha(95%));
+    }
+  }
+
+  :global(.install-block) :global(.line-numbers) :global(.line-numbers-rows) {
+    top: 3px;
+    left: -24px;
+    line-height: 19px;
+  }
+
+  :global(header) {
+    .version-block,
+    .install-block .links {
+      position: absolute;
+    }
+  }
+  
+  :global(header) {
+    .version-block,
+    .install-block [class*="-link"]:not(.fas) {
+      height: 41px;
+      background-color: #f7f9f8;
+      padding: 7px 20px;
+      border-radius: 4px;
+      font-weight: 600;
+      border: 1px solid rgba(0, 10 , 0, 0.01);
+      cursor: default;
+      font-family: var(--code-font);
+      color: color-mod(var(--primary) alpha(90%));
+
+      small {
+        color: color-mod(black alpha(50%));
+      }
+
+      span {
+        font-size: 13px;
+      }
+
+      &:hover {
+        border: 1px solid color-mod(var(--primary) alpha(50%));
+      }
+    }
+
+    .version-block {
+      right: 0;
+    }
+
+    .version-block,
+    .install-block pre,
+    .links a {
+      transition: all 0.2s ease-out;
+    }
+
+    .links {
+      left: 100%;
+      top: 0;
+      bottom: auto;
+      white-space: nowrap;
+
+      [class*="-link"]:not(.fas) {
+        color: color-mod(black alpha(50%));
+        white-space: pre;
+        cursor: pointer;
+        margin-left: 10px;
+        display: inline-block;
+        background-position: 12px 14px;
+        line-height: 26px;
+        padding: 7px 13px;
+        font-size: 13px;
+      }
+
+      .fab, .fas {
+        margin-right: 10px;
+      }
+
+      .github-link i {
+        font-size: 18px;
+        top: 2px;
+        position: relative;
+      }
+
+      .npm-link i {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .Component :global(.code-block.code-block-container pre.code-block) {
+    max-height: 300px;
+    overflow: auto;
+  }
+
+</style>

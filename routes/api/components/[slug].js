@@ -2,7 +2,7 @@ import path from 'path';
 import globby from 'globby';
 import { createGlob } from '../_utils';
 import getSections from '../_sections';
-import getPkgInfo from './_package';
+import getPkgInfo from '../_package';
 import constants from '../_constants.js';
 
 let lookup;

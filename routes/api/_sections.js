@@ -51,15 +51,15 @@ const SELECTOR = 'pre>code[class*="language-"]'
 
 export const demos = new Map()
 
-export default function(dir) {
+export default function(dir, fileSlug = 'README') {
   return fs
     .readdirSync(dir)
-    .filter(file => file[0] !== '.' && path.extname(file) === '.md')
+    .filter(file => file[0] !== '.' && file === `${fileSlug}.md` && path.extname(file) === '.md')
     .map(file => {
       const markdown = fs.readFileSync(`${dir}/${file}`, 'utf-8')
-
+      
       const { content, metadata } = processMarkdown(markdown, dir)
-
+      
       const groups = []
       let group = null
       let uid = 1
@@ -130,7 +130,7 @@ export default function(dir) {
             require(`prismjs/components/prism-${language}`),
           )
         }
-
+        
         // Apply Prism js to every source code
         $elements.each(function(index, element) {
           let $element = $(this)
@@ -166,7 +166,7 @@ export default function(dir) {
 
           if (!env.code || !env.grammar) {
             if (env.code) {
-              env.element.textContent = env.code
+              env.$element.textContent = env.code
             }
             Prism.hooks.run('complete', env)
             return
@@ -270,6 +270,7 @@ export default function(dir) {
         subsections,
         slug: file.replace(/^\d+-/, '').replace(/\.md$/, ''),
         file,
+        filePath: `${dir}/${file}`,
       }
     })
 }

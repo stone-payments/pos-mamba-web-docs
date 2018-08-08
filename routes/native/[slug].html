@@ -25,39 +25,13 @@
         <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
       </div>
     </header>
-
-    
-    <div class="Examples">
-      <div class="Examples-boxes">
-        <section class="Examples-example">
-          <header>
-            Header
-          </header>
-          <div class="Code-run">
-            <iframe title='Result' ref:child class='{error || pending || pendingImports ? "greyed-out" : ""}' srcdoc='
-              <!doctype html>
-              <html><head>
-        <link rel="stylesheet" href="/repl-viewer.css">
-      </head>
-      <body><h2>Example</h2></body></html>
-            '></iframe>
-          </div>
-          <div class="Source-wrapper">
-            source
-          </div>
-        </section>
-
-      </div>
-      
-    </div>
     <section>
       <div class="part">
         {@html manifest.docs.html}
       </div>
     </section>
   </div>
-  <pre>{JSON.stringify(docs, null, 2)}</pre>
-  
+
 {:else}
  Not Found
 {/if}
@@ -159,7 +133,6 @@
   }
 
   section :global(code) {
-    background-color: #f9f9f9;
     padding: 0.2em 0.4em;
     border-radius: 3px;
   }
@@ -177,8 +150,15 @@
     padding: 39px 0;
 
     & :global(h3:not(:first-child)) {
-      margin-top: 18px;
-      padding-top: 16px;
+      margin-top: 25px;
+      padding-top: 15px;
+      font-family: var(--code-font) !important;
+      font-weight: 500;
+      color: var(--primary);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid color-mod(silver alpha(20%));
+      text-shadow: 0 0 0.1px color-mod(var(--primary) alpha(1%));
 
       & :global(.counter) {
         font-weight: 500;
@@ -232,118 +212,14 @@
     border-radius: 6px;
   }
 
+  :global(p) > code {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
   section :global(.code-block) :global(pre) {
     padding: 12px 8px 12px 40px;
-  }
-
-  header .install-block,
-  header .version-block {
-    bottom: 22px;
-  }
-
-  header .install-block {
-    position: absolute;
-    left: 0;
-    right: auto;
-
-    pre {
-      margin: 0;
-      display: block;
-      white-space: nowrap;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      padding-left: 25px;
-      padding-right: 19px;
-      border-radius: 4px;
-      border: 1px solid rgba(0, 10 , 0, 0.01);
-    }
-
-    .token.string {
-      color: color-mod(var(--primary) alpha(95%));
-    }
-  }
-
-  :global(.install-block) :global(.line-numbers) :global(.line-numbers-rows) {
-    top: 3px;
-    left: -24px;
-    line-height: 19px;
-  }
-
-  :global(header) {
-    .version-block,
-    .install-block .links {
-      position: absolute;
-    }
-  }
-  
-  :global(header) {
-    .version-block,
-    .install-block [class*="-link"]:not(.fas) {
-      height: 41px;
-      background-color: #f7f9f8;
-      padding: 7px 20px;
-      border-radius: 4px;
-      font-weight: 600;
-      border: 1px solid rgba(0, 10 , 0, 0.01);
-      cursor: default;
-      font-family: var(--code-font);
-      color: color-mod(var(--primary) alpha(90%));
-
-      small {
-        color: color-mod(black alpha(50%));
-      }
-
-      span {
-        font-size: 13px;
-      }
-
-      &:hover {
-        border: 1px solid color-mod(var(--primary) alpha(50%));
-      }
-    }
-
-    .version-block {
-      right: 0;
-    }
-
-    .version-block,
-    .install-block pre,
-    .links a {
-      transition: all 0.2s ease-out;
-    }
-
-    .links {
-      left: 100%;
-      top: 0;
-      bottom: auto;
-      white-space: nowrap;
-
-      [class*="-link"]:not(.fas) {
-        color: color-mod(black alpha(50%));
-        white-space: pre;
-        cursor: pointer;
-        margin-left: 10px;
-        display: inline-block;
-        background-position: 12px 14px;
-        line-height: 26px;
-        padding: 7px 13px;
-        font-size: 13px;
-      }
-
-      .fab, .fas {
-        margin-right: 10px;
-      }
-
-      .github-link i {
-        font-size: 18px;
-        top: 2px;
-        position: relative;
-      }
-
-      .npm-link i {
-        font-size: 15px;
-      }
-    }
   }
 
   .Component :global(.code-block.code-block-container pre.code-block) {

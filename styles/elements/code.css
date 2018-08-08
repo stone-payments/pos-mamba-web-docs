@@ -1,10 +1,11 @@
 @import url('../../node_modules/prismjs/themes/prism.css');
 @import url('../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css');
 
+code, kbd, samp,
 .code-block pre,
 .code-block code {
-  font-family: 'Source Code Pro', 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Ubuntu Mono', Menlo, Courier, monospace !important;
+  font-family: var(--code-font); /*'Source Code Pro', 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Ubuntu Mono', Menlo, Courier, monospace !important;*/
 }
 
 .code-block pre {
@@ -51,7 +52,7 @@ code .token.url {
 
 code[class*='language-'],
 pre[class*='language-'] {
-  font-family: Source Code Pro, monospace !important;
+  font-family: var(--code-font) !important;
   color: color-mod(#000c1d alpha(70%));
   font-weight: 600;
   font-size: 13px !important;
@@ -59,6 +60,7 @@ pre[class*='language-'] {
 }
 
 .line-numbers .line-numbers-rows {
+  font-family: var(--code-font) !important;
   border: none;
   width: 30px;
   top: 0;

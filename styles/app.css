@@ -13,6 +13,7 @@
 @import 'base/generic.css';
 
 /* Layout */
+@import 'layout/header.css';
 @import 'layout/sidebar.css';
 @import 'layout/wrappers.css';
 

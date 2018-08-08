@@ -61,12 +61,16 @@ article dl,
 article ol,
 article table tbody,
 article ul {
-  font-size: 15px;
+  font-size: 14px;
   color: #373e42;
   line-height: 26px;
 }
 
 article p {
+  font-size: 15px;
+}
+
+article p:first-child {
   font-size: 16px;
 }
 

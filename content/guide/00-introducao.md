@@ -81,13 +81,13 @@ yarn install @mambasdk/dialog
 #### Para modules da API nativa:
 
 ```bash
-yarn install @mambasdk/native
+yarn install @mambasdk/pos
 ```
 
 Agora só importar o módulo que deseja, sempre descontruindo objeto do pacote `@mambasdk/native`:
 
 ```js
-import System from '@mambasdk/native/system.js'
+import System from '@mambasdk/pos/system.js'
 ```
 
 ### Compatibilidade

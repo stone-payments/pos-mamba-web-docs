@@ -1,8 +1,10 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const config = require('sapper/webpack/config.js')
-const baseConfig = require('./base.config.js')('client')
-const { IS_DEV } = require('quickenv')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const config = require('sapper/webpack/config.js');
+const baseConfig = require('./base.config.js')('client');
+const { IS_DEV } = require('quickenv');
+
+console.log('client.config.js');
 
 const client = {
   entry: config.client.entry(),
@@ -20,4 +22,4 @@ const client = {
   devtool: IS_DEV && 'inline-source-map',
 }
 
-module.exports = merge([baseConfig, client])
+module.exports = merge([baseConfig, client]);

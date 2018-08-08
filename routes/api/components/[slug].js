@@ -9,7 +9,7 @@ let lookup;
 
 export async function get(req, res) {
   const { slug } = req.params;
-
+  console.log('slug: ', slug);
   if (!lookup || process.env.NODE_ENV !== 'production') {
 
     lookup = new Map();
@@ -34,7 +34,8 @@ export async function get(req, res) {
         error: 'not found',
       }));
     }
-
+    
+    console.log('packagePath: ', packagePath);
     let packageRoot = path.resolve(packagePath);
 
     // Create globs with our desired files

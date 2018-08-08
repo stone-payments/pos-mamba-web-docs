@@ -25,7 +25,13 @@ module.exports = function createWebpackConfig(type) {
     externals: new RegExp(`^${Object.keys(pkg.dependencies).filter(d => d.startsWith('@mambasdk')).join('|')}`),
     module: {
       rules: [
-        /** Run babel and eslint on projects src files only */
+        {
+          test: /NAV_COMPONENTS$/,
+          loader: require.resolve('./navigation-loader'),
+          options: {
+            path: 'packages/components',
+          },
+        },
         {
           test: /\.js?$/,
           exclude: [/assets/],
@@ -33,12 +39,12 @@ module.exports = function createWebpackConfig(type) {
           use: [loaders.babel, loaders.eslint],
         },
         {
-          test: /\.(html)$/,
+          test: /\.html$/,
           exclude: [/node_modules/],
           use: [loaders.svelte(type)],
         },
         {
-          test: /\.(css|pcss)$/,
+          test: /\.css$/,
           /** When importing from a style file, let's use package.json's 'style' field before the actual 'main' one */
           resolve: { mainFields: ['style', 'main'] },
           use: [loaders.styleLoader, loaders.css, loaders.postcss],

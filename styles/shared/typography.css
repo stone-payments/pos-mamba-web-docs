@@ -25,6 +25,9 @@ h2 {
   margin-top: 45px;
   width: 100%;
   padding-top: 10px;
+}
+
+h2:not(.props-heading) {
   margin-bottom: 30px;
 }
 

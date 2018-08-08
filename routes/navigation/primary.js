@@ -1,3 +1,5 @@
+import NAV_COMPONENTS from './NAV_COMPONENTS';
+
 export default [
   { type: 'hr' },
   {
@@ -5,23 +7,7 @@ export default [
     to: '/components',
     icon: 'fas fa-cube',
     submenu: [
-      { title: 'App', to: '/app' },
-      { title: 'AppBar', to: '/app-bar' },
-      { title: 'Action Page', to: '/action-page' },
-      { title: 'Button', to: '/button' },
-      { title: 'Collection', to: '/collection' },
-      { title: 'Collection Group', to: '/collection-group' },
-      { title: 'Collection Item', to: '/collection-item' },
-      { title: 'Dialog', to: '/dialog' },
-      { title: 'Full Page Loading', to: '/full-page-loading' },
-      { title: 'Sprite', to: '/sprite' },
-      { title: 'Icon', to: '/icon' },
-      { title: 'Input', to: '/input' },
-      { title: 'Row', to: '/row' },
-      { title: 'Printable', to: '/printable' },
-      { title: 'Progress', to: '/progress' },
-      { title: 'Range', to: '/range' },
-      { title: 'Switch', to: '/switch' },
+      ...NAV_COMPONENTS,
     ],
   },
   { type: 'hr' },

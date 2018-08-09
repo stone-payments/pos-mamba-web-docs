@@ -9,7 +9,7 @@ let lookup;
 
 export async function get(req, res) {
   const { slug } = req.params;
-  console.log('slug: ', slug);
+
   if (!lookup || process.env.NODE_ENV !== 'production') {
 
     lookup = new Map();

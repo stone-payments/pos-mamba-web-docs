@@ -51,7 +51,7 @@ const SELECTOR = 'pre>code[class*="language-"]'
 
 export const demos = new Map()
 
-export default function(dir, fileSlug) {
+export default function(dir, fileSlug, anchorPath = '') {
   return fs
     .readdirSync(dir)
     .filter(file => file[0] !== '.' && (!fileSlug && true || file === `${fileSlug}.md`) && path.extname(file) === '.md')
@@ -196,7 +196,17 @@ export default function(dir, fileSlug) {
         }
       })
 
-      const html = marked(content, { renderer })
+      let html = marked(content, { renderer });
+      
+
+      // Add anchors to h3
+      let match;
+      let pattern = /<h3 id="(.+?)">(.+?)<\/h3>/g;
+      while ((match = pattern.exec(html))) {
+        const slug = match[1];
+        const anchor = match[0].replace(match[2], `<span>${match[2]}</span><a href="${anchorPath}#${slug}" class="anchor">#</a>`);
+        html = html.replace(match[0], anchor);
+      }
 
       const hashes = {}
       
@@ -233,12 +243,12 @@ export default function(dir, fileSlug) {
       })
 
       // Create subsections with H2 heading match
-      const subsections = []
-      let pattern = /<h2 id="(.+?)">(.+?)<\/h2>/g
-      let match
+      const subsections = [];
+      pattern = /<h2 id="(.+?)">(.+?)<\/h2>/g;
+      match;
 
       while ((match = pattern.exec(html))) {
-        const slug = match[1]
+        const slug = match[1];
         const title = unescape(
           match[2]
             .replace(/<\/?code>/g, '')
@@ -250,7 +260,7 @@ export default function(dir, fileSlug) {
         )
 
         subsections.push({ slug, title })
-      }
+      };
 
       // Add class to numbers before h3 Headings
       let output = insertTag(
@@ -259,10 +269,11 @@ export default function(dir, fileSlug) {
         'span',
         'counter',
         'h3'
-      )
+      );
+      
 
       // Add Span to tables td content to allow customization
-      output = insertTag(/<td>(.+?)<\/td>/gm, output, 'span')
+      output = insertTag(/<td>(.+?)<\/td>/gm, output, 'span');
       
       return {
         html: output.replace(/@@(\d+)/g, (m, id) => hashes[id] || m),

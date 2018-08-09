@@ -38,10 +38,32 @@ h2:not(.props-heading) {
 h3:not(:first-child),
 h3:not(:first-child) + p {
   margin-top: 5px;
+  line-height: 25px;
 }
 
 h3 {
   font-size: 20px;
   color: #0d2b3e;
   font-weight: 500;
+  position: relative;
+
+  .anchor {
+    display: inline-block;
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
+    text-decoration: none;
+    border: 0 none;
+    font-weight: 600;
+    font-size: 26px;
+    padding: 0 10px 0 5px;
+    position: relative;
+    line-height: 0;
+    top: 2px;
+    text-shadow: none;
+    color: color-mod(black alpha(50%));
+  }
+
+  &:hover .anchor {
+    opacity: 1;
+  }
 }

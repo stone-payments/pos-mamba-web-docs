@@ -7,9 +7,9 @@ import constants from '../_constants.js';
 
 let lookup;
 
-export async function get(req, res) {
+export async function get(req, res, next) {
   const { slug } = req.params;
-  
+
   if (!lookup || process.env.NODE_ENV !== 'production') {
 
     lookup = new Map();
@@ -21,17 +21,11 @@ export async function get(req, res) {
     try {
       packagePath = path.resolve(path.dirname(__non_webpack_require__.resolve(`${constants.npmScope}/${constants.nativePackageName}/package.json`)));
     }catch(e) {
-      res.writeHead(404, {
-        'Content-Type': 'application/json',
-      });
-
-      res.end(JSON.stringify({
-        error: 'not found',
-      }));
+      next();
     }
     
     // Get directory README.md and CHANGELOG.md sections
-    const sections = getSections(`${packagePath}/docs`, slug.toLowerCase());
+    const sections = getSections(`${packagePath}/docs`, slug.toLowerCase(), `native/${slug}`);
     const section = sections.find(item => item.slug === slug);
     const components = { docs: { html: section && section.html || '', metadata: { title: slug.charAt(0).toUpperCase() + slug.slice(1) }}, scope: constants.npmScope };
     components.info = getPkgInfo(`${packagePath}/package.json`, section.file)

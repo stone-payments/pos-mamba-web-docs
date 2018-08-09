@@ -1,8 +1,8 @@
-const { IS_DEV } = require('quickenv')
-const { fromProject } = require('./paths')
+const { IS_DEV } = require('quickenv');
+const { fromProject } = require('./paths');
 
 /** Read the project's .babelrc.js to enforce it in 'babel-loader' */
-const babelrc = require(fromProject('.babelrc.js'))
+const babelrc = require(fromProject('.babelrc.js'));
 /** 'babel-loader' already appends 'sourceMap: true'. Cannot have both. */
 delete babelrc.sourceMaps
 

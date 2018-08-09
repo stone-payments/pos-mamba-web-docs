@@ -1,8 +1,9 @@
+const { IS_DEV } = require('quickenv');
 const loaders = require('./helpers/loaders');
 const { fromWorkspace, fromProject } = require('./helpers/paths');
 const pkg = require('../package.json');
 
-const mode = process.env.NODE_ENV
+const mode = process.env.NODE_ENV;
 
 module.exports = function createWebpackConfig(type) {
   return {
@@ -14,6 +15,7 @@ module.exports = function createWebpackConfig(type) {
       children: false,
     },
     resolve: {
+      symlinks: true,
       mainFields: ['svelte', 'browser', 'module', 'main'],
       extensions: ['.js', '.json', '.css', '.html'],
       modules: [

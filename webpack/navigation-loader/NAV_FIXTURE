@@ -1,0 +1,17 @@
+module.exports = [
+  { type: 'static', description: 'This is a development list' },
+  { title: 'App', to: '/app' },
+  { title: 'AppBar', to: '/appbar' },
+  { title: 'Barcode', to: '/barcode' },
+  { title: 'Button', to: '/button' },
+  { title: 'Collection', to: '/collection' },
+  { title: 'Dialog', to: '/dialog' },
+  { title: 'Icon', to: '/icon' },
+  { title: 'Input', to: '/input' },
+  { title: 'Printable', to: '/printable' },
+  { title: 'Progress', to: '/progress' },
+  { title: 'QRCode', to: '/qrcode' },
+  { title: 'Range', to: '/range' },
+  { title: 'Sprite', to: '/sprite' },
+  { title: 'Switch', to: '/switch' }
+]

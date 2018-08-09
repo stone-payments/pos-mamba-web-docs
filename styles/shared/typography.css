@@ -49,18 +49,19 @@ h3 {
 
   .anchor {
     display: inline-block;
-    transition: opacity 0.2s ease-out;
+    transition: opacity 0.1s ease-out;
     opacity: 0;
     text-decoration: none;
     border: 0 none;
-    font-weight: 600;
-    font-size: 26px;
+    font-weight: 500;
+    font-size: 23px;
     padding: 0 10px 0 5px;
     position: relative;
     line-height: 0;
-    top: 2px;
+    top: 3px;
     text-shadow: none;
-    color: color-mod(black alpha(50%));
+    color: rgb(129, 130, 129);
+    font-family: var(--font-text);
   }
 
   &:hover .anchor {

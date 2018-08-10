@@ -1,9 +1,10 @@
 <svelte:head>
-  <title>{manifest.docs.metadata.title}</title>
+  <title>{title}</title>
 </svelte:head>
 
-{#if manifest}
-
+{#if manifest.error}
+  <h1>Não encontrado</h1>
+{:elseif manifest.docs}
   <div class="Component">
     <header>
       <h1>
@@ -56,9 +57,6 @@
       </div>
     </section>
   </div>
-
-{:else}
- Not Found
 {/if}
 
 <script>
@@ -97,6 +95,7 @@
           manifest: manifest,
           version: query.version || 'latest',
           components: [],
+          title: manifest && manifest.docs && manifest.docs.metadata.title || params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
         };
       });
     },

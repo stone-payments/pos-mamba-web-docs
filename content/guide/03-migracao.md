@@ -122,7 +122,7 @@ Por fim, uma última modifcação que também é improtante são as `refs`, que 
 <MyComponent ref="myComponentRef"></MyComponent>
 
 <!-- SDK 2.0 -->
-<MyComponent ref:"myComponentRef"></MyComponent>
+<MyComponent ref:myComponentRef></MyComponent>
 ```
 
 E para acessa-las:

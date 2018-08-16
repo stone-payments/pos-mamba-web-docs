@@ -1,0 +1,45 @@
+{
+  "name": "@mambasdk/webpack",
+  "version": "0.0.21",
+  "description": "Webpack configs for Mamba Applications",
+  "author": "Stone Payments - Mamba Team",
+  "contributors": [
+    "Christian Kaisermann <christian.kaisermann@stone.com.br>"
+  ],
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "@mambasdk/configs": "^0.0.12",
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8"
+  },
+  "dependencies": {
+    "babel-loader": "^8.0.0-beta",
+    "css-loader": "^1.0.0",
+    "cssnano": "^4.0.5",
+    "eslint-loader": "^2.1.0",
+    "file-loader": "^1.1.11",
+    "filemanager-webpack-plugin": "^1.0.29",
+    "html-minifier": "^3.5.19",
+    "json-loader": "^0.5.7",
+    "mini-css-extract-plugin": "^0.4.1",
+    "mini-html-webpack-plugin": "^0.2.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.0",
+    "pkg-dir": "^3.0.0",
+    "postcss-loader": "^3.0.0",
+    "progress-bar-webpack-plugin": "^1.11.0",
+    "quickenv": "^0.0.5",
+    "resolve-url-loader": "^2.3.0",
+    "style-loader": "^0.22.1",
+    "svelte-loader": "^2.10.1",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.16.5",
+    "webpack-archive-plugin": "^3.0.0",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-merge": "^4.1.4",
+    "webpack-sources": "^1.1.0",
+    "xmlbuilder": "^10.0.0"
+  }
+}

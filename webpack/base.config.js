@@ -1,3 +1,4 @@
+const path = require('path');
 const loaders = require('./helpers/loaders');
 const { fromWorkspace, fromProject } = require('./helpers/paths');
 const pkg = require('../package.json');
@@ -30,7 +31,9 @@ module.exports = function createWebpackConfig(type) {
           test: /NAV_COMPONENTS$/,
           loader: require.resolve('./navigation-loader'),
           options: {
-            path: 'packages/components',
+            githubPath: 'packages/components',
+            localPath: path.join(__dirname, '..', 'packages'),
+            mode: 'local'
           },
         },
         {

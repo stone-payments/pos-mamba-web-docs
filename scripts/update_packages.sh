@@ -8,4 +8,5 @@ git subtree add --prefix .temp https://github.com/stone-payments/pos-mamba-sdk.g
 mkdir packages
 cd .temp/packages/components
 mv * ../../packages
+cd ../.. && rm -rf .temp
 

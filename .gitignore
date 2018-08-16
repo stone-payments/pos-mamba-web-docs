@@ -21,3 +21,6 @@ bower_components/
 /app/manifest/
 /sdk/
 /packages/
+packages/
+packages/.*
+.temp/

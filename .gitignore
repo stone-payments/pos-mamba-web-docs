@@ -19,3 +19,5 @@ bower_components/
 /export/
 /build/
 /app/manifest/
+/sdk/
+/packages/

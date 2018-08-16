@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 # Remove packages folder
+rm -rf .git/modules/packages
 rm -rf packages
 
 # update-submodules
@@ -22,3 +23,4 @@ git remote rm origin
 
 git filter-branch --subdirectory-filter packages/components -- --all
 
+rm .git

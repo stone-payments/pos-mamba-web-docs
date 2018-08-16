@@ -1,5 +1,6 @@
-const { IS_DEV } = require('quickenv');
 const { fromProject } = require('./paths');
+
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 /** Read the project's .babelrc.js to enforce it in 'babel-loader' */
 const babelrc = require(fromProject('.babelrc.js'));
@@ -11,14 +12,14 @@ module.exports = {
     loader: 'babel-loader',
     options: {
       compact: false,
-      cacheDirectory: IS_DEV(),
+      cacheDirectory: IS_DEV,
       babelrc: false,
       ...babelrc,
     },
   },
   eslint: {
     loader: 'eslint-loader',
-    options: { emitWarning: IS_DEV() },
+    options: { emitWarning: IS_DEV },
   },
   /**
    * MiniCssExtractPlugin doesn't support HMR.
@@ -28,8 +29,8 @@ module.exports = {
   css: {
     loader: 'css-loader',
     options: {
-      sourceMap: IS_DEV(),
-      minimize: !IS_DEV(),
+      sourceMap: IS_DEV,
+      minimize: !IS_DEV,
       /** Apply the two last loaders */
       importLoaders: 1,
     },
@@ -83,7 +84,7 @@ module.exports = {
         loader.options = {
           emitCss: true,
           hydratable: true,
-          hotReload: IS_DEV(),
+          hotReload: IS_DEV,
           ...require(fromProject('svelte.config.js')),
         }
     }

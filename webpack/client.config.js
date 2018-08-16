@@ -4,8 +4,6 @@ const config = require('sapper/webpack/config.js');
 const baseConfig = require('./base.config.js')('client');
 const { IS_DEV } = require('quickenv');
 
-console.log('client.config.js');
-
 const client = {
   entry: config.client.entry(),
   output: Object.assign(config.client.output(), {

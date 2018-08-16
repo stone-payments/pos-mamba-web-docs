@@ -1,4 +1,3 @@
-const { IS_DEV } = require('quickenv');
 const loaders = require('./helpers/loaders');
 const { fromWorkspace, fromProject } = require('./helpers/paths');
 const pkg = require('../package.json');

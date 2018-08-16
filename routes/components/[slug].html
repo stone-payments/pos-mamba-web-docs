@@ -62,30 +62,12 @@
 <script>
   import { observe } from 'svelte-extras';
 
-  const workerPromise = process.browser && import('workerize-loader!./_worker.js').then(async ({ default: getWorker }) => getWorker());
-
   // JSON.stringify(docs, null, 2)
   export default {
     
     async oncreate() {
-      workerPromise.then(async worker => {
-        let { version } = this.get();
 
-
-        version = await worker.init(version);
-        this.set({ version });
-        
-        const updateBundle = async () => {
-          const { components } = this.get();
-          console.log('updateBundle: ', components);
-        };
-
-        this.observe('components', updateBundle);
-
-      });
-
-      const { query, components, version } = this.get();
-      console.log("query components, version", query, components, version);
+      console.log("this.get()", this.get());
 
     },
 

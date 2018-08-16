@@ -17,14 +17,16 @@
     </h1>
     <ul class='guide-toc'>
       {#each section.subsections as subsection}
-        <li>
-          <a class='subsection {subsection.slug === $activeGuideSection ? "active": ""}' href='guide#{subsection.slug}'>{subsection.title}</a>
-        </li>
+        {#if subsection.title}
+          <li>
+            <a class='subsection {subsection.slug === $activeGuideSection ? "active": ""}' href='guide#{subsection.slug}'>{subsection.title}</a>
+          </li>
+        {/if}
       {/each}
     </ul>
     {/each}
     {#each navigation as [idx, item]}
-      {#if (item.type === "hr")}
+      {#if item.type === "hr"}
         <ul>
           <li class="SideBar-border Nav-border"></li>
         </ul>
@@ -40,9 +42,16 @@
         {#if item.submenu}
           <ul>
             {#each item.submenu as sub}
-            <li class='{(path === sub.to || path === item.to + sub.to) ? "active": ""}'>
-              <a href='{sub.to !== item.to ? item.to : ""}{sub.to}'>{sub.title}</a>
-            </li>
+              {#if sub.type === "static"}
+                <li class="SideBar-static-label"><small>{sub.description}</small></li>
+              {:elseif sub.title}
+                <li class='{(path === sub.to || path === item.to + sub.to) ? "active": ""}'>
+                  <a href='{sub.to !== item.to ? item.to : ""}{sub.to}'>
+                  {#if (path === sub.to || path === item.to + sub.to) ? "active": ""}
+                    <i class="fas fa-angle-right"></i>
+                  {/if}{sub.title}</a>
+                </li>
+              {/if}
             {/each}
           </ul>
         {/if}

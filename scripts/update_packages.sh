@@ -1,26 +1,44 @@
 #!/bin/sh -e
 
+# remove .temp if already exist
+rm -rf .temp
+
 # Remove packages folder
-rm -rf .git/modules/packages
 rm -rf packages
+  
+  # Using subtree
+    
+    # git subtree add --prefix .temp https://github.com/stone-payments/pos-mamba-sdk.git develop --squash
 
-# update-submodules
-#git subtree add --prefix .temp https://github.com/stone-payments/pos-mamba-sdk.git develop --squash
+    # mkdir packages
 
-# mkdir packages
+    # cd .temp/packages/components
 
-# cd .temp/packages/components
+    # mv * ../../packages
 
-# mv * ../../packages
+    # cd ../.. && rm -rf .temp
 
-# cd ../.. && rm -rf .temp
-
-git submodule add --force https://github.com/stone-payments/pos-mamba-sdk.git packages
+git pull --recurse-submodules
+# git submodule add --force https://github.com/stone-payments/pos-mamba-sdk.git packages
 
 cd packages
 
-git remote rm origin
+# git remote rm origin
 
-git filter-branch --subdirectory-filter packages/components -- --all
+  # Using filter-branch(will keep history from another branch)
+    # git filter-branch --subdirectory-filter packages/components -- --all
 
-rm .git
+# Using moving folder around
+mkdir ../.temp
+
+mv packages/components/* ../.temp
+
+# Remove undesired files
+find . -name ._\* -print0 | xargs -0 rm -f
+rm -rf *
+rm -rf .[^.]* ..?*
+
+mv ../.temp/* ./
+
+# remove our .temp folder
+rm -rf ../.temp

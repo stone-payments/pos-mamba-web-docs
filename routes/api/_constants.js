@@ -1,4 +1,4 @@
 export default {
-  npmScope: '@mambasdk',
+  npmScope: '@mamba',
   nativePackageName: 'pos',
 }

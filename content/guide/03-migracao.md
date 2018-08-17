@@ -5,15 +5,15 @@
 
 ## Introdução 
 
-Um passo muito importante na transição da SDK 1.0 para a 2.0 é a **Refatoração** dos aplicativos. Isso deve ocorrer porque mudamos motor por trás utilizado em nossa nova SDK, agora quem é responsável por isso é  o **Svelte**. Desse modo, não será possível portar o código das aplicações após a atualização da SDK.
+Um passo muito importante na transição da SDK 1.0 para a 2.0 é a **Refatoração** dos aplicativos. Isso deve ocorrer porque mudamos o motor utilizado por trás da nossa nova SDK, agora quem é responsável por isso é  o **Svelte**. Desse modo, **não será possível portar o código das aplicações após a atualização da SDK**.
 
-Apesar dessa tarefa paracer ser um pouco trabalhosa, os dois Frameworks são bem parecidos e para ajuda-los nessa transição nosso time de *Developers* preparou este guia.
+Apesar dessa tarefa parecer ser um pouco trabalhosa, os dois Frameworks são bem parecidos e para ajudá-los nessa transição nosso time de *Developers* preparou este guia.
 
 ## Componentes
 
 Os componentes fazem parte do núcleo central de qualquer aplicação, sejam elas produzidas utilizando a SDK 1.0 ou 2.0. Sendo assim, resolvemos começar nosso guia de migração por estes elementos.
 
-Na nossa atinga SDK, um componente seguia a seguinte estrutura:
+Na nossa antiga SDK, um componente seguia a seguinte estrutura:
 
 ```js
 export default {
@@ -62,7 +62,7 @@ export default {
 }
 ```
 
-Em Svelte, eles parecem bastante, veja:
+Em Svelte, eles parecem bastante:
 
 ```js
 export default {
@@ -95,7 +95,7 @@ export default {
 }
 ```
 
-Outra parte importante é atribuição de valores as propriedades (`props`/`data`) do componente. Antigamente um valor podia ser acessado diretamente da seguinte forma:
+Outra parte importante é atribuição de valores às propriedades (`props`/`data`) do componente. Antigamente um valor podia ser acessado diretamente da seguinte forma:
 
 ```js
 // SDK 1.0
@@ -105,7 +105,7 @@ console.log(myVar); // 1
 this.myProp = 2
 console.log(this.myProp) // 2
 ```
-Agora isto é feito da seguinte maneira: 
+Agora isso é feito da seguinte maneira: 
 ```js
 //SDK 2.0
 
@@ -115,7 +115,7 @@ this.set({myProp: 2});
 console.log(this.get().myProp); // 2
 ```
 
-Por fim, uma última modifcação que também é improtante são as `refs`, que facilitam o acesso à componentes e elementos do `DOM`. Antigamente, no `HTML` tinhamos:
+Por fim, uma última modificação que também é importante são as `refs`, que facilitam o acesso a componentes e elementos do `DOM`. Antigamente, no `HTML` tínhamos:
 
 ```html
 <!-- SDK 1.0 -->
@@ -125,7 +125,7 @@ Por fim, uma última modifcação que também é improtante são as `refs`, que 
 <MyComponent ref:myComponentRef></MyComponent>
 ```
 
-E para acessa-las:
+E para acessá-las:
 
 ```js
 // SDK 1.0
@@ -136,7 +136,7 @@ this.$refs.myComponentRef.innerText = myText;
 this.refs.myComponentRef.innerText = myText;
 ```
 
-Aproveitando que falamos de `refs` e manipulação de elementos no `DOM` é interessante também introduzi-los a linguagem de template do **Svelte**. Como vimos no exemplo acima, na versão `1.0` era necessário criar uma referência para inserir uma variável do *JavaScript* dentro de um elemento no `DOM`. Isso atualmente pode ser feito de modo muito mais fácil (desde que essa variável esteja na propriedade `data()`):
+Aproveitando que falamos de `refs` e manipulação de elementos no `DOM`, é interessante também introduzi-los a linguagem de template do **Svelte**. Como vimos no exemplo acima, na versão `1.0` era necessário criar uma referência para inserir uma variável do *JavaScript* dentro de um elemento no `DOM`. Isso atualmente pode ser feito de modo muito mais fácil (desde que essa variável esteja na propriedade `data()`):
 
 ```js
 
@@ -154,10 +154,10 @@ export default {
 }
 ```
 
-O mais interessante é que desta maneira a propriedade do componente se conecta `two way binding`, ou seja caso a propriedade `myText` se altere, o texto dentro de `<p>` se altera no mesmo momento. Isso facilita muito, não? 
+O mais interessante é que dessa maneira a propriedade do componente se conecta `two way binding`, ou seja caso a propriedade `myText` se altere, o texto dentro de `<p>` se altera no mesmo momento. Isso facilita muito, não? 
 Além desta funcionalidade, a linguagem de template do **Svelte** permite possui diversas outras funcionalidades como: iterações, slots e propriedades computadas, sendo assim recomendamos fortemente que se acesse o guia de introdução deles clicando [aqui]('https://svelte.technology/guide')
 
-Para finalizar, aposto que mesmo após essa explicação, você ainda deve estar se perguntando sobre os componentes visuais de nossa `SDK`. Esses também sofreram modificações, começando pelo nome que não possui mais as iniciais *Mb*, a inclusão de novos componentes e a remoção de alguns que achamos que não fariam mais sentido existir. Para a lista completa dos componentes e suas utilizações [acesse aqui]().
+Para finalizar, aposto que mesmo após essa explicação, você ainda deve estar se perguntando sobre os componentes visuais de nossa `SDK`. Eles também sofreram modificações, começando pelo nome que não possui mais as iniciais *Mb*, a inclusão de novos componentes e a remoção de alguns que achamos que não fariam mais sentido existir. Para a lista completa dos componentes e suas utilizações [acesse aqui]().
 
 ## Páginas
 
@@ -280,15 +280,15 @@ Agora, deve-se especificar as rotas diretamente no componente de acesso da aplic
   };
 </script>
 ```
-Como pode ser visto, para a administração das rotas foi utilizado o `svelte-routing`, caso deseje saber mais sobre como este funciona [clique aqui](https://github.com/EmilTholin/svelte-routing).
+Como pode ser visto, para a administração das rotas foi utilizado o `svelte-routing`, caso deseje saber mais sobre como ele funciona [clique aqui](https://github.com/EmilTholin/svelte-routing).
 
 ## Considerações Finais
 
-Acredito que podemos agora dizer que é fácil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas ainda assim, caso deixaremos aqui um repertório de links que podem lhe ajudar:
+Acredito que podemos agora dizer que é tão difícil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas, ainda assim, deixaremos aqui um repertório de links que podem ajudá-lo:
 
 * [Documentação do Svelte](https://svelte.technology/guide)
 * [Documentação Svelte-Routing](https://github.com/EmilTholin/svelte-routing)
 * [Canal do Discord do Svelte](https://discordapp.com/invite/yy75DKs)
 * [Documentação SDK 1.0](https://stone-payments.github.io/pos-mamba-websdk-docs/docs/components)
 
-Caso tenha alguma dúvida sinta-se a vontade para nos procurar em nosso canal do [Slack]() ou entre em contato com nosso [Time de Integrações]().
+Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack]() ou entrar em contato com nosso [Time de Integrações]().

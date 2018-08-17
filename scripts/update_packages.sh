@@ -1,9 +1,10 @@
 #!/bin/sh -e
 
-# remove .temp if already exist
+
+echo "-> Remove .temp if already exist"
 rm -rf .temp
 
-# Remove packages folder
+echo "-> Remove packages folder"
 rm -rf packages
   
   # Using subtree
@@ -18,6 +19,7 @@ rm -rf packages
 
     # cd ../.. && rm -rf .temp
 
+echo "-> Pulling submodules"
 git pull --recurse-submodules
 # git submodule add --force https://github.com/stone-payments/pos-mamba-sdk.git packages
 
@@ -28,17 +30,28 @@ cd packages
   # Using filter-branch(will keep history from another branch)
     # git filter-branch --subdirectory-filter packages/components -- --all
 
-# Using moving folder around
-mkdir ../.temp
 
+echo "-> Using moving folder around"
+mkdir ../.temp
+mkdir ../.temp/pos
+mkdir ../.temp/store
+mkdir ../.temp/styles
+
+mv packages/pos/* ../.temp/pos
+mv packages/store/* ../.temp/store
+mv packages/styles/* ../.temp/styles
 mv packages/components/* ../.temp
 
-# Remove undesired files
+# echo "-> Remove undesired files";
 find . -name ._\* -print0 | xargs -0 rm -f
 rm -rf *
 rm -rf .[^.]* ..?*
 
 mv ../.temp/* ./
 
+echo "-> Lowering case"
+for fd in */; do fd_lower=$(printf %s "$fd" | tr A-Z a-z) && [ "$fd" != "$fd_lower" ] && mv "$fd" "$fd_lower"; done
+
+echo "-> Finishing"
 # remove our .temp folder
 rm -rf ../.temp

@@ -10,11 +10,10 @@ function replaceTag(tag) {
   return escaped[tag] || tag
 }
 
-function createGlob(glob) {
+function createGlob(glob = '') {
   return [
     `${glob}README.md`,
     `${glob}package.json`,
-    `${glob}CHANGELOG.md`,
     `${glob}(examples|example)/*.+(html|svelte)`,
   ]
 }

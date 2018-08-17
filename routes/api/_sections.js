@@ -52,11 +52,18 @@ const SELECTOR = 'pre>code[class*="language-"]'
 export const demos = new Map()
 
 export default function(dir, fileSlug, anchorPath = '') {
-  return fs
-    .readdirSync(dir)
-    .filter(file => file[0] !== '.' && (!fileSlug && true || file === `${fileSlug}.md`) && path.extname(file) === '.md')
+  let read;
+
+  try {
+    read = fs.readdirSync(dir);
+  } catch(e) {
+    console.warn(e.code, e.path);
+    return null;
+  }
+
+  return read.filter(file => file[0] !== '.' && (!!fileSlug || file === `${fileSlug}.md`) && path.extname(file) === '.md')
     .map(file => {
-      const markdown = fs.readFileSync(`${dir}/${file}`, 'utf-8')
+      const markdown = fs.readFileSync(`${dir}/${file}`, 'utf-8');
       
       const { content, metadata } = processMarkdown(markdown, dir)
       

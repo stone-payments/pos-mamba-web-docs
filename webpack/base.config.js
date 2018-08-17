@@ -23,6 +23,9 @@ module.exports = function createWebpackConfig(type) {
         fromWorkspace('node_modules'),
         fromProject('node_modules'),
       ],
+      alias: {
+        Packages: path.resolve(__dirname, '../packages/'),
+      }
     },
     externals: new RegExp(`^${Object.keys(pkg.dependencies).filter(d => d.startsWith('@mambasdk')).join('|')}`),
     module: {

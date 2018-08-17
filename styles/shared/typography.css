@@ -1,7 +1,11 @@
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
 
 :root {
+  /*
+  Moz does not support yet
   --font-text: system-ui;
+  */
+  --font-text: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   --font-weight: 400;
   --font-size: 62.5%;
   --line-height: normal;

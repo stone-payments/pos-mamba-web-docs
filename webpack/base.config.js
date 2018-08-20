@@ -15,9 +15,6 @@ const {
   APP_ENV,
 } = require('@mamba/webpack/helpers/consts.js');
 
-
-console.log('path.resolve: ', require('fs').existsSync(path.resolve(__dirname, '../packages/pos/api/app.js')));
-
 module.exports = function createWebpackConfig(type) {
   return {
     /** Minimal useful output log */
@@ -34,24 +31,12 @@ module.exports = function createWebpackConfig(type) {
       modules: [
        path.resolve(__dirname, '../packages'),
        path.resolve(__dirname, '../node_modules'),
-
-        // '@mamba',
-        // 'node_modules',
-        // path.resolve(__dirname, 'packages', 'Dialog', 'node_modules')
       ],
       alias: {
-        //'@mamba': path.resolve(__dirname, '../packages/'),
-        // '@mamba/Sprite': path.resolve(__dirname, '../packages/Sprite'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
-        
-        // '@mamba/dialog': path.resolve(__dirname, '../packages/Dialog'),
-        // '@mamba/icon': path.resolve(__dirname, '../packages/Icon'),
-        // '@mamba/store': path.resolve(__dirname, '../node_modules/@mamba/store'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
-        Packages: path.resolve(__dirname, '../packages/'),
       }
     },
-    //externals: new RegExp(`^${Object.keys(pkg.dependencies).filter(d => d.startsWith('@mambasdk')).join('|')}`),
     module: {
       rules: [
         {
@@ -81,13 +66,8 @@ module.exports = function createWebpackConfig(type) {
         },
         {
           test: /\.(css|pcss)$/,
-          /** When importing from a style file, let's use package.json's 'style' field before the actual 'main' one */
           resolve: { mainFields: ['style', 'main'] },
-          exclude: [
-             path.resolve(__dirname, '../packages/pos/simulator/view/')
-          ],
           include: [
-            //path.resolve(__dirname, '../node_modules/@mamba'), 
             path.resolve(__dirname, '..'),
           ],
           use: [loaders.styleLoader, loaders.css, loaders.postcss],

@@ -21,6 +21,7 @@ rm -rf packages
 
 echo "-> Pulling submodules"
 git pull --recurse-submodules
+git submodule update --recursive --remote
 # git submodule add --force https://github.com/stone-payments/pos-mamba-sdk.git packages
 
 cd packages
@@ -35,10 +36,11 @@ echo "-> Using moving folder around"
 mkdir ../.temp
 mkdir ../.temp/pos
 mkdir ../.temp/store
+mkdir ../.temp/components
 
 mv packages/pos/* ../.temp/pos
 mv packages/store/* ../.temp/store
-mv packages/components/* ../.temp
+mv packages/components/* ../.temp/components
 
 # echo "-> Remove undesired files";
 find . -name ._\* -print0 | xargs -0 rm -f

@@ -18,7 +18,7 @@ export async function get(req, res) {
     lookup = new Map();
 
     const Slug = capitalize(slug);
-    const packageRoot = path.resolve(`Packages/${Slug}`);
+    const packageRoot = path.resolve(`packages/components/${Slug}`);
 
     // Create globs with our desired files
     const globs = [

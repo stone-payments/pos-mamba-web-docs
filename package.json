@@ -13,6 +13,7 @@
     "cy:run": "cypress run",
     "deploy": "now",
     "pull:packages": "node scripts/update_packages.js ",
+    "pull:packages:bash": "chmod +x scripts/update_packages.sh && scripts/update_packages.sh",
     "postinstall": "yarn run pull:packages",
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run",

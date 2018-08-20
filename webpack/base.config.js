@@ -46,7 +46,7 @@ module.exports = function createWebpackConfig(type) {
           test: /NAV_COMPONENTS$/,
           loader: require.resolve('./navigation-loader'),
           options: {
-            localPath: path.join(__dirname, '..', 'packages'),
+            localPath: path.join(__dirname, '..', 'packages/components'),
           },
         },
         // {

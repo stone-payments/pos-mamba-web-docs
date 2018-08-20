@@ -31,8 +31,11 @@ module.exports = function createWebpackConfig(type) {
       modules: [
        path.resolve(__dirname, '../packages'),
        path.resolve(__dirname, '../node_modules'),
+       'node_modules'
       ],
       alias: {
+        // Create alias for shared node_modules
+
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
       }
@@ -43,9 +46,7 @@ module.exports = function createWebpackConfig(type) {
           test: /NAV_COMPONENTS$/,
           loader: require.resolve('./navigation-loader'),
           options: {
-            githubPath: 'packages/components',
             localPath: path.join(__dirname, '..', 'packages'),
-            mode: 'local'
           },
         },
         // {

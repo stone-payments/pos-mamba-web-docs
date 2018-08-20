@@ -7,34 +7,31 @@ import strings from './_strings';
 
 export default function processMarkdown(markdown, dir) {
   const metadata = {};
+  
+  const pattern = /(\w*@example)\s(.+)\s-->$/gm;
   let match;
-  /* let hasExamples = false;
   let examples = [];
 
   // Match files ou code to include
   // Process example filename to include and metadata
-  while ((match = /(\w*@example)\s(.+)\s-->$/gm.exec(markdown))) {
+  while ((match = pattern.exec(markdown))) {
     const fileContents = fs.readFileSync(path.join(dir, match[2]), 'utf-8');
     const matchTitle = match.input.match(/#\s.+?\n/);
     const title = matchTitle && matchTitle[0].trim() || match[2];
     const index = match.index;
-
-    // const { html, css, head } = Example.render();
-    // console.log(html, css, head);
     
-    let source = `${!hasExamples ? `\n${strings.examplesTitle}` : ''}\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${path.basename(
+    let source = `${examples.length === 0 ? `\n${strings.examplesTitle}` : ''}\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${path.basename(
       match[2],
     )}'} -->\n${fileContents}\`\`\``;
     markdown = markdown.replace(`<!-- `.concat(match[0]), source);
     examples.push({ index, fileContents, source: source });
-    hasExamples = true;
-  } */
+  }
 
   // console.log('examples: ', examples);
 
   // Create component props heading for multiple components in page
   markdown = markdown.replace(
-    /\`<([a-zA-Z]+)(\s\.\.\.props\s)\/>\`/gm,
+    /\`<([a-zA-Z]+)(\s\.\.\.props\s?)\/>\`/gm,
     (m, $1, $2) => {
       const scaped = `<span class="token punctuation">&lt;</span>${$1} <span class="attr-name">${$2}</span> <span class="token punctuation">/&gt;</span>`;
       return `<h2 class="props-heading token tag">${scaped}</h2>`;

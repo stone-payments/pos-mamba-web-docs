@@ -26,7 +26,6 @@
         <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
       </div>
     </header>
-
     
     <div class="Examples">
       <div class="Examples-boxes">
@@ -35,13 +34,7 @@
             Header
           </header>
           <div class="Code-run">
-            <iframe title='Result' ref:child class='{error || pending || pendingImports ? "greyed-out" : ""}' srcdoc='
-              <!doctype html>
-              <html><head>
-        <link rel="stylesheet" href="/repl-viewer.css">
-      </head>
-      <body><h2>Example</h2></body></html>
-            '></iframe>
+            <svelte:component this="{Example}" name="example"/>
           </div>
           <div class="Source-wrapper">
             source
@@ -59,28 +52,33 @@
   </div>
 {/if}
 
+
 <script>
   import { observe } from 'svelte-extras';
+  import capitalize from 'lodash.capitalize';
 
+  let slug = '';
+  
   // JSON.stringify(docs, null, 2)
   export default {
-    
-    async oncreate() {
-
-      console.log("this.get()", this.get());
-
-    },
 
     async preload({ params, query }) {
+      slug = params.slug;
+      const Slug = capitalize(slug);
+
+      const lock = await import(`../../packages/${Slug}/example/Example.html`);
+
       return await this.fetch(`api/components/${params.slug}`).then(r => r.json()).then(manifest => {
         return {
           manifest: manifest,
           version: query.version || 'latest',
+          Example: lock.default,
           components: [],
-          title: manifest && manifest.docs && manifest.docs.metadata.title || params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
+          title: manifest && manifest.docs && manifest.docs.metadata.title || capitalize(params.slug)
         };
       });
     },
+
     methods: {
       run() {
         console.log('run', this.get);

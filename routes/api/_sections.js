@@ -51,7 +51,7 @@ const SELECTOR = 'pre>code[class*="language-"]'
 
 export const demos = new Map()
 
-export default function(dir, fileSlug, anchorPath = '') {
+export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
   let read;
 
   try {
@@ -63,6 +63,9 @@ export default function(dir, fileSlug, anchorPath = '') {
 
   return read.filter(file => file[0] !== '.' && (!!fileSlug || file === `${fileSlug}.md`) && path.extname(file) === '.md')
     .map(file => {
+
+      const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '');
+
       const markdown = fs.readFileSync(`${dir}/${file}`, 'utf-8');
       
       const { content, metadata } = processMarkdown(markdown, dir)
@@ -77,7 +80,32 @@ export default function(dir, fileSlug, anchorPath = '') {
         source = source.replace(/^ +/gm, match =>
           match.split('    ').join('\t'),
         )
+        
+        /* console.log('mambaSlub: ', mambaSlub);
+        if(mambaSlub) {
+          source = source.replace('../src', `@mamba/${mambaSlub}`);
+        }
+        
+        const iframe = `<iframe title='Result' ref:child class='{error || pending || pendingImports ? "greyed-out" : ""}' srcdoc='
+              <!doctype html>
+              <html><head>
+        
+      </head>
+      <body>
+        
 
+      </body>
+      </html>
+            '></iframe>`;
+
+        const exampleCompiled = require('svelte').compile(source, {
+          
+        });
+
+
+
+        console.log('exampleCompiled: ', exampleCompiled); */
+        
         const lines = source.split('\n')
 
         const meta = extractMeta(lines[0], lang)
@@ -211,7 +239,7 @@ export default function(dir, fileSlug, anchorPath = '') {
       let pattern = /<h3 id="(.+?)">(.+?)<\/h3>/g;
       while ((match = pattern.exec(html))) {
         const slug = match[1];
-        const anchor = match[0].replace(match[2], `<span>${match[2]}</span><a href="${anchorPath}#${slug}" class="anchor">#</a>`);
+        const anchor = match[0].replace(match[2], `<span>${match[2]}</span><a href="${anchorPath || ''}#${slug}" class="anchor">#</a>`);
         html = html.replace(match[0], anchor);
       }
 

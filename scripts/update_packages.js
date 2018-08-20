@@ -23,6 +23,7 @@ function cloneRepo(callback) {
     const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
         cache: true,
         force: true,
+        verbose: true
     })
     return emmiter.clone('.temp/');
 }

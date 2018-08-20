@@ -35,11 +35,9 @@ echo "-> Using moving folder around"
 mkdir ../.temp
 mkdir ../.temp/pos
 mkdir ../.temp/store
-mkdir ../.temp/styles
 
 mv packages/pos/* ../.temp/pos
 mv packages/store/* ../.temp/store
-mv packages/styles/* ../.temp/styles
 mv packages/components/* ../.temp
 
 # echo "-> Remove undesired files";
@@ -49,8 +47,8 @@ rm -rf .[^.]* ..?*
 
 mv ../.temp/* ./
 
-echo "-> Lowering case"
-for fd in */; do fd_lower=$(printf %s "$fd" | tr A-Z a-z) && [ "$fd" != "$fd_lower" ] && mv "$fd" "$fd_lower"; done
+# echo "-> Lowering case"
+# for fd in */; do fd_lower=$(printf %s "$fd" | tr A-Z a-z) && [ "$fd" != "$fd_lower" ] && mv "$fd" "$fd_lower"; done
 
 echo "-> Finishing"
 # remove our .temp folder

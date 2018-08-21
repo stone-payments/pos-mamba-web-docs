@@ -1,8 +1,10 @@
 import { init } from 'sapper/runtime.js'
-import store from '../client/store.js'
+import MambaStore from '../packages/store/src/index.js';
 import { manifest } from './manifest/client.js';
 import '../packages/pos/simulator/libs/boot.js';
-import '../styles/app.css'
+import '../styles/app.css';
+
+const store = MambaStore();
 
 const renderApp = () => {
   init({

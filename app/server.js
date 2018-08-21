@@ -11,8 +11,6 @@ dotenv.config();
 
 const app = express();
 
-console.log(path.resolve(__dirname, '../packages/components/Icon/src'));
-
 app
   .use(
     compression({ threshold: 0 }),

@@ -32,11 +32,11 @@ function cloneRepo(callback) {
 function createDir(dirName) {
     if (!fs.existsSync(dirName)) {
        fs.mkdirSync(dirName, (error) => {
-           if(error) { 
+           if(error) {
             console.log('ERROR \n'+error.message);
            }
-               
-       }); 
+
+       });
     }
 }
 
@@ -61,6 +61,7 @@ rimraf('./packages', () =>{
         // move to directory
         moveDir('./.temp/packages/components', './packages/components',
         moveDir('./.temp/packages/pos', './packages/pos',
-        clearTemp()));
+        moveDir('./.temp/packages/store','./packages/store',
+        clearTemp())));
     });
 })

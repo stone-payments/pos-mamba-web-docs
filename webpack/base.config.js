@@ -17,28 +17,30 @@ const {
 
 module.exports = function createWebpackConfig(type) {
   return {
-    /** Minimal useful output log */
-    stats: {
-      modules: false,
-      chunks: false,
-      colors: true,
-      children: false,
-    },
+
+    // Sapper just ignore this property
+    stats: "verbose",
+    
     resolve: {
       symlinks: false,
       mainFields: ['svelte', 'browser', 'module', 'main', 'dist'],
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
-       path.resolve(__dirname, '../packages'),
-       path.resolve(__dirname, '../node_modules'),
-       'node_modules'
+        path.resolve(__dirname, '../packages'),
+        path.resolve(__dirname, '../node_modules'),
+        path.resolve(__dirname, '../packages/components/Icon/src'),
+        path.resolve(__dirname, '../packages/components/Icon'),
+        'node_modules',
       ],
       alias: {
+        // './assets/icons/': path.resolve(__dirname, '../packages/components/Icon/src/assets/icons'),
+        // '~IconSrc': path.resolve(__dirname, '../packages/components/Icon/src/'),
+        // 'assets/icons': path.resolve(__dirname, '../packages/components/Icon/src/assets/icons'),
         // Create alias for shared node_modules
-
+        '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
-      }
+      },
     },
     module: {
       rules: [
@@ -57,13 +59,12 @@ module.exports = function createWebpackConfig(type) {
         // },
         {
           test: /\.(html|svelte)$/,
-          
           include: [
             /node_modules\/@mamba/,
             /packages\/.+\/src/,
-            path.resolve(__dirname, '..')
+            path.resolve(__dirname, '..'),
           ],
-          use: [loaders.svelte(type)],
+          use: loaders.svelte(type),
         },
         {
           test: /\.(css|pcss)$/,
@@ -73,10 +74,21 @@ module.exports = function createWebpackConfig(type) {
           ],
           use: [loaders.styleLoader, loaders.css, loaders.postcss],
         },
-        /** Handle font imports */
-        { test: /\.(eot|woff2?|otf|ttf)$/, use: [loaders.fonts] },
-        /** Handle image imports */
-        { test: /\.(gif|jpe?g|png|ico|svg)$/, use: [loaders.images] },
+        { 
+          test: /\.(eot|woff2?|otf|ttf)$/, 
+          use: loaders.fonts,
+        },
+        { 
+          test: /\.(gif|jpe?g|png|ico)$/,
+          exclude: /\assets\/icons/,
+          use: loaders.images,
+        },
+        { 
+          test: /\.svg$/,
+          exclude: /node_modules/,
+          include: /assets\/icons/,
+          use: loaders.icons,
+        },
       ],
     },
     plugins: [

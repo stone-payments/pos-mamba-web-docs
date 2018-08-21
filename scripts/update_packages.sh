@@ -37,9 +37,11 @@ mkdir ../.temp
 mkdir ../.temp/pos
 mkdir ../.temp/store
 mkdir ../.temp/components
+mkdir -p ../public/assets/icons
 
 mv packages/pos/* ../.temp/pos
 mv packages/store/* ../.temp/store
+yes | cp -rf packages/components/Icon/src/assets/icons/* ../public/assets/icons
 mv packages/components/* ../.temp/components
 
 # echo "-> Remove undesired files";

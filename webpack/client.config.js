@@ -5,6 +5,7 @@ const baseConfig = require('./base.config.js')('client');
 const { IS_DEV } = require('quickenv');
 
 const client = {
+  stats: "verbose",
   entry: config.client.entry(),
   output: Object.assign(config.client.output(), {
     globalObject: 'this',

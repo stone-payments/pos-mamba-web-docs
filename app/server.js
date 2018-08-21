@@ -1,3 +1,4 @@
+import path from 'path';
 import dotenv from 'dotenv';
 import express from 'express';
 import sapper from 'sapper';
@@ -10,10 +11,12 @@ dotenv.config();
 
 const app = express();
 
+console.log(path.resolve(__dirname, '../packages/components/Icon/src'));
+
 app
   .use(
     compression({ threshold: 0 }),
-    serve('assets'),
+    serve('public'),
     sapper({
       manifest,
       store: req => {

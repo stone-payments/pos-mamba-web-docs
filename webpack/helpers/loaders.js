@@ -1,5 +1,5 @@
 const { fromProject } = require('./paths');
-
+const path = require('path');
 const IS_DEV = process.env.NODE_ENV === 'development';
 
 /** Read the project's .babelrc.js to enforce it in 'babel-loader' */
@@ -55,9 +55,26 @@ module.exports = {
   images: {
     loader: 'url-loader',
     options: {
+      fallback: 'file-loader',
       limit: 1,
       outputPath: 'assets/',
       name: './images/[name].[ext]',
+    },
+  },
+  icons: {
+    loader: 'file-loader',
+    options: {
+      context: path.resolve(__dirname, '../..'),
+      publicPath: '../assets/icons/',
+      outputPath: '../',
+      name: '[name].[ext]',
+      useRelativePath: true,
+    },
+  },
+  svg: {
+    loader: 'svg-url-loader',
+    options: {
+      limit: 2048,
     },
   },
   html: {

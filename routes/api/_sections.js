@@ -53,7 +53,7 @@ export const demos = new Map()
 
 export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
   let read;
-
+  console.log('_sections.js: ', dir, fileSlug, anchorPath, mambaSlub);
   try {
     read = fs.readdirSync(dir);
   } catch(e) {

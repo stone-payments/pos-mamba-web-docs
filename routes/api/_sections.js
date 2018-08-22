@@ -68,8 +68,8 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
 
       const markdown = fs.readFileSync(`${dir}/${file}`, 'utf-8');
       
-      const { content, metadata } = processMarkdown(markdown, dir)
-      
+      const { content, metadata, examples } = processMarkdown(markdown, dir);
+
       const groups = []
       let group = null
       let uid = 1
@@ -80,31 +80,6 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
         source = source.replace(/^ +/gm, match =>
           match.split('    ').join('\t'),
         )
-        
-        /* console.log('mambaSlub: ', mambaSlub);
-        if(mambaSlub) {
-          source = source.replace('../src', `@mamba/${mambaSlub}`);
-        }
-        
-        const iframe = `<iframe title='Result' ref:child class='{error || pending || pendingImports ? "greyed-out" : ""}' srcdoc='
-              <!doctype html>
-              <html><head>
-        
-      </head>
-      <body>
-        
-
-      </body>
-      </html>
-            '></iframe>`;
-
-        const exampleCompiled = require('svelte').compile(source, {
-          
-        });
-
-
-
-        console.log('exampleCompiled: ', exampleCompiled); */
         
         const lines = source.split('\n')
 
@@ -219,8 +194,16 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
           Prism.hooks.run('after-highlight', env)
           Prism.hooks.run('complete', env)
         })
+        
+        const renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
 
-        return `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`
+        if(examples) {
+          examples[0].source = renderBlock;
+          examples[0].endIndex = renderBlock.length;
+          return '';
+        }
+
+        return renderBlock;
       }
 
       blockTypes.forEach(type => {
@@ -306,16 +289,19 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
         'h3'
       );
       
-
       // Add Span to tables td content to allow customization
       output = insertTag(/<td>(.+?)<\/td>/gm, output, 'span');
-      
+
+      output = output.replace(/@@(\d+)/g, (m, id) => hashes[id] || m);
+      console.log('output.slice(examples[0].index + examples[0].endIndex): ', output.slice(examples[0].index));
       return {
-        html: output.replace(/@@(\d+)/g, (m, id) => hashes[id] || m),
+        html: examples.length && output.slice(0, examples[0].index + 1) || output,
+        paramsHtml: examples.length && output.slice(examples[0].index +1) || '',
         metadata,
         subsections,
         slug: file.replace(/^\d+-/, '').replace(/\.md$/, ''),
         file,
+        examples,
         filePath: `${dir}/${file}`,
       }
     })

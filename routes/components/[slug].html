@@ -26,41 +26,35 @@
         <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
       </div>
     </header>
-    
-    <div class="Examples">
-      <div class="Examples-boxes">
-        <section class="Examples-example">
-          <header>
 
-          </header>
-          <div class="Code-run">
-            
-            <iframe title='Result' ref:child class='{error || pending || pendingImports ? "greyed-out" : ""}' srcdoc='
-              <!doctype html>
-              <html>
-                <head>
-                  
-                </head>
-                <body>
-                 
-                </body>
-              </html>
-            '></iframe>
-            <svelte:component this="{Example}" name="example"/>
-          </div>
-          <div class="Source-wrapper">
-            
-          </div>
-        </section>
-
-      </div>
-      
-    </div>
     <section>
       <div class="part">
         {@html manifest.docs.html}
       </div>
     </section>
+    
+    <section class="Examples">
+      <div class="Examples-boxes">
+        <div class="Examples-example">
+          <header>
+            <h2>Exemplos</h2>
+          </header>
+          <div class="Code-run">
+            <svelte:component this="{Example}" name="example"/>
+          </div>
+          <div class="Source-wrapper">
+            {@html example.source}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="Params-html">
+      <div class="part">
+        {@html manifest.docs.paramsHtml}
+      </div>
+    </section>
+    
   </div>
 {/if}
 
@@ -68,36 +62,38 @@
 <script>
   import { observe } from 'svelte-extras';
   import capitalize from 'lodash.capitalize';
-
+  
   let slug = '';
   
   // JSON.stringify(docs, null, 2)
   export default {
 
     async preload({ params, query }) {
-      slug = params.slug;
-      const Slug = capitalize(slug);
-
-      const lock = await import(`../../packages/components/${Slug}/example/Example.html`);
-
       return await this.fetch(`api/components/${params.slug}`).then(r => r.json()).then(manifest => {
+        const docs = manifest && manifest.docs;
         return {
           manifest: manifest,
           version: query.version || 'latest',
-          Example: lock.default,
+          example: docs.examples.length && docs.examples[0],
           components: [],
-          title: manifest && manifest.docs && manifest.docs.metadata.title || capitalize(params.slug)
+          title: docs && docs.metadata.title || capitalize(params.slug)
         };
       });
     },
 
-    oncreate() {
+    async oncreate() {
+      const { manifest, docs } = this.get();
+      console.log('this.get(): ', this.get());
+      await import(`../../packages/components/${manifest.info.slug}/example/Example.html`).then(mod => {
+          this.set({Example: mod.default});
+        });
+    },
+    methods: {
+      run() {
+        this.set({ pending: false });
+      },
 
-      this.refs.child.addEventListener('load', () => {
-        const iframe = this.refs.child;
-        const body = iframe.contentDocument.body;
-        const evalInIframe = iframe.contentWindow.eval;
-      });
+      observe
     }
   }
 </script>

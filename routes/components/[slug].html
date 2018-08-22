@@ -156,23 +156,51 @@
     line-height: 3.4rem;
     pointer-events: all;
   }
+
+  .Source-wrapper {
+    background-color: #f7f9f8;
+    padding-bottom: 1px;
+    border: 1px solid rgba(0, 10 , 0, 0.01);
+    border-radius: 6px;
+  }
   
   section :global(.code-block) {
     position: relative;
+
+    :global(.source-header) {
+      line-height: 1;
+      width: 100%;
+      border-bottom: 1px solid rgba(0, 10 , 0, 0.06);
+      border-radius: 4px 4px 0 0;
+      padding: 13px 13px 10px 16px;
+      color: var(--primary);
+      font-size: 13px;
+    }
+  }
+
+  section :global(.code-block.named.code-block-container) :global(i) {
+    display: inline-block;
+    margin-right: 10px;
   }
 
   section :global(.filename) {
-    font-size: 13px;
-    font-weight: 500; 
-    padding: 6px 12px 8px 7px;
-    display: inline-block;
-    top: 0;
-    color: #0099e5;
-    line-height: 1;
-    text-shadow: 0 0 0.1px rgba(0, 0, 0, 0.21);
+    display:inline-block;
+    font-weight: 600;
+    font-family: var(--code-font);
   }
 
-  section :global(a:not(.anchor)) {
+  section :global(.filename) + :global(pre) {
+    border: 1px solid rgba(0, 10 , 0, 0.01);
+    border-top: 0;
+    display: block;
+    margin-bottom: 0;
+  }
+
+  section :global(a.filename):hover {
+    text-decoration: underline;
+  }
+
+  section :global(a:not(.anchor):not(.filename)) {
     border-bottom: 1px solid #e3d9d9;
   }
 
@@ -194,10 +222,15 @@
     border: none;
   }
 
-  section:not(.Examples-example) {
-    border-bottom: 2px solid #f4f6f7;
+  section:not(.Examples):not(.Examples-example) {
+
     padding: 39px 0;
 
+    + section {
+      padding-bottom: 46px;
+      border-bottom: 2px solid #f4f6f7;
+    }
+    
     & :global(h3:not(:first-child)) {
       margin-top: 18px;
       padding-top: 16px;
@@ -250,8 +283,6 @@
   section :global(.CodeMirror) {
     background-color: #f7f9f8;
     padding: 8px;
-    margin: 0 0 1em 0;
-    border-radius: 6px;
   }
 
   section :global(.code-block) :global(pre) {
@@ -261,6 +292,27 @@
   .Component :global(.code-block.code-block-container pre.code-block) {
     max-height: 300px;
     overflow: auto;
+    margin: 0;
+  }
+
+  .Code-run {
+
+    /*width: 300px;
+    border: 20px #000000db solid;
+    border-radius: 6px;*/
+
+    :global(.container) {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .Examples-example {
+    header {
+      h2 {
+        margin-bottom: 0;
+      }
+    }
   }
 
 </style>

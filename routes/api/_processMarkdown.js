@@ -1,9 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import strings from './_strings';
-// import Example from './components/_components/Example.html';
-
-// const { html, css, head } = Example.render();
 
 export default function processMarkdown(markdown, dir) {
   const metadata = {};
@@ -16,7 +13,7 @@ export default function processMarkdown(markdown, dir) {
   // Process example filename to include and metadata
   while ((match = pattern.exec(markdown))) {
     
-    const fileContents = fs.readFileSync(path.join(dir, match[2]), 'utf-8');
+    const fileContents = fs.readFileSync(path.join(dir, match[2].trim()), 'utf-8');
 
     const matchTitle = match.input.match(/#\s.+?\n/);
     const title = matchTitle && matchTitle[0].trim() || match[2];
@@ -27,7 +24,7 @@ export default function processMarkdown(markdown, dir) {
     )}'} -->\n${fileContents}\`\`\``;
     markdown = markdown.replace(`<!-- `.concat(match[0]), source);
     
-    examples.push({ index, fileContents, fileName: path.basename(match[2]), source: source });
+    examples.push({ index, fileContents, filePath: path.join(dir, match[2]), fileName: path.basename(match[2]), source: source });
   }
 
   // Create component props heading for multiple components in page
@@ -38,10 +35,6 @@ export default function processMarkdown(markdown, dir) {
       return `<h2 class="props-heading token tag">${scaped}</h2>`;
     },
   )
-  
-  /* import('./components/_components/Example.html').then(mod => {
-    console.log('mod: ', mod);
-  }).catch(() => {}); */
 
   // This match for custom tag of:
   // ---

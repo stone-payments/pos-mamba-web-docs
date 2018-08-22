@@ -1,14 +1,18 @@
-import fs from 'fs'
-import path from 'path'
-import * as fleece from 'golden-fleece'
-import processMarkdown from './_processMarkdown'
-import marked from 'marked'
-import cheerio from 'cheerio'
-import Prism from 'prismjs'
-import { unescape, insertTag, replaceTag } from './_utils'
-import classNameUtils from './_classNameUtils'
-import escape from './_escape'
-import './_processLineNumbers'
+import fs from 'fs';
+import path from 'path';
+
+import * as fleece from 'golden-fleece';
+import capitalize from 'lodash.capitalize';
+import cheerio from 'cheerio';
+import marked from 'marked';
+import Prism from 'prismjs';
+
+import { unescape, insertTag, replaceTag } from './_utils';
+import processMarkdown from './_processMarkdown';
+import classNameUtils from './_classNameUtils';
+import strings from './_strings';
+import escape from './_escape';
+import './_processLineNumbers';
 
 const blockTypes = 'blockquote html heading hr list listitem paragraph table tablerow tablecell'.split(
   ' ',
@@ -53,7 +57,7 @@ export const demos = new Map()
 
 export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
   let read;
-  console.log('_sections.js: ', dir, fileSlug, anchorPath, mambaSlub);
+
   try {
     read = fs.readdirSync(dir);
   } catch(e) {
@@ -70,45 +74,45 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
       
       const { content, metadata, examples } = processMarkdown(markdown, dir);
 
-      const groups = []
-      let group = null
-      let uid = 1
+      const groups = [];
+      let group = null;
+      let uid = 1;
 
-      const renderer = new marked.Renderer()
+      const renderer = new marked.Renderer();
 
       renderer.code = (source, lang) => {
         source = source.replace(/^ +/gm, match =>
           match.split('    ').join('\t'),
         )
         
-        const lines = source.split('\n')
+        const lines = source.split('\n');
 
-        const meta = extractMeta(lines[0], lang)
+        const meta = extractMeta(lines[0], lang);
 
-        let prefix = ''
-        let className = 'code-block'
+        let prefix = '';
+        let className = 'code-block';
 
         if (lang === 'html' && !group) {
-          if (!meta || meta.repl !== false) {
-            prefix = `<a class='open-in-repl' href='repl?demo=@@${uid}'>REPL</a>`
-          }
-
           group = { id: uid++, blocks: [] }
-          groups.push(group)
+          groups.push(group);
         }
 
         if (meta) {
           source = lines.slice(1).join('\n')
           const filename = meta.filename || (lang === 'html' && 'App.html')
           if (filename) {
-            prefix = `<span class='filename'>${prefix} ${filename}</span>`
-            className += ' named'
+            if(mambaSlub) {
+              prefix = `<div class='source-header'><i class="fas fa-external-link-alt svelte-co345y"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/develop/packages/components/${capitalize(mambaSlub)}/example/${filename}'><span>${strings.sourceCode}</span></a></div>`;
+            }else {
+              prefix = `<span class='filename'>${filename}</span>`;
+            }
+            className += ' named';
           }
         }
 
-        if (group) group.blocks.push({ meta: meta || {}, lang, source })
+        if (group) group.blocks.push({ meta: meta || {}, lang, source });
 
-        if (meta && meta.hidden) return ''
+        if (meta && meta.hidden) return '';
 
         // Start Code highlight with Prism
 
@@ -123,10 +127,10 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
         )}</code></pre>`
 
         // Load cheerio with Code component output
-        const $ = cheerio.load(html, cheerioOption)
+        const $ = cheerio.load(html, cheerioOption);
 
         // Select element with cheerio
-        const $elements = $(SELECTOR)
+        const $elements = $(SELECTOR);
 
         // Default options for Prism
         const options = {
@@ -143,26 +147,26 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
         
         // Apply Prism js to every source code
         $elements.each(function(index, element) {
-          let $element = $(this)
+          let $element = $(this);
 
-          let $parent = $element.parent()
+          let $parent = $element.parent();
 
           let language = classNameUtils.getLanguageFromClassName(
             $element.attr('class'),
           )
 
-          let grammar = Prism.languages[language]
+          let grammar = Prism.languages[language];
 
           $parent
             .addClass(`language-${language}`)
-            .css('font-size', options.fontSize + 'px')
+            .css('font-size', options.fontSize + 'px');
 
-          let code = $element.html()
+          let code = $element.html();
 
           // &amp; -> &
-          code = escape.amp(code)
+          code = escape.amp(code);
           // &lt; -> '<', &gt; -> '>'
-          code = escape.tag(code)
+          code = escape.tag(code);
 
           let env = {
             $element: $element,
@@ -172,30 +176,30 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
             options: options,
           }
 
-          Prism.hooks.run('before-sanity-check', env)
+          Prism.hooks.run('before-sanity-check', env);
 
           if (!env.code || !env.grammar) {
             if (env.code) {
-              env.$element.textContent = env.code
+              env.$element.textContent = env.code;
             }
-            Prism.hooks.run('complete', env)
+            Prism.hooks.run('complete', env);
             return
           }
 
-          Prism.hooks.run('before-highlight', env)
+          Prism.hooks.run('before-highlight', env);
 
-          let highlightedCode = Prism.highlight(code, grammar)
+          let highlightedCode = Prism.highlight(code, grammar);
 
-          env.highlightedCode = highlightedCode
-          Prism.hooks.run('before-insert', env)
+          env.highlightedCode = highlightedCode;
+          Prism.hooks.run('before-insert', env);
 
-          $element.text(highlightedCode)
+          $element.text(highlightedCode);
 
-          Prism.hooks.run('after-highlight', env)
-          Prism.hooks.run('complete', env)
+          Prism.hooks.run('after-highlight', env);
+          Prism.hooks.run('complete', env);
         })
         
-        const renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
+        let renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
 
         if(examples) {
           examples[0].source = renderBlock;
@@ -207,10 +211,10 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
       }
 
       blockTypes.forEach(type => {
-        const fn = renderer[type]
+        const fn = renderer[type];
         renderer[type] = function() {
-          group = null
-          return fn.apply(this, arguments)
+          group = null;
+          return fn.apply(this, arguments);
         }
       })
 
@@ -230,16 +234,16 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
       
       groups.forEach(group => {
 
-        const main = group.blocks[0]
-        if (main.meta.repl === false) return
+        const main = group.blocks[0];
+        if (main.meta.repl === false) return;
 
-        const hash = getHash(group.blocks.map(block => block.source).join(''))
-        hashes[group.id] = hash
+        const hash = getHash(group.blocks.map(block => block.source).join(''));
+        hashes[group.id] = hash;
 
-        const json5 = group.blocks.find(block => block.lang === 'json')
+        const json5 = group.blocks.find(block => block.lang === 'json');
         // console.log('main, main.meta: ', main, main.meta);
-        const title = main.meta.title
-        if (!title) console.error(`Missing title for demo in ${file}`)
+        const title = main.meta.title;
+        if (!title) console.error(`Missing title for demo in ${file}`);
 
         demos.set(
           hash,
@@ -257,7 +261,7 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
               }),
             json5: json5 && json5.source,
           }),
-        )
+        );
       })
 
       // Create subsections with H2 heading match
@@ -277,7 +281,7 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
             }),
         )
 
-        subsections.push({ slug, title })
+        subsections.push({ slug, title });
       };
 
       // Add class to numbers before h3 Headings
@@ -293,10 +297,13 @@ export default function(dir, fileSlug, anchorPath, mambaSlub = undefined) {
       output = insertTag(/<td>(.+?)<\/td>/gm, output, 'span');
 
       output = output.replace(/@@(\d+)/g, (m, id) => hashes[id] || m);
-      console.log('output.slice(examples[0].index + examples[0].endIndex): ', output.slice(examples[0].index));
+
+      let paramsIndex = output.search(/<h2 id="par-metros">/);
+      paramsIndex = paramsIndex === -1 ? false : paramsIndex;
+
       return {
-        html: examples.length && output.slice(0, examples[0].index + 1) || output,
-        paramsHtml: examples.length && output.slice(examples[0].index +1) || '',
+        html: paramsIndex && output.slice(0, paramsIndex) || output,
+        paramsHtml: paramsIndex && output.slice(paramsIndex) || '',
         metadata,
         subsections,
         slug: file.replace(/^\d+-/, '').replace(/\.md$/, ''),

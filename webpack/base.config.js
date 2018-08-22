@@ -28,15 +28,9 @@ module.exports = function createWebpackConfig(type) {
       modules: [
         path.resolve(__dirname, '../packages'),
         path.resolve(__dirname, '../node_modules'),
-        path.resolve(__dirname, '../packages/components/Icon/src'),
-        path.resolve(__dirname, '../packages/components/Icon'),
         'node_modules',
       ],
       alias: {
-        // './assets/icons/': path.resolve(__dirname, '../packages/components/Icon/src/assets/icons'),
-        // '~IconSrc': path.resolve(__dirname, '../packages/components/Icon/src/'),
-        // 'assets/icons': path.resolve(__dirname, '../packages/components/Icon/src/assets/icons'),
-        // Create alias for shared node_modules
         '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),

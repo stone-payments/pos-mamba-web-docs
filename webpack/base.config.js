@@ -79,12 +79,17 @@ module.exports = function createWebpackConfig(type) {
         },
         { 
           test: /\.(gif|jpe?g|png|ico)$/,
-          exclude: /\assets\/icons/,
+          exclude: [
+            /\assets\/icons/,
+            /\/Icon\/src\/assets\/icons/,
+          ],
           use: loaders.images,
         },
         { 
           test: /\.svg$/,
-          exclude: /node_modules/,
+          exclude: [
+            /node_modules/,
+          ],
           include: /assets\/icons/,
           use: loaders.icons,
         },

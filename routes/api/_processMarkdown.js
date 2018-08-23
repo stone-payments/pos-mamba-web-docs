@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import { join, basename } from 'path';
 import strings from './_strings';
 
 export default function processMarkdown(markdown, dir, examplesPaths) {
@@ -13,23 +13,24 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
   // Process example filename to include and metadata
   while ((match = pattern.exec(markdown))) {
 
-    if(examplesPaths.find(k => path.basename(k) === path.basename(match[2]))) {
+    const found = examplesPaths.find(k => basename(k).toLowerCase() === basename(match[2].trim()).toLowerCase());
+
+    if(found) {
 
       const filePath = match[2].trim();
-      const absPath = path.join(dir, filePath);
+      const absPath = join(dir, filePath);
       const fileContents = fs.readFileSync(absPath, 'utf-8');
       const matchTitle = match.input.match(/#\s.+?\n/);
       const title = matchTitle && matchTitle[0].trim() || match[2];
       const index = match.index;
       
-      let source = `\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${path.basename(
+      let source = `\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${basename(
         match[2],
       )}'} -->\n${fileContents}\`\`\``;
       markdown = markdown.replace(`<!-- `.concat(match[0]), source);
       
-      // const relativePath = path.join(path.relative(__dirname, process.cwd()), dir);
 
-      examples.push({ index, fileContents, filePath, fileName: path.basename(match[2]), source: source });
+      examples.push({ index, fileContents, filePath, fileName: basename(match[2]), source: source });
     }
   }
 

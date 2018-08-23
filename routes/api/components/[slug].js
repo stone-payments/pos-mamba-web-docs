@@ -20,11 +20,17 @@ export async function get(req, res) {
 
     const packageRoot = path.join(process.cwd(), 'packages/components/');
     
-    const hasProperSlug = fs.readdirSync(packageRoot).filter(name => {
-      return name.toLowerCase() === slug;
-    });
+    const hasProperSlug = fs.readdirSync(packageRoot).filter(name => name.toLowerCase() === slug);
     
-    if(!hasProperSlug.length) throw strings.errors.notFound;
+    if(!hasProperSlug.length) {
+      console.warn(strings.errors.notFound);
+      res.writeHead(404, {
+        'Content-Type': 'application/json',
+      });
+
+      res.end(JSON.stringify({ error: strings.errors.notFound }));
+      return;
+    }
 
     const Slug = hasProperSlug[0];
 
@@ -51,8 +57,6 @@ export async function get(req, res) {
         extensions: ['md', 'json', 'html'],
       },
     });
-
-    console.log('paths: ', paths);
     
     const [ README, packageJson ] = ["README.md","package.json"];
 
@@ -79,7 +83,7 @@ export async function get(req, res) {
               examples: examples,
               toFile: true,
             });
-              
+
             pkg.docs = sections && sections.find(item => item.file === fileName);
 
             break;
@@ -95,7 +99,7 @@ export async function get(req, res) {
     
     res.set({
       'Content-Type': 'application/json',
-      // 'Cache-Control': `max-age=${5 * 60 * 1e3}`, // 5 minutes
+      'Cache-Control': `max-age=${5 * 60 * 1e3}`, // 5 minutes
     });
 
     res.end(lookup.get(slug))

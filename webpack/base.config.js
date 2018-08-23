@@ -38,11 +38,9 @@ module.exports = function createWebpackConfig(type) {
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
       },
     },
-
     node: {
       __dirname: false,
     },
-    
     module: {
       rules: [
         {

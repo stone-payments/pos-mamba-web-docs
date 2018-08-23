@@ -314,17 +314,13 @@ export default function(path, options = {}) {
       
     const paramsPattern = /<h2 (id="par-metros")>/;
 
-    /* output = output.replace(paramsPattern, (m, $1) => {
-        return `<h2 class="props-heading" id="par-metros">`;
-      }); */
-
     let paramsIndex = output.search(paramsPattern);
     paramsIndex = paramsIndex === -1 ? false : paramsIndex;
 
     return {
       html: paramsIndex && output.slice(0, paramsIndex) || output,
       paramsHtml: paramsIndex && output.slice(paramsIndex) || undefined,
-      slug: file.replace(/^\d+-/, '').replace(/\.md$/, ''),
+      slug: options.toFile ? basename(file).replace(/\.md$/, '') : file.replace(/^\d+-/, '').replace(/\.md$/, ''),
       file: basename(file),
       filePath: options.toFile ? path : `${path}/${file}`,
       metadata,

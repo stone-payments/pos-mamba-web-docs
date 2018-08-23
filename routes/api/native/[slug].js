@@ -1,8 +1,8 @@
 import path from 'path';
-import globby from 'globby';
-import { createApiGlob } from '../_utils';
+import fs from 'fs';
 import getSections from '../_sections';
 import getPkgInfo from '../_package';
+import strings from '../_strings';
 import constants from '../_constants.js';
 
 let lookup;
@@ -14,26 +14,35 @@ export async function get(req, res, next) {
 
     lookup = new Map();
 
-    // Resolve package absolute path from slug, through package.json
-    // Webpack performs a static analyse at build time with require.resolve function. It doesn't try to infer variables, so dont even try call it with variables like requeire.resolve(var)
-    let packagePath;
+    const packageRoot = path.join(process.cwd(), 'packages/pos/docs');
     
-    try {
-      packagePath = path.resolve(path.dirname(__non_webpack_require__.resolve(`${constants.npmScope}/${constants.nativePackageName}/package.json`)));
-    }catch(e) {
-      next();
+    const hasProperSlug = fs.readdirSync(packageRoot).filter(name => name.toLowerCase() === `${slug}.md`);
+
+    if(!hasProperSlug.length) {
+      console.warn(strings.errors.notFound);
+      res.writeHead(404, {
+        'Content-Type': 'application/json',
+      });
+
+      res.end(JSON.stringify({ error: strings.errors.notFound }));
+      return;
     }
+
+    const Slug = hasProperSlug[0];
     
     // Get directory README.md and CHANGELOG.md sections
-    const sections = getSections(`${packagePath}/docs`, {
+    const sections = getSections(path.join(packageRoot, Slug), {
       anchorPath: slug.toLowerCase(),
       mambaSlub: `native/${slug}`,
+      toFile: true,
     });
 
     const section = sections.find(item => item.slug === slug);
     
     const components = { docs: { html: section && section.html || '', metadata: { title: slug.charAt(0).toUpperCase() + slug.slice(1) }}, scope: constants.npmScope };
-    components.info = getPkgInfo(`${packagePath}/package.json`, section.file)
+
+    components.info = getPkgInfo(path.join(packageRoot, '../package.json'), section.file);
+
     lookup.set(slug, JSON.stringify(components));
   }
 
@@ -41,7 +50,7 @@ export async function get(req, res, next) {
     
     res.set({
       'Content-Type': 'application/json',
-      // 'Cache-Control': `max-age=${5 * 60 * 1e3}`, // 5 minutes
+      'Cache-Control': `max-age=${5 * 60 * 1e3}`, // 5 minutes
     });
 
     res.end(lookup.get(slug))

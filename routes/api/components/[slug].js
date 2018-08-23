@@ -12,15 +12,19 @@ let lookup;
 export async function get(req, res) {
   const { slug } = req.params;
   
-  console.info('Slug: ', slug);
+  console.info('\n -> Slug: ', slug, lookup && lookup.has(slug), '\nprocess.env.NODE_ENV:', process.env.NODE_ENV, "\n");
 
-  if (!lookup || process.env.NODE_ENV !== 'production') {
+  if (!lookup || !lookup.has(slug)) {
 
     lookup = new Map();
 
     const packageRoot = path.join(process.cwd(), 'packages/components/');
+
+    console.log('packageRoot: ', packageRoot);
     
     const hasProperSlug = fs.readdirSync(packageRoot).filter(name => name.toLowerCase() === slug);
+
+    console.log('hasProperSlug: ', hasProperSlug);
     
     if(!hasProperSlug.length) {
       console.warn(strings.errors.notFound);
@@ -42,6 +46,8 @@ export async function get(req, res) {
     ].filter(p => !!p);
 
     const exclude = ['**/node_modules/** ', 'dist/**'];
+
+    console.log('globs: ', globs);
   
     // Append exclude globs
     const patterns = []
@@ -58,6 +64,8 @@ export async function get(req, res) {
       },
     });
     
+    console.log('paths: ', paths);
+
     const [ README, packageJson ] = ["README.md","package.json"];
 
     let sections = null;

@@ -33,23 +33,25 @@
       </div>
     </section>
     
-    <section class="Examples">
-      <div class="Examples-boxes">
-        <div class="Examples-example">
-          <header>
-            <h2>Exemplos</h2>
-          </header>
-          <div class="Code-run">
-            <svelte:component this="{Example}" name="example"/>
-          </div>
-          <div class="Source-wrapper">
-            {@html example.source}
+    {#if !!example}
+      <section class="Examples">
+        <div class="Examples-boxes">
+          <div class="Examples-example">
+            <header>
+              <h2>Exemplos</h2>
+            </header>
+            <div class="Code-run">
+              <svelte:component this="{Example}" name="example"/>
+            </div>
+            <div class="Source-wrapper">
+              {@html example.source}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    {/if}
 
-    {#if manifest.docs.paramsHtml}
+    {#if manifest.docs.paramsHtml !== false}
       <section class="Params-html">
         <div class="part">
           {@html manifest.docs.paramsHtml}
@@ -75,14 +77,14 @@
         return {
           manifest: manifest,
           version: query.version || 'latest',
-          example: docs.examples.length && docs.examples[0],
+          example: docs.examples.length && docs.examples[0] || false,
           components: [],
           title: docs && docs.metadata.title || capitalize(params.slug)
         };
       });
     },
 
-    async oncreate() {
+    oncreate() {
       const { manifest } = this.get();
       import(`../../packages/components/${manifest.info.slug}/example/Example.html`).then(mod => {
           this.set({Example: mod.default});
@@ -290,13 +292,13 @@
 
   .Code-run {
 
-    /*width: 300px;
-    border: 20px #000000db solid;
-    border-radius: 6px;*/
+    margin: 20px 0 0 0;
+    padding-bottom: 40px;
 
     :global(.container) {
       width: 100%;
       max-width: 100%;
+      margin: 0 !important;
     }
   }
 

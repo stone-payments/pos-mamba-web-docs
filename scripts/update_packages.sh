@@ -20,9 +20,9 @@ rm -rf packages
     # cd ../.. && rm -rf .temp
 
 echo "-> Pulling submodules"
-git pull --recurse-submodules
-git submodule update --recursive --remote
-# git submodule add --force https://github.com/stone-payments/pos-mamba-sdk.git packages
+# git pull --recurse-submodules
+# git submodule update --recursive --remote
+git submodule add --force https://github.com/stone-payments/pos-mamba-sdk.git packages
 
 cd packages
 
@@ -42,6 +42,7 @@ mkdir -p ../public/assets/icons
 mv packages/pos/* ../.temp/pos
 mv packages/store/* ../.temp/store
 yes | cp -rf packages/components/Icon/src/assets/icons/* ../public/assets/icons
+# mv -f packages/components/Icon/src/assets/icons/* ../public/assets/icons
 mv packages/components/* ../.temp/components
 
 # echo "-> Remove undesired files";

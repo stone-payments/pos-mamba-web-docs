@@ -49,18 +49,19 @@
       </div>
     </section>
 
-    <section class="Params-html">
-      <div class="part">
-        {@html manifest.docs.paramsHtml}
-      </div>
-    </section>
+    {#if manifest.docs.paramsHtml}
+      <section class="Params-html">
+        <div class="part">
+          {@html manifest.docs.paramsHtml}
+        </div>
+      </section>
+    {/if}
     
   </div>
 {/if}
 
 
 <script>
-  import { observe } from 'svelte-extras';
   import capitalize from 'lodash.capitalize';
   
   let slug = '';
@@ -82,18 +83,10 @@
     },
 
     async oncreate() {
-      const { manifest, docs } = this.get();
-      console.log('this.get(): ', this.get());
-      await import(`../../packages/components/${manifest.info.slug}/example/Example.html`).then(mod => {
+      const { manifest } = this.get();
+      import(`../../packages/components/${manifest.info.slug}/example/Example.html`).then(mod => {
           this.set({Example: mod.default});
         });
-    },
-    methods: {
-      run() {
-        this.set({ pending: false });
-      },
-
-      observe
     }
   }
 </script>

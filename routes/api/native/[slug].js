@@ -25,8 +25,13 @@ export async function get(req, res, next) {
     }
     
     // Get directory README.md and CHANGELOG.md sections
-    const sections = getSections(`${packagePath}/docs`, slug.toLowerCase(), `native/${slug}`);
+    const sections = getSections(`${packagePath}/docs`, {
+      anchorPath: slug.toLowerCase(),
+      mambaSlub: `native/${slug}`,
+    });
+
     const section = sections.find(item => item.slug === slug);
+    
     const components = { docs: { html: section && section.html || '', metadata: { title: slug.charAt(0).toUpperCase() + slug.slice(1) }}, scope: constants.npmScope };
     components.info = getPkgInfo(`${packagePath}/package.json`, section.file)
     lookup.set(slug, JSON.stringify(components));

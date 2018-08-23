@@ -26,16 +26,23 @@ module.exports = function createWebpackConfig(type) {
       mainFields: ['svelte', 'browser', 'module', 'main', 'dist'],
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
+        // path.resolve(__dirname, '../'),
         path.resolve(__dirname, '../packages'),
         path.resolve(__dirname, '../node_modules'),
         'node_modules',
       ],
       alias: {
+        // '~': path.resolve(__dirname, '../'),
         '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
       },
     },
+
+    node: {
+      __dirname: false,
+    },
+    
     module: {
       rules: [
         {

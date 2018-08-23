@@ -1,10 +1,11 @@
 import path from 'path';
+import fs from 'fs';
 import globby from 'globby';
 import { createGlob } from '../_utils';
 import getSections from '../_sections';
 import getPkgInfo from '../_package';
-import constants from '../_constants.js';
-import capitalize from 'lodash.capitalize';
+import strings from '../_strings';
+import constants from '../_constants';
 
 let lookup;
 
@@ -17,14 +18,21 @@ export async function get(req, res) {
 
     lookup = new Map();
 
-    const Slug = capitalize(slug);
-    const packageRoot = path.resolve(`packages/components/${Slug}`);
+    const packageRoot = path.join(process.cwd(), 'packages/components/');
+    
+    const hasProperSlug = fs.readdirSync(packageRoot).filter(name => {
+      return name.toLowerCase() === slug;
+    });
+    
+    if(!hasProperSlug.length) throw strings.errors.notFound;
+
+    const Slug = hasProperSlug[0];
+
+    console.info('Proper Slug: ', Slug);
 
     // Create globs with our desired files
     const globs = [
-      ...createGlob('', {
-        cwd: packageRoot,
-      }),
+      ...createGlob(`${Slug}/`),
     ].filter(p => !!p);
 
     const exclude = ['**/node_modules/** ', 'dist/**'];
@@ -34,22 +42,46 @@ export async function get(req, res) {
       .concat(globs)
       .concat((exclude || []).map(p => `!${p}`));
 
-    const files = await globby(patterns);
 
-    const components = files
+    const paths = await globby(patterns, {
+      cwd: packageRoot,
+      deep: true,
+      onlyFiles: false,
+      expandDirectories: {
+        extensions: ['md', 'json', 'html'],
+      },
+    });
+
+    console.log('paths: ', paths);
+    
+    const [ README, packageJson ] = ["README.md","package.json"];
+
+    let sections = null;
+
+    let examples = paths.filter(f => f.indexOf('/example/') !== -1);
+    
+    const components = paths
       .reduce((pkg, file) => {
-
         const fileName = path.basename(file);
+        const filePath = path.join(packageRoot, file);
 
         switch(fileName) {
-          case "package.json":
-            pkg.info = getPkgInfo(path.join(packageRoot, fileName), Slug);
+          case packageJson:
+            pkg.info = getPkgInfo(filePath, Slug);
             break;
-          case "README.md":
+
+          case README:
 
             // Get directory README.md and CHANGELOG.md sections
-            const sections = getSections(packageRoot, fileName, '', slug);
+            if(!sections) sections = getSections(filePath, {
+              mambaSlub: Slug,
+              examplePath: packageRoot,
+              examples: examples,
+              toFile: true,
+            });
+              
             pkg.docs = sections && sections.find(item => item.file === fileName);
+
             break;
         }
 

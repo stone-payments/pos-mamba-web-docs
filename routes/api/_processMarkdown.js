@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import strings from './_strings';
 
-export default function processMarkdown(markdown, dir) {
+export default function processMarkdown(markdown, dir, examplesPaths) {
   const metadata = {};
   
   const pattern = /(\w*@example)\s(.+)\s?-->$/gm;
@@ -12,19 +12,25 @@ export default function processMarkdown(markdown, dir) {
   // Match files ou code to include
   // Process example filename to include and metadata
   while ((match = pattern.exec(markdown))) {
-    
-    const fileContents = fs.readFileSync(path.join(dir, match[2].trim()), 'utf-8');
 
-    const matchTitle = match.input.match(/#\s.+?\n/);
-    const title = matchTitle && matchTitle[0].trim() || match[2];
-    const index = match.index;
-    
-    let source = `\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${path.basename(
-      match[2],
-    )}'} -->\n${fileContents}\`\`\``;
-    markdown = markdown.replace(`<!-- `.concat(match[0]), source);
-    
-    examples.push({ index, fileContents, filePath: path.join(dir, match[2]), fileName: path.basename(match[2]), source: source });
+    if(examplesPaths.find(k => path.basename(k) === path.basename(match[2]))) {
+
+      const filePath = match[2].trim();
+      const absPath = path.join(dir, filePath);
+      const fileContents = fs.readFileSync(absPath, 'utf-8');
+      const matchTitle = match.input.match(/#\s.+?\n/);
+      const title = matchTitle && matchTitle[0].trim() || match[2];
+      const index = match.index;
+      
+      let source = `\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${path.basename(
+        match[2],
+      )}'} -->\n${fileContents}\`\`\``;
+      markdown = markdown.replace(`<!-- `.concat(match[0]), source);
+      
+      // const relativePath = path.join(path.relative(__dirname, process.cwd()), dir);
+
+      examples.push({ index, fileContents, filePath, fileName: path.basename(match[2]), source: source });
+    }
   }
 
   // Create component props heading for multiple components in page

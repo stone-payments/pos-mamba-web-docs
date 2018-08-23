@@ -34,3 +34,7 @@
     }
   }
 }
+
+#par-metros + .props-heading {
+  margin-top: 0 !important;
+}

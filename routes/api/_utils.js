@@ -14,7 +14,7 @@ function createGlob(glob = '') {
   return [
     `${glob}README.md`,
     `${glob}package.json`,
-    `${glob}(examples|example)/*.+(html|svelte)`,
+    `${glob}example/Example.html`,
   ]
 }
 

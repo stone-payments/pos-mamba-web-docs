@@ -2,4 +2,7 @@
 
 export default {
   sourceCode: 'Código fonte dos exemplos',
+  errors: {
+    notFound: 'Não encontrado',
+  },
 }

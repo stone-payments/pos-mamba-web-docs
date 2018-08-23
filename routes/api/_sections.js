@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { basename } from 'path';
+import { basename, extname } from 'path';
 
 import * as fleece from 'golden-fleece';
 import capitalize from 'lodash.capitalize';
@@ -66,9 +66,6 @@ export const demos = new Map()
 */
 export default function(path, options = {}) {
   let read = [path];
-
-  console.log('read: ', read);
-  // console.info('fs.readdirSync(dir): ', fs.readdirSync(dir));
   
   if(!options.toFile) {
     try {
@@ -78,7 +75,7 @@ export default function(path, options = {}) {
       return null;
     }
 
-    read = read.filter(file => file[0] !== '.' && path.extname(file) === '.md');
+    read = read.filter(file => file[0] !== '.' && extname(file) === '.md');
   }
 
   return read.map(file => {

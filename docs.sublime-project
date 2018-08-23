@@ -1,0 +1,9 @@
+{
+  "follow_symlinks": true,
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
+}

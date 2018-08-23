@@ -11,7 +11,7 @@
     "start": "node build",
     "debug": "DEBUG=express:*, sapper dev",
     "cy:run": "cypress run",
-    "deploy": "now --public -e NODE_ENV='production '",
+    "deploy": "now --public && now alias",
     "pull:packages": "node scripts/update_packages.js ",
     "pull:packages:bash": "ls ./ && chmod +x scripts/update_packages.sh && scripts/update_packages.sh && ls ./packages",
     "postinstall": "yarn run pull:packages && ls ./packages/components",

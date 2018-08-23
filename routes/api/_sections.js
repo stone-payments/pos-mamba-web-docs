@@ -319,7 +319,7 @@ export default function(path, options = {}) {
 
     return {
       html: paramsIndex && output.slice(0, paramsIndex) || output,
-      paramsHtml: paramsIndex && output.slice(paramsIndex) || undefined,
+      paramsHtml: paramsIndex && output.slice(paramsIndex) || false,
       slug: options.toFile ? basename(file).replace(/\.md$/, '') : file.replace(/^\d+-/, '').replace(/\.md$/, ''),
       file: basename(file),
       filePath: options.toFile ? path : `${path}/${file}`,

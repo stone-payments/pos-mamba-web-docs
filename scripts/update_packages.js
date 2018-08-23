@@ -21,7 +21,6 @@ function moveDir(path, destination, callback) {
 
 function cloneRepo(callback) {
     const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
-        cache: true,
         force: true,
         verbose: true
     })
@@ -58,7 +57,7 @@ rimraf('./packages', () =>{
 
     // clone repo
     cloneRepo().then(() => {
-        // move to directory
+        // move to directory and clear temp files
         moveDir('./.temp/packages/components', './packages/components',
         moveDir('./.temp/packages/pos', './packages/pos',
         moveDir('./.temp/packages/store','./packages/store',

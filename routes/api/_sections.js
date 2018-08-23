@@ -85,7 +85,7 @@ export default function(path, options = {}) {
 
     const markdown = fs.readFileSync(filePath, 'utf-8');
  
-    const { content, metadata, examples } = processMarkdown(markdown, `${options.examplePath}${options.mambaSlub}`, options.examples);
+    const { content, metadata, examples } = processMarkdown(markdown, `${options.examplePath}`, options.examples);
 
     const groups = [];
     let group = null;

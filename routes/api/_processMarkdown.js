@@ -17,8 +17,8 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
 
     if(found) {
 
-      const filePath = match[2].trim();
-      const absPath = join(dir, filePath);
+      const filePath = found; // match[2].trim();
+      const absPath = join(dir, found);
       const fileContents = fs.readFileSync(absPath, 'utf-8');
       const matchTitle = match.input.match(/#\s.+?\n/);
       const title = matchTitle && matchTitle[0].trim() || match[2];

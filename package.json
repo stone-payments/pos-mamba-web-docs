@@ -48,7 +48,7 @@
     "@mamba/dialog": "^0.0.2-alpha.1",
     "@mamba/sprite": "^0.0.2-alpha.1",
     "@mamba/store": "^0.0.2-alpha.1",
-    "@mamba/styles": "^0.0.2-alpha.1",
+    "@mamba/styles": "^0.0.2-alpha.3",
     "cheerio": "^1.0.0-rc.2",
     "codemirror": "^5.36.0",
     "compression": "^1.7.2",

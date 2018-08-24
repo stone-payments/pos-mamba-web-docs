@@ -17,6 +17,8 @@
 </article>
 
 <script>
+  import NProgress from 'nprogress';
+
   export default {
 
     preload() {
@@ -77,6 +79,7 @@
 
       onresize();
       onscroll();
+      NProgress.done();
     },
   };
 </script>

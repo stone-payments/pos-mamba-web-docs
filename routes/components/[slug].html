@@ -1,94 +1,100 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
-
-{#if manifest.error}
-  <h1>Não encontrado</h1>
-{:elseif manifest.docs}
-  <div class="Component">
-    <header>
-      <h1>
-        {manifest.docs.metadata.title}
-        <small><a href='https://github.com/stone-payments/pos-mamba-web/tree/master/packages/components/{manifest.info.slug}'>editar esta seção</a></small>
-      </h1>
-      <div class="code-block code-block-container install-block">
-        <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
-          <code class="language-bash">yarn add <span class="token string">{manifest.info.package.name}</span>
-            <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
-          </code>
-        </pre>
-        <div class="links">
-          <a class="github-link" href="https://github.com/stone-payments/pos-mamba-web/tree/develop/packages/components/{manifest.info.slug}" target="_blank"><i class="fab fa-github"></i>Github</a>
-          <a class="npm-link" href="https://www.npmjs.com/package/{manifest.info.package.name}" target="_blank"><i class="fas fa-external-link-alt"></i>NPM</a>
-        </div>
-      </div>
-      <div class="version-block">
-        <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
-      </div>
-    </header>
-
-    <section>
-      <div class="part">
-        {@html manifest.docs.html}
-      </div>
-    </section>
-    
-    {#if !!example}
-      <section class="Examples">
-        <div class="Examples-boxes">
-          <div class="Examples-example">
-            <header>
-              <h2>Exemplos</h2>
-            </header>
-            <div class="Code-run">
-              <svelte:component this="{Example}" name="example"/>
-            </div>
-            <div class="Source-wrapper">
-              {@html example.source}
-            </div>
+{#if !isLoading}
+  {#if manifest.error}
+    <h1>Não encontrado</h1>
+  {:elseif manifest.docs}
+    <div class="Component">
+      <header>
+        <h1>
+          {manifest.docs.metadata.title}
+          <small><a href='https://github.com/stone-payments/pos-mamba-web/tree/develop/packages/components/{manifest.info.slug}'>editar esta seção</a></small>
+        </h1>
+        <div class="code-block code-block-container install-block">
+          <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
+            <code class="language-bash">yarn add <span class="token string">{manifest.info.package.name}</span>
+              <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
+            </code>
+          </pre>
+          <div class="links">
+            <a class="github-link" href="https://github.com/stone-payments/pos-mamba-web/tree/develop/packages/components/{manifest.info.slug}" target="_blank"><i class="fab fa-github"></i>Github</a>
+            <a class="npm-link" href="https://www.npmjs.com/package/{manifest.info.package.name}" target="_blank"><i class="fas fa-external-link-alt"></i>NPM</a>
           </div>
         </div>
-      </section>
-    {/if}
+        <div class="version-block">
+          <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
+        </div>
+      </header>
 
-    {#if manifest.docs.paramsHtml !== false}
-      <section class="Params-html">
+      <section>
         <div class="part">
-          {@html manifest.docs.paramsHtml}
+          {@html manifest.docs.html}
         </div>
       </section>
-    {/if}
-    
-  </div>
+      
+      {#if !!example}
+        <section class="Examples">
+          <div class="Examples-boxes">
+            <div class="Examples-example">
+              <header>
+                <h2>Exemplos</h2>
+              </header>
+              <div class="Code-run">
+                <svelte:component this="{Example}" name="example"/>
+              </div>
+              <div class="Source-wrapper">
+                {@html example.source}
+              </div>
+            </div>
+          </div>
+        </section>
+      {/if}
+      {#if manifest.docs.paramsHtml !== false}
+        <section class="Params-html">
+          <div class="part">
+            {@html manifest.docs.paramsHtml}
+          </div>
+        </section>
+      {/if}
+    </div>
+  {/if}
 {/if}
 
-
 <script>
+  import NProgress from 'nprogress';
   import capitalize from 'lodash.capitalize';
-  
-  let slug = '';
-  
-  // JSON.stringify(docs, null, 2)
-  export default {
 
-    async preload({ params, query }) {
-      return await this.fetch(`api/components/${params.slug}`).then(r => r.json()).then(manifest => {
-        const docs = manifest && manifest.docs;
-        return {
-          manifest: manifest,
-          version: query.version || 'latest',
-          example: docs.examples.length && docs.examples[0] || false,
-          components: [],
-          title: docs && docs.metadata.title || capitalize(params.slug)
-        };
-      });
+  export default {
+    data() {
+      return {
+        isLoading: true,
+        title: "Carregando"
+      }
     },
 
-    oncreate() {
-      const { manifest } = this.get();
-      import(`../../packages/components/${manifest.info.slug}/example/Example.html`).then(mod => {
+    async oncreate() {
+      const { params } = this.get();
+      NProgress.start();
+
+    
+      await fetch(`api/components/${params.slug}`).then(r => r.json()).then(async manifest => {
+        const docs = manifest && manifest.docs;
+
+        import(`../../packages/components/${manifest.info.slug}/example/Example.html`).then(mod => {
+          NProgress.done();
           this.set({Example: mod.default});
+        }).catch(NProgress.done);
+
+        this.set({
+          isLoading: false,
+          manifest: manifest,
+          example: docs.examples.length && docs.examples[0] || false,
+          title: docs && docs.metadata.title || capitalize(params.slug)
         });
+
+        NProgress.inc();
+      });
     }
   }
 </script>

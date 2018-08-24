@@ -1,0 +1,5 @@
+@import url('../../node_modules/nprogress/nprogress.css');
+
+#nprogress .bar {
+  background: var(--secondary);
+}

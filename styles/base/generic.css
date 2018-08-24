@@ -21,3 +21,8 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+body {
+  transition: opacity 0.2s ease-out;
+  opacity: 1 !important;
+}

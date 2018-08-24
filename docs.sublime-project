@@ -1,9 +1,12 @@
 {
-  "follow_symlinks": true,
 	"folders":
 	[
 		{
 			"path": "."
+		},
+		{
+			"path": ".sapper"
 		}
-	]
+	],
+	"follow_symlinks": true
 }

@@ -7,8 +7,8 @@
 	"start_url": "/",
 	"icons": [
 		{
-			"src": "logo.svg",
-			"sizes": "192x192",
+			"src": "assets/logoMamba.svg",
+			"sizes": "142x56",
 			"type": "image/svg"
 		}
 	]

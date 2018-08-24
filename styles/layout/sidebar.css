@@ -32,8 +32,9 @@
 
   &-logo {
     top: var(--logo-container-top);
-    left: var(--logo-container-left);
-    margin-left: 10px;
+    right: 0;
+    width: var(--logo-container-size);
+    margin-left: 0;
 
     & a {
       background-position: center center;
@@ -41,23 +42,6 @@
       display: inline-block;
       position: relative;
       text-decoration: none;
-
-      & span {
-        color: rgba(0, 109, 11, 0.5);
-        position: absolute;
-        bottom: -15px;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 1.5;
-        left: -2px;
-        right: 0;
-        letter-spacing: -0.5px;
-        font-variant: all-petite-caps;
-        text-align: center;
-        display: hidden;
-      }
-
-      width: var(--logo-container-size);
       height: var(--logo-svg-height);
     }
   }

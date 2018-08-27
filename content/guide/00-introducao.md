@@ -9,7 +9,7 @@ O Mamba SDK permite o desenvolvimento de aplicativos para o POS da Stone, habili
 
 > Antes de começar a usar o Mamba SDK, é preciso ter uma boa base de conhecimento de [JavaScript ES2015](http://babeljs.io/docs/learn-es2015/).
 
-O Mamba SDK, utiliza o <span style="color:#a03636">**[Svelte](https://svelte.technology/guide)**</span> como framework UI, isso quer dizer que não usamos tempo de execução como no React, Angular, Vue, entre outros. Isso significa que os componentes são compilados para um JavaScript ideal após o build.
+O Mamba SDK, utiliza o <span style="color:#a03636">**[Svelte](https://svelte.technology/guide)**</span> como framework UI, isso quer dizer que não usamos tempo de execução como no React, Angular, Vue, entre outros. Isso significa que os componentes são compilados para um JavaScript ideal durante o build.
 
 ### Entendendo um componente em Mamba SDK
 

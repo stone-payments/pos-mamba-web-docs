@@ -16,10 +16,9 @@ Mamba Web
 
 ### Pacotes
 
-O diretório ```packages``` é onde todos os módulos do Mamba são mantidos. Cada subdiretório possui seu pacote NPM.
-Você pode instalar cada pacote separadamente no modelo em que você está trabalhando.
+O diretório ```packages``` é onde todos os módulos do Mamba são mantidos. Cada subdiretório possui seu pacote NPM. Portanto, é possível instalar cada pacote separadamente no modelo em que está trabalhando.
 
-Pode parecer algo como::
+Pode parecer algo como:
 
 ```markup
 └─ packages

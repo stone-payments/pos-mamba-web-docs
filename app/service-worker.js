@@ -1,4 +1,5 @@
 import { assets, shell, routes, timestamp } from './manifest/service-worker.js';
+import NProgress from 'nprogress';
 
 const ASSETS = `cache${timestamp}`;
 
@@ -62,6 +63,7 @@ self.addEventListener('fetch', event => {
           cache.put(event.request, response.clone());
           return response;
         } catch(err) {
+          NProgress.done();
           const response = await cache.match(event.request);
           if (response) return response;
 

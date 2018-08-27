@@ -94,6 +94,13 @@
         });
 
         NProgress.inc();
+      })
+      .catch((e) => {
+        NProgress.done();
+        this.set({
+          isLoading: false,
+          manifest: { error: "Falha ao carregar o component." }
+        });
       });
     }
   }
@@ -104,9 +111,13 @@
   
   /* Check if table have four or more columns to use this class below */
   :global(table) thead th {
-    background-color: color-mod(black alpha(0.028));
+    background-color: color-mod(black alpha(0.03));
     font-family: var(--code-font);
-    border-top: 1px solid color-mod(#ebf0ed alpha(50%));
+    border-top: 1px solid color-mod(#ebf0ed alpha(60%));
+
+    &:first-child {
+      border-radius: 4px 0 0 0;
+    }
   }
 
   :global(table) tr td:nth-child(3) {

@@ -56,6 +56,13 @@
         });
 
         NProgress.done();
+      })
+      .catch((e) => {
+        NProgress.done();
+        this.set({
+          isLoading: false,
+          manifest: { error: "Ocorreu um erro ao carregar a página. Tente novamente." }
+        });
       });
     }
   }

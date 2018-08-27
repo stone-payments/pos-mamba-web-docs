@@ -20,7 +20,7 @@ Um componente é um arquivo html muito semelhante ao Vue.js. Ou seja, ele é um 
 
 ### 1. Crie um novo projeto
 
-Para iniciar, execute no seu terminal de comando o seguinte comando:
+Para iniciar, execute o seguinte comando:
 ```bash
 git clone https://github.com/stone-payments/pos-mamba-websdk-template.git <my-app>
 cd <my-app>

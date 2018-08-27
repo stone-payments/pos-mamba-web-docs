@@ -6,7 +6,6 @@ bundle.stats.json
 result.xml
 npm-debug.log
 yarn-error.log
-yarn.lock
 
 ## Directories
 log/

@@ -3,31 +3,29 @@
   @description: Test
 -->
 
-## O que é o MAMBA?
+O Mamba SDK permite o desenvolvimento de aplicativos para o POS da Stone, habilitando uma experiência para o usuário que vai além de apenas pagamento. O Mamba é um sistema e framework desenvolvido dentro da Stone especificamente para POS e nosso Mamba SDK faz a abstração das funções do POS, facilitando o desenvolvimento de aplicativos em linguagem Web.
 
-Mamba é um sistema e framework desenvolvido dentro da Stone especificamente para o POS (Ponto de Venda)!
-Com ele você pode utilizar a programação web para desenvolver aplicativos utilizando tecnologias web, de acordo com as necessidades do cliente.
+> É necessário ter o [Node.js](https://nodejs.org/en/) instalado e ter alguma familiaridade com a linha de comando
 
-> Você precisará ter o [Node.js](https://nodejs.org/en/) instalado e ter alguma familiaridade com a linha de comando
+> Antes de começar a usar o Mamba SDK, é preciso ter uma boa base de conhecimento de [JavaScript ES2015](http://babeljs.io/docs/learn-es2015/).
 
-> Antes de tentar ou começar a usar o Mamba Web, é necessária uma boa base de conhecimento do [JavaScript ES2015](http://babeljs.io/docs/learn-es2015/).
-
-O Mamba Web SDK, usa o <span style="color:#a03636">**[Svelte](https://svelte.technology/guide)**</span> como framework UI, isto quer dizer que não usamos tempo de execução como outros frameworks como React, Angular, Vue, etc. Seu componente é convertido para um JavaScript ideal durante o build.
+O Mamba SDK, utiliza o <span style="color:#a03636">**[Svelte](https://svelte.technology/guide)**</span> como framework UI, isso quer dizer que não usamos tempo de execução como no React, Angular, Vue, entre outros. Isso significa que os componentes são compilados para um JavaScript ideal após o build.
 
 ### Entendendo um componente em Mamba SDK
 
-Um componente é um nada mais que um  arquivo html muito semelhante ao Vue.js. Um componente é um bloco de código auto-suficiente e reutilizável que encapsula marcações, estilos e comportamentos que estão juntos.
+Um componente é um arquivo html muito semelhante ao Vue.js. Ou seja, ele é um bloco de código autossuficiente e reutilizável que encapsula marcações, estilos e comportamentos que estão juntos.
 
 
 ## Começando
 
 ### 1. Crie um novo projeto
 
+Para iniciar, execute no seu terminal de comando o seguinte comando:
 ```bash
 git clone https://github.com/stone-payments/pos-mamba-websdk-template.git <my-app>
 cd <my-app>
 ```
-Quando isso for feito, instale as dependências do projeto. É recomendado que você use `Yarn` para gerenciamento de dependências determinísticas, mas `npm install` será suficiente.
+Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o `Yarn` para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
 
 ```bash
 yarn  # Instala dependências do projeto (ou `npm install`)
@@ -41,26 +39,26 @@ Depois de concluir a etapa de instalação, você está pronto para iniciar o pr
 yarn start # Inicie o ambiente de desenvolvimento
 ```
 
-### 3. Usando alguns componentes do Mamba
+### 3. Usando alguns componentes da SDK
 
 **Para componentes Web, instale o componente/pacote que deseja usar no projeto:**
 
 ```bash
-yarn install @mambasdk/buttom # Componente do botão
+yarn install @mamba/buttom # Componente do botão
 
 
-# Se quiser usar o dialog por ex:
+# Se quiser usar o dialog por exemplo:
 
-yarn install @mambasdk/dialog
+yarn install @mamba/dialog
 ```
 
 
 
-**Para importar o componente instalado, pode seguir uma das formas abaixo:**
+**Para importar o componente instalado, basta seguir uma das formas abaixo:**
 
 ```js
 <script>
-  import Button from '@mambasdk/buttom';
+  import Button from '@mamba/buttom';
 
   export default {
     components: { Button }
@@ -72,24 +70,24 @@ yarn install @mambasdk/dialog
 <script>
   export default {
     components: {
-      Button: '@mambasdk/buttom'
+      Button: '@mamba/buttom'
     }
   }
 </script>
 ```
 
-#### Para modules da API nativa:
+#### Para módulos da API nativa:
 
 ```bash
-yarn install @mambasdk/pos
+yarn install @mamba/pos
 ```
 
-Agora só importar o módulo que deseja, sempre descontruindo objeto do pacote `@mambasdk/native`:
+Agora é só importar o módulo desejado, sempre descontruindo objeto do pacote `@mamba/native`:
 
 ```js
-import System from '@mambasdk/pos/system.js'
+import System from '@mamba/pos/system.js'
 ```
 
 ### Compatibilidade
 
-O Mamba foi desenvolvido para rodar com o Safari 5.1+, que é a versão do navegador no POS.
+O Mamba SDK foi desenvolvido para o [WebKit 534.48.3](https://developers.whatismybrowser.com/useragents/explore/layout_engine_name/webkit/1785) que é equivalente ao Safari 5.1.

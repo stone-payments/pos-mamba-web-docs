@@ -18,7 +18,8 @@
     "lint:js": "eslint \"*.js\" \"{tools,packages,docs-sapper}/**/*.{js,html,svelte}\"",
     "format": "npm run format:css; npm run format:js",
     "format:js": "prettier --loglevel silent --write \"*.js\" \"{tools,packages,docs-sapper}/**/*.js\" && eslint --fix \"*.js\" \"{tools,packages,docs-sapper}/**/*.{js,html,svelte}\"",
-    "format:css": "prettier --loglevel silent --write \"packages/**/*.{css,pcss}\""
+    "format:css": "prettier --loglevel silent --write \"packages/**/*.{css,pcss}\"",
+    "clean:deployments": "chmod +x scripts/now_clean.sh && scripts/now_clean.sh"
   },
   "husky": {
     "hooks": {

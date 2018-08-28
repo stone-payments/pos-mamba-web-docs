@@ -1,19 +1,42 @@
-@custom-selector :--button button, .button;
+/*@custom-selector :--button button, .button;
 @custom-selector :--enter :hover, :focus;
 
 :--button {
-  /* styles for your buttons */
-  background: red;
-  z-index: 9;
+
 }
 
 :--button:--enter {
-  background: blue;
 
-  /*
-    hover/focus styles for your button
+}
+*/
 
-    Read more about :enter proposal
-    http://discourse.specifiction.org/t/a-common-pseudo-class-for-hover-and-focus/877
-   */
+
+.row div:not(.range) button:not(.button), .row ~ button:not(.button) {
+  position: relative;
+  vertical-align: top;
+  background-color: #ffffff;yar
+  color: var(--primary);
+  cursor: pointer !important;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-bottom: calc(.375em - 1px);
+  padding-left: .75em;
+  padding-right: .75em;
+  padding-top: calc(.375em - 1px);
+  text-align: center;
+  white-space: nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-block;
+  font-size: 13px;
+  height: 2.25em;
+  line-height: 1.5;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #f7f7f7;
+  }
 }

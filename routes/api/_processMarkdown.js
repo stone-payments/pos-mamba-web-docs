@@ -51,7 +51,7 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
   // ---
   // to define a section and fetch metadatas.
   // If not found, markdown must have a least H1.
-  match = /<!--([\s\S]*(@*:[\s]?).+?)-->\n*#/isu.exec(markdown);
+  match = /<!--\n?([\s\S]*(@*:[\s]?).+?)\n-->/isu.exec(markdown);
 
   // Match/Found H1 heading
   if (match === null) {
@@ -74,6 +74,6 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
         .slice(colonIndex + 1)
         .trim()
   })
-  
+
   return { metadata, content, examples }
 }

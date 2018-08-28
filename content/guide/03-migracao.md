@@ -1,9 +1,8 @@
 <!--
-  @title: Migração 1.0 para 2.0 
+  @title: Migração 1.0 para 2.0
 -->
 
-
-## Migração 1.0 para 2.0  
+## Migração 1.0 para 2.0
 
 Um passo muito importante na transição da SDK 1.0 para a 2.0 é a **Refatoração** dos aplicativos. Isso deve ocorrer porque mudamos o motor utilizado por trás da nossa nova SDK, agora quem é responsável por isso é  o **Svelte**. Desse modo, **não será possível portar o código das aplicações após a atualização da SDK**.
 

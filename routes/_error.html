@@ -2,15 +2,12 @@
 	<title>{status}</title>
 </svelte:head>
 
-<h1>{status}</h1>
-<p>{error.message}</p>
+<h5>{status}</h5>
+<small>{status === 500 ? error.message : 'Ocorreu um erro inesperado.'}</small>
 
 <style>
-	h1 {
+	h5 {
 		display: block;
-		color: var(--primary);
-		font-size: 10vw;
-		font-weight: 300;
 		line-height: 1;
 		margin: 0;
 		text-transform: lowercase;

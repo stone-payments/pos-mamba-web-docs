@@ -2,7 +2,6 @@
   @title: Estrutura de diretórios
 -->
 
-
 ## Estrutura de diretórios
 
 A estrutura de diretórios de nível superior se parece com o diagrama a seguir:

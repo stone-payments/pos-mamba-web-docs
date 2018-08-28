@@ -115,7 +115,7 @@ export default function(path, options = {}) {
         const filename = meta.filename || (lang === 'html' && 'App.html')
         if (filename) {
           if(options.mambaSlub) {
-            prefix = `<div class='source-header'><i class="fas fa-external-link-alt svelte-co345y"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/develop/packages/components/${capitalize(options.mambaSlub)}/example/${filename}'><span>${strings.sourceCode}</span></a></div>`;
+            prefix = `<div class='source-header'><i class="fas fa-external-link-alt"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/develop/packages/components/${capitalize(options.mambaSlub)}/example/${filename}'><span>${strings.sourceCode}</span></a></div>`;
           }else {
             prefix = `<span class='filename'>${filename}</span>`;
           }

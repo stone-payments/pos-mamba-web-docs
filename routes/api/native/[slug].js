@@ -32,8 +32,7 @@ export async function get(req, res, next) {
     
     // Get directory README.md and CHANGELOG.md sections
     const sections = getSections(path.join(packageRoot, Slug), {
-      anchorPath: slug.toLowerCase(),
-      mambaSlub: `native/${slug}`,
+      anchorPath: `native/${slug}`,
       toFile: true,
     });
 

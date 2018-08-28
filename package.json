@@ -81,6 +81,7 @@
     "babel-plugin-prismjs": "^1.0.2",
     "chalk": "^2.4.1",
     "css-loader": "^1.0.0",
+    "docsearch.js": "^2.5.2",
     "eslint": "^5.2.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",

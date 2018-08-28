@@ -67,7 +67,8 @@ article ul {
 }
 
 article p {
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 30px;
 }
 
 article p:first-child {

@@ -283,8 +283,10 @@ export default function(path, options = {}) {
     pattern = /<h2 id="(.+?)">(.+?)<\/h2>/g;
     match;
 
+
     while ((match = pattern.exec(html))) {
       const slug = match[1];
+     
       const title = unescape(
         match[2]
           .replace(/<\/?code>/g, '')
@@ -293,9 +295,9 @@ export default function(path, options = {}) {
             if ($2) return `.${$1}()`
             return `.${$1}`
           }),
-      )
-
-      subsections.push({ slug, title });
+      );
+      
+      if(metadata.title !== title) subsections.push({ slug, title });
     };
 
     // Add class to numbers before h3 Headings

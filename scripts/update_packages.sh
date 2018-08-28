@@ -49,6 +49,7 @@ mv packages/components/* ../.temp/components
 find . -name ._\* -print0 | xargs -0 rm -f
 rm -rf *
 rm -rf .[^.]* ..?*
+rm -rf ../.temp/components/App
 
 mv ../.temp/* ./
 

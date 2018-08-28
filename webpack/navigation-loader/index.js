@@ -20,8 +20,12 @@ function loader (source) {
 
   let packages = [];
 
+  let exclude = ["App"];
+
   packages = directories(opts.localPath).reduce((r, c) => {
-    r.push({ title: c.charAt(0).toUpperCase() + c.slice(1), to: `/${c.toLowerCase()}` });
+    if(!exclude.includes(c)) {
+      r.push({ title: c.charAt(0).toUpperCase() + c.slice(1), to: `/${c.toLowerCase()}` });
+    }
     return r;
   }, []);
   

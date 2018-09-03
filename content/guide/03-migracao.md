@@ -231,7 +231,7 @@ Como exemplo, temos:
 
 ## Rotas
 
-Por fim, temos as rotas. Como sabemos, as rotas são a forma de conexão entre uma página e outra. Em nossa primeira `SDK` esse elemento era especificado da seguinte maneira:
+Por fim, temos as rotas. Como sabemos, as rotas são a forma de conexão entre uma página e outra. Em nossa `SDK 1.0` esse elemento era especificado da seguinte maneira:
 
 ```js
 // pos-mamba-websdk-template/src/router/index.js
@@ -283,11 +283,11 @@ Como pode ser visto, para a administração das rotas foi utilizado o `svelte-ro
 
 ## Considerações Finais
 
-Acredito que podemos agora dizer que é tão difícil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas, ainda assim, deixaremos aqui um repertório de links que podem ajudá-lo:
+Acredito que podemos agora dizer que não é tão difícil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas, ainda assim, deixaremos aqui um repertório de links que podem ajudá-lo:
 
 * [Documentação do Svelte](https://svelte.technology/guide)
 * [Documentação Svelte-Routing](https://github.com/EmilTholin/svelte-routing)
 * [Canal do Discord do Svelte](https://discordapp.com/invite/yy75DKs)
 * [Documentação SDK 1.0](https://stone-payments.github.io/pos-mamba-websdk-docs/docs/components)
 
-Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack]() ou entrar em contato com nosso [Time de Integrações]().
+Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack]() ou entrar em contato com nosso [Time de Integrações](mailto:integracoes@stone.com.br)

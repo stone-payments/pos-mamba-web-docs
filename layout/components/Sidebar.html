@@ -1,6 +1,6 @@
 <div class="SideBar Flex--flex Flex--grow Flex-direction--column Flex-alignItems--flexEnd">
 
-  
+
   <div class="SideBar-logo">
     <a href="/" title="Mamba">
       <img src="assets/logoMamba.svg" alt="mamba SDK">
@@ -16,7 +16,7 @@
   <nav>
 
     {#each $guide_contents as section}
-    
+
     <h1 class="section">
       <a class='{section.slug === $activeGuideSection ? "active": ""}' href='guide#{section.slug}' on:click="select(path.slice(1) !== 'guide')">{section.metadata.title}</a>
     </h1>
@@ -63,7 +63,7 @@
           </ul>
         {/if}
       {/if}
-      
+
     {/each}
   </nav>
 </div>
@@ -81,7 +81,7 @@
     },
 
     oncreate () {
-      console.log('this.get(): ', this.get());
+      // console.log('this.get(): ', this.get());
       const onhashchange = () => {
         this.store.set({ activeGuideSection: window.location.hash.slice( 1 ) });
       };
@@ -101,3 +101,10 @@
     }
   }
 </script>
+
+
+<style>
+  .subsection{
+    margin-left: 5px;
+  }
+</style>

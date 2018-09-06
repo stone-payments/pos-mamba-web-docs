@@ -69,6 +69,7 @@
     "serve-static": "^1.13.2",
     "sourcemap-codec": "^1.4.1",
     "svelte-extras": "^2.0.2",
+    "svelte-page": "^0.0.6",
     "svelte-routing": "^0.4.2"
   },
   "devDependencies": {

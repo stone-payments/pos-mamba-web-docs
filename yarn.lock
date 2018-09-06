@@ -4813,6 +4813,10 @@ is-wsl@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-1.1.0.tgz#1f16e4aa22b04d1336b66188a66af3c600c3a66d"
 
+isarray@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
+
 isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
@@ -6127,6 +6131,12 @@ pad-right@^0.2.2:
   dependencies:
     repeat-string "^1.5.2"
 
+page@^1.8.6:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/page/-/page-1.9.0.tgz#37d7f90e5713eca8d3744938adba78741a1c2782"
+  dependencies:
+    path-to-regexp "~1.2.1"
+
 pako@~1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.6.tgz#0101211baa70c4bca4a0f63f2206e97b7dfaf258"
@@ -6251,6 +6261,12 @@ path-to-regexp@0.1.7:
 path-to-regexp@^2.1.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.2.1.tgz#90b617025a16381a879bc82a38d4e8bdeb2bcf45"
+
+path-to-regexp@~1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.2.1.tgz#b33705c140234d873c8721c7b9fd8b541ed3aff9"
+  dependencies:
+    isarray "0.0.1"
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -8532,6 +8548,12 @@ svelte-loader@^2.10.1, svelte-loader@^2.9.0:
   dependencies:
     loader-utils "^1.1.0"
     svelte-dev-helper "^1.1.7"
+
+svelte-page@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/svelte-page/-/svelte-page-0.0.6.tgz#bc23d1385ba187203462187bb42a6af0e68f3d10"
+  dependencies:
+    page "^1.8.6"
 
 svelte-routing@^0.4.2:
   version "0.4.2"

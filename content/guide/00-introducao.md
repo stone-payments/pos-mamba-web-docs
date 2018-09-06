@@ -82,7 +82,7 @@ yarn install @mamba/dialog
 yarn install @mamba/pos
 ```
 
-Agora é só importar o módulo desejado, sempre descontruindo objeto do pacote `@mamba/native`:
+Agora é só importar o módulo desejado, sempre desconstruindo objeto do pacote `@mamba/native`:
 
 ```js
 import System from '@mamba/pos/system.js'

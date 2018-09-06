@@ -290,4 +290,4 @@ Acredito que podemos agora dizer que não é tão difícil adaptar um aplicativo
 * [Canal do Discord do Svelte](https://discordapp.com/invite/yy75DKs)
 * [Documentação SDK 1.0](https://stone-payments.github.io/pos-mamba-websdk-docs/docs/components)
 
-Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack]() ou entrar em contato com nosso [Time de Integrações](mailto:integracoes@stone.com.br)
+Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack](https://join.slack.com/t/stone-mambaweb/shared_invite/enQtMzczMDc0MjM0Mzc1LTJmYTg4ZWQwNmNmZjQ4MjcxNzk2ODU0NjQ4MjMxMzdiYjFmMzIzNzk2MTkyMDhiOGNjZDZmM2E0NDZlNDdlYjg) ou entrar em contato com nosso [Time de Integrações](mailto:integracoes@stone.com.br)

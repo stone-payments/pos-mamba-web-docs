@@ -16,13 +16,13 @@ export default [
     to: '/native',
     icon: 'fas fa-microchip',
     submenu: [
-      { title: 'Cookie', to: '/cookie' },
       { title: 'Http', to: '/http' },
       { title: 'Keyboard', to: '/keyboard' },
       { title: 'Merchant', to: '/merchant' },
       { title: 'Payment', to: '/payment' },
       { title: 'Printer', to: '/printer' },
       { title: 'System', to: '/system' },
+      { title: 'Storage', to: '/storage' },
     ],
   },
 ]

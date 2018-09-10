@@ -135,7 +135,7 @@ this.$refs.myComponentRef.innerText = myText;
 this.refs.myComponentRef.innerText = myText;
 ```
 
-Aproveitando que falamos de `refs` e manipulação de elementos no `DOM`, é interessante também introduzi-los a linguagem de template do **Svelte**. Como vimos no exemplo acima, na versão `1.0` era necessário criar uma referência para inserir uma variável do *JavaScript* dentro de um elemento no `DOM`. Isso atualmente pode ser feito de modo muito mais fácil (desde que essa variável esteja na propriedade `data()`):
+Aproveitando que falamos de `refs` e manipulação de elementos no `DOM`, é interessante também introduzi-los a linguagem de template do **Svelte**. Como vimos no exemplo acima, na versão `1.0` era necessário criar uma referência para inserir uma variável do *JavaScript* dentro de um elemento no `DOM`. Isso atualmente pode ser feito de modo muito mais fácil (desde que essa variável esteja na propriedade `data()`:
 
 ```js
 
@@ -153,8 +153,8 @@ export default {
 }
 ```
 
-O mais interessante é que dessa maneira a propriedade do componente se conecta `two way binding`, ou seja caso a propriedade `myText` se altere, o texto dentro de `<p>` se altera no mesmo momento. Isso facilita muito, não? 
-Além desta funcionalidade, a linguagem de template do **Svelte** possui diversas outras funcionalidades como: iterações, slots e propriedades computadas, sendo assim recomendamos fortemente que se acesse o guia de introdução deles clicando [aqui]('https://svelte.technology/guide')
+O mais interessante é que dessa maneira a propriedade do componente se conecta [`two way data binding`](https://en.wikipedia.org/wiki/Data_binding), ou seja caso a propriedade `myText` se altere, o texto dentro de `<p>` se altera no mesmo momento. Isso facilita muito, não? 
+Além desta funcionalidade, a linguagem de template do **Svelte** possui diversas outras funcionalidades como: iterações, [slots](https://svelte.technology/guide#composing-with-slot) e propriedades computadas, sendo assim recomendamos fortemente que se acesse o guia de introdução deles clicando [aqui]('https://svelte.technology/guide')
 
 Para finalizar, aposto que mesmo após essa explicação, você ainda deve estar se perguntando sobre os componentes visuais de nossa `SDK`. Eles também sofreram modificações, começando pelo nome que não possui mais as iniciais *Mb*, a inclusão de novos componentes e a remoção de alguns que achamos que não fariam mais sentido existir. Para a lista completa dos componentes e suas utilizações [acesse aqui]().
 

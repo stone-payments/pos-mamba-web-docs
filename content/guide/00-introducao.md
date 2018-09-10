@@ -3,7 +3,7 @@
   @description: Test
 -->
 
-O Mamba SDK permite o desenvolvimento de aplicativos para o POS da Stone, habilitando uma experiência para o usuário que vai além de apenas pagamento. O Mamba é um sistema e framework desenvolvido pelo time da Stone com suporte para POS. O Mamba SDK faz a abstração das funções do POS, facilitando o desenvolvimento de aplicativos em linguagem Web e, dessa maneira, simplificamos a inserção de aplicativos nos POS.
+O Mamba SDK permite o desenvolvimento de aplicativos para o POS da Stone, habilitando uma experiência para o usuário que vai além de apenas pagamento. O Mamba é um sistema desenvolvido pelo time da Stone com suporte para POS. O Mamba SDK faz a abstração das funções do POS, facilitando o desenvolvimento de aplicativos em linguagem Web e, dessa maneira, simplificamos a inserção de aplicativos nos POS.
 
 > É necessário ter o [Node.js](https://nodejs.org/en/) instalado e ter alguma familiaridade com a linha de comando
 
@@ -22,10 +22,10 @@ Um componente é um arquivo html muito semelhante ao Vue.js. Ou seja, ele é um 
 
 Para iniciar, execute o seguinte comando:
 ```bash
-git clone https://github.com/stone-payments/pos-mamba-app-template <my-app>
+git clone https://github.com/stone-payments/pos-mamba-app-template.git <my-app>
 cd <my-app>
 ```
-Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o `Yarn` para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
+Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o [`Yarn`](https://yarnpkg.com/pt-BR/) para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
 
 ```bash
 yarn  # Instala dependências do projeto (ou `npm install`)
@@ -82,7 +82,7 @@ yarn install @mamba/dialog
 yarn install @mamba/pos
 ```
 
-Agora é só importar o módulo desejado, sempre descontruindo objeto do pacote `@mamba/native`:
+Agora é só importar o módulo desejado, sempre desconstruindo objeto do pacote `@mamba/native`:
 
 ```js
 import System from '@mamba/pos/system.js'

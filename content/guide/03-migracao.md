@@ -135,7 +135,7 @@ this.$refs.myComponentRef.innerText = myText;
 this.refs.myComponentRef.innerText = myText;
 ```
 
-Aproveitando que falamos de `refs` e manipulação de elementos no `DOM`, é interessante também introduzi-los a linguagem de template do **Svelte**. Como vimos no exemplo acima, na versão `1.0` era necessário criar uma referência para inserir uma variável do *JavaScript* dentro de um elemento no `DOM`. Isso atualmente pode ser feito de modo muito mais fácil (desde que essa variável esteja na propriedade `data()`):
+Aproveitando que falamos de `refs` e manipulação de elementos no `DOM`, é interessante também introduzi-los a linguagem de template do **Svelte**. Como vimos no exemplo acima, na versão `1.0` era necessário criar uma referência para inserir uma variável do *JavaScript* dentro de um elemento no `DOM`. Isso atualmente pode ser feito de modo muito mais fácil (desde que essa variável esteja na propriedade `data()`:
 
 ```js
 
@@ -153,8 +153,8 @@ export default {
 }
 ```
 
-O mais interessante é que dessa maneira a propriedade do componente se conecta `two way binding`, ou seja caso a propriedade `myText` se altere, o texto dentro de `<p>` se altera no mesmo momento. Isso facilita muito, não? 
-Além desta funcionalidade, a linguagem de template do **Svelte** permite possui diversas outras funcionalidades como: iterações, slots e propriedades computadas, sendo assim recomendamos fortemente que se acesse o guia de introdução deles clicando [aqui]('https://svelte.technology/guide')
+O mais interessante é que dessa maneira a propriedade do componente se conecta [`two way data binding`](https://en.wikipedia.org/wiki/Data_binding), ou seja caso a propriedade `myText` se altere, o texto dentro de `<p>` se altera no mesmo momento. Isso facilita muito, não? 
+Além desta funcionalidade, a linguagem de template do **Svelte** possui diversas outras funcionalidades como: iterações, [slots](https://svelte.technology/guide#composing-with-slot) e propriedades computadas, sendo assim recomendamos fortemente que se acesse o guia de introdução deles clicando [aqui]('https://svelte.technology/guide')
 
 Para finalizar, aposto que mesmo após essa explicação, você ainda deve estar se perguntando sobre os componentes visuais de nossa `SDK`. Eles também sofreram modificações, começando pelo nome que não possui mais as iniciais *Mb*, a inclusão de novos componentes e a remoção de alguns que achamos que não fariam mais sentido existir. Para a lista completa dos componentes e suas utilizações [acesse aqui]().
 
@@ -231,7 +231,7 @@ Como exemplo, temos:
 
 ## Rotas
 
-Por fim, temos as rotas. Como sabemos, as rotas são a forma de conexão entre uma página e outra. Em nossa primeira `SDK` esse elemento era especificado da seguinte maneira:
+Por fim, temos as rotas. Como sabemos, as rotas são a forma de conexão entre uma página e outra. Em nossa `SDK 1.0` esse elemento era especificado da seguinte maneira:
 
 ```js
 // pos-mamba-websdk-template/src/router/index.js
@@ -266,11 +266,11 @@ Como pode ser visto, para a administração das rotas foi utilizado o `svelte-pa
 
 ## Considerações Finais
 
-Acredito que podemos agora dizer que é tão difícil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas, ainda assim, deixaremos aqui um repertório de links que podem ajudá-lo:
+Acredito que podemos agora dizer que não é tão difícil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas, ainda assim, deixaremos aqui um repertório de links que podem ajudá-lo:
 
 * [Documentação do Svelte](https://svelte.technology/guide)
 * [Documentação Svelte-Page](https://github.com/kaisermann/svelte-page)
 * [Canal do Discord do Svelte](https://discordapp.com/invite/yy75DKs)
 * [Documentação SDK 1.0](https://stone-payments.github.io/pos-mamba-websdk-docs/docs/components)
 
-Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack]() ou entrar em contato com nosso [Time de Integrações]().
+Caso tenha alguma dúvida sinta-se à vontade para nos procurar em nosso canal do [Slack](https://join.slack.com/t/stone-mambaweb/shared_invite/enQtMzczMDc0MjM0Mzc1LTJmYTg4ZWQwNmNmZjQ4MjcxNzk2ODU0NjQ4MjMxMzdiYjFmMzIzNzk2MTkyMDhiOGNjZDZmM2E0NDZlNDdlYjg) ou entrar em contato com nosso [Time de Integrações](mailto:integracoes@stone.com.br)

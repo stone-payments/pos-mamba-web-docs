@@ -26,3 +26,7 @@ body {
   transition: opacity 0.2s ease-out;
   opacity: 1 !important;
 }
+
+ol,ul {
+  padding-left: 1.2em;
+}

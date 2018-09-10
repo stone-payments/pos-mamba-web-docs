@@ -251,42 +251,25 @@ export default new MbRouter({
 
 ```
 
-Agora, deve-se especificar as rotas diretamente no componente de acesso da aplicação `App.html`, dessa forma:
+Agora, deve-se especificar as rotas diretamente no arquivo `routes.js`, dessa forma:
 
 ```js
-//  pos-mamba-app-template/src/App.html
+//  pos-mamba-app-template/src/routes.js
+import Example from '../routes/Example.html'
 
-<App>
-  <Route exact path="/" component={Home}/>
-  <Route path="/otherpage/:payload" component={OtherPage}/>
-</App>
+export default {
+  '/': Example,
+}
 
-<script>
-  import Home from './routes/Home.html';
-  import OtherPage from './routes/OtherPage.html';
-
-  export default {
-    components: {
-      App: '@mambasdk/app',
-      Route: 'svelte-routing/Route',
-    },
-    data() {
-      return {
-        Home,
-        OtherPage,
-      };
-    },
-  };
-</script>
 ```
-Como pode ser visto, para a administração das rotas foi utilizado o `svelte-routing`, caso deseje saber mais sobre como ele funciona [clique aqui](https://github.com/EmilTholin/svelte-routing).
+Como pode ser visto, para a administração das rotas foi utilizado o `svelte-page`, caso deseje saber mais sobre como ele funciona [clique aqui](https://github.com/kaisermann/svelte-page).
 
 ## Considerações Finais
 
 Acredito que podemos agora dizer que é tão difícil adaptar um aplicativo feito na primeira versão da SDK para a mais atual, não é? Mas, ainda assim, deixaremos aqui um repertório de links que podem ajudá-lo:
 
 * [Documentação do Svelte](https://svelte.technology/guide)
-* [Documentação Svelte-Routing](https://github.com/EmilTholin/svelte-routing)
+* [Documentação Svelte-Page](https://github.com/kaisermann/svelte-page)
 * [Canal do Discord do Svelte](https://discordapp.com/invite/yy75DKs)
 * [Documentação SDK 1.0](https://stone-payments.github.io/pos-mamba-websdk-docs/docs/components)
 

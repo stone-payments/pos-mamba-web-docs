@@ -13,7 +13,7 @@
         </h1>
         <div class="code-block code-block-container install-block">
           <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
-            <code class="language-bash">yarn add <span class="token string">{manifest.info.package.name}</span>
+            <code class="language-bash">npm install <span class="token string">{manifest.info.package.name}</span>
               <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
             </code>
           </pre>
@@ -70,7 +70,7 @@
 
 <style>
   @import '../../styles/shared/colors.css';
-  
+
   /* Check if table have four or more columns to use this class below */
   :global(table) thead th {
     background-color: color-mod(black alpha(0.028));
@@ -85,11 +85,11 @@
   }
 
   :global(article) :global(table) {
-    
+
     tbody {
       font-size: 80%;
     }
-    
+
     tr td {
       font-size: 14px;
       font-family: var(--code-font);
@@ -126,14 +126,14 @@
     line-height: 3.4rem;
     pointer-events: all;
   }
-  
+
   section :global(.code-block) {
     position: relative;
   }
 
   section :global(.filename) {
     font-size: 13px;
-    font-weight: 500; 
+    font-weight: 500;
     padding: 6px 12px 8px 7px;
     display: inline-block;
     top: 0;
@@ -202,7 +202,7 @@
       margin-top: 30px;
     }
   }
-  
+
   :global(section) {
     :global(h2) + :global(h3) {
       margin-top: 0 !important;

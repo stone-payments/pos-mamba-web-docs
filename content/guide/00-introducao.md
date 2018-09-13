@@ -28,7 +28,7 @@ cd <my-app>
 Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o [`Yarn`](https://yarnpkg.com/pt-BR/) para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
 
 ```bash
-yarn  # Instala dependências do projeto (ou `npm install`)
+npm install  # Instala dependências do projeto (ou `npm install`)
 ```
 
 ### 2. Rode o projeto
@@ -36,7 +36,7 @@ yarn  # Instala dependências do projeto (ou `npm install`)
 Depois de concluir a etapa de instalação, você está pronto para iniciar o projeto!
 
 ```bash
-yarn start # Inicie o ambiente de desenvolvimento
+npm run start # Inicie o ambiente de desenvolvimento
 ```
 
 ### 3. Usando alguns componentes da SDK
@@ -44,12 +44,12 @@ yarn start # Inicie o ambiente de desenvolvimento
 **Para componentes Web, instale o componente/pacote que deseja usar no projeto:**
 
 ```bash
-yarn install @mamba/buttom # Componente do botão
+npm install @mamba/buttom # Componente do botão
 
 
 # Se quiser usar o dialog por exemplo:
 
-yarn install @mamba/dialog
+npm install @mamba/dialog
 ```
 
 
@@ -79,7 +79,7 @@ yarn install @mamba/dialog
 #### Para módulos da API nativa:
 
 ```bash
-yarn install @mamba/pos
+npm install @mamba/pos
 ```
 
 Agora é só importar o módulo desejado, sempre desconstruindo objeto do pacote `@mamba/native`:

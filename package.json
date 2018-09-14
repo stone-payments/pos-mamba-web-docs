@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "sapper dev",
-    "build": "npm run pull:packages && cross-env NODE_ENV=production sapper build",
+    "build": "cross-env NODE_ENV=production sapper build",
     "export": "sapper export",
     "start": "node build",
     "now-start": "node scripts/slack_webhook.js && node build",

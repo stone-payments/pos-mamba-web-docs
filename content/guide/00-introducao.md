@@ -20,6 +20,26 @@ Um componente é um arquivo html muito semelhante ao Vue.js. Ou seja, ele é um 
 
 ### 1. Crie um novo projeto
 
+#### Utilizando a CLI
+
+```bash
+# Instale a CLI globalmente
+npm i -g @mamba/cli
+
+# Crie um novo aplicativo em 'my-mamba-app'
+mamba app new my-mamba-app
+
+? Name: My Mamba App
+? Version: 0.0.1
+? Description: My new Mamba app
+
+# Entre no diretório do App.
+cd my-mamba-app
+
+```
+
+#### Manualmente
+ 
 Para iniciar, execute o seguinte comando:
 ```bash
 git clone https://github.com/stone-payments/pos-mamba-app-template.git <my-app>
@@ -31,20 +51,26 @@ Depois é necessário instalar as dependências do projeto. É recomendado que s
 yarn  # Instala dependências do projeto (ou `npm install`)
 ```
 
-### 2. Rode o projeto
+## Desenvolvendo
 
 Depois de concluir a etapa de instalação, você está pronto para iniciar o projeto!
 
 ```bash
-yarn start # Inicie o ambiente de desenvolvimento
+# Utilizando a CLI
+
+mamba app start
+
+# Manualmente
+
+yarn start
 ```
 
-### 3. Usando alguns componentes da SDK
+### Usando alguns componentes da SDK
 
 **Para componentes Web, instale o componente/pacote que deseja usar no projeto:**
 
 ```bash
-yarn install @mamba/buttom # Componente do botão
+yarn install @mamba/button # Componente do botão
 
 
 # Se quiser usar o dialog por exemplo:
@@ -52,31 +78,26 @@ yarn install @mamba/buttom # Componente do botão
 yarn install @mamba/dialog
 ```
 
-
-
 **Para importar o componente instalado, basta seguir uma das formas abaixo:**
 
 ```js
 <script>
-  import Button from '@mamba/buttom';
+  import Button from '@mamba/button';
 
   export default {
     components: { Button }
   }
-</script>
-
-// ou 
 
 <script>
   export default {
     components: {
-      Button: '@mamba/buttom'
+      Button: '@mamba/button'
     }
   }
 </script>
 ```
 
-#### Para módulos da API nativa:
+### Para módulos da API nativa:
 
 ```bash
 yarn install @mamba/pos
@@ -87,6 +108,38 @@ Agora é só importar o módulo desejado, sempre desconstruindo objeto do pacote
 ```js
 import System from '@mamba/pos/system.js'
 ```
+
+## Finalizando
+
+### Testando no Mamba Browser
+
+Apesar do nosso `POS Virtual` ser um excelente modo de testar rapidamente as aplicações, ele não simula o comportamento ideal do `POS`, já que este utiliza a versão do `Webkit` do seu navegador. Sendo assim, para um teste fiel é recomendado que se utilize o `Mamba Browser` ou faça `deploy` da aplicação direto no `POS`.
+
+(Linux)[https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage]
+
+(Windows)[https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip]
+
+### Build
+
+Antes de enviar sua aplicação para testar no `POS` é necessário realizar o `build` desta. Para isso, em seu terminal execute:
+
+```bash
+# Utilizando a CLI
+mamba app build
+
+# Manualmente
+yarn build
+
+```
+### Deploy
+
+Para testar suas aplicações em seu POS você deve primeiro ter o Aplicativo de Developer instalado e antes ter realizado o `build` da sua aplicação. Após, digite no terminal do seu computador:
+
+```bash
+yarn start:http-server
+
+```
+Após o servidor iniciar, abra o aplicativo de developer em seu `POS` e digite o IP local da máquina. Após alguns segundos o seu app será automaticamente baixado e aparecerá na lista de aplicativos instalados do Aplicativo de Developer.
 
 ### Compatibilidade
 

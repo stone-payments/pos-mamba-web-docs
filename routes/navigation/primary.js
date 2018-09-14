@@ -16,6 +16,7 @@ export default [
     to: '/native',
     icon: 'fas fa-microchip',
     submenu: [
+      { title: 'App', to: '/app'},
       { title: 'Http', to: '/http' },
       { title: 'Keyboard', to: '/keyboard' },
       { title: 'Merchant', to: '/merchant' },

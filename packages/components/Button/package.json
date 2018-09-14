@@ -1,0 +1,26 @@
+{
+  "name": "@mamba/button",
+  "version": "1.0.0-prealpha.9",
+  "svelte": "src/index.js",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "author": "Stone Payments - Mamba Team",
+  "license": "Apache-2.0",
+  "contributors": [
+    "Christian Kaisermann <christian.kaisermann@stone.com.br>",
+    "Pedro Lancelloti Kaisermann <pedro.lancelloti@stone.com.br>"
+  ],
+  "scripts": {
+    "start": "rollup -c ../../../tools/rollup/config.component.watch.js -w",
+    "build": "exit 0",
+    "build:dev": "exit 0"
+  },
+  "devDependencies": {
+    "@mamba/icon": "^1.0.0-prealpha.9"
+  },
+  "dependencies": {
+    "@mamba/styles": "^1.0.0-prealpha.9"
+  }
+}

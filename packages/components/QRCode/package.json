@@ -1,0 +1,23 @@
+{
+  "name": "@mamba/qrcode",
+  "version": "1.0.0-prealpha.9",
+  "svelte": "src/index.js",
+  "files": [
+    "src/"
+  ],
+  "author": "Stone Payments - Mamba Team",
+  "contributors": [
+    "Pedro Lancelloti <pedro.lancelloti@stone.com.br>",
+    "Christian Kaisermann <christian.kaisermann@stone.com.br>"
+  ],
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "rollup -c ../../../tools/rollup/config.component.watch.js -w",
+    "build": "exit 0",
+    "build:dev": "exit 0"
+  },
+  "dependencies": {
+    "@mamba/styles": "^1.0.0-prealpha.9",
+    "qrious": "^4.0.2"
+  }
+}

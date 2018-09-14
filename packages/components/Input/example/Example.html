@@ -1,0 +1,97 @@
+<div class="container">
+
+  <h4>Padrão </h4>
+  <div class="row">
+    <Input />
+  </div>
+
+  <h4>Alfanúmerico</h4>
+  <div class="row">
+    <Input alphanumeric />
+  </div>
+
+  <h4>Autofocado</h4>
+  <div class="row">
+    <Input autofocus/>
+  </div>
+
+  <h4>Senha</h4>
+  <div class="row">
+    <Input type="password" />
+  </div>
+
+  <h4>Senha com Visibilidade</h4>
+  <div class="row">
+    <Input type="password" readable />
+  </div>
+
+  <h4>Título</h4>
+  <div class="row">
+    <Input label="Input"/>
+  </div>
+
+  <h4>Custom colored labeled input</h4>
+  <div class="row">
+    <Input bgColor="#A8A9AD" textColor="white" label="Text"/>
+  </div>
+
+  <h4>Validated input</h4>
+  <div class="row">
+    <Input
+      type="password"
+      validate={validate}
+      on:valid="console.log('VALIDO')"
+      on:invalid="console.log('INVALIDO')"
+    />
+  </div>
+</div>
+
+<style>
+  :global(body) {
+    background-color: #ddd;
+  }
+
+  h4 {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+
+  .container {
+    max-width: 80%;
+    width: 700px;
+    margin: 80px auto;
+  }
+
+  .row {
+    margin: 20px 0px 20px 0px;
+    width: 60%;
+  }
+</style>
+
+<script>
+  export default {
+    components: {
+      Input: '../src',
+    },
+    data() {
+      return {
+        validate(Input) {
+          const { value } = Input.get();
+          let error;
+          let message;
+
+          if (value !== '2') {
+            error = true;
+            message = 'Senha inválida';
+          }
+
+          return {
+            error,
+            message,
+          };
+        },
+      };
+    },
+  };
+</script>

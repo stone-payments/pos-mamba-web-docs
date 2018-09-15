@@ -109,9 +109,11 @@ import System from '@mamba/pos/system.js'
 
 Apesar do nosso `POS Virtual` ser um excelente modo de testar rapidamente as aplicações, ele não simula o comportamento ideal do `POS`, já que este utiliza a versão do `Webkit` do seu navegador. Sendo assim, para um teste fiel é recomendado que se utilize o `Mamba Browser` ou faça `deploy` da aplicação direto no `POS`.
 
-(Linux)[https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage]
+[Baixar a versão mais atual](https://github.com/stone-payments/pos-mamba-browser/releases/)
 
-(Windows)[https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip]
+[Linux](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage)
+
+[Windows](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip)
 
 ### Build
 

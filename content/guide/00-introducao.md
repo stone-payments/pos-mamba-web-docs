@@ -111,9 +111,9 @@ Apesar do nosso `POS Virtual` ser um excelente modo de testar rapidamente as apl
 
 [Baixar a versão mais atual](https://github.com/stone-payments/pos-mamba-browser/releases/)
 
-[Linux](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage)
+[Linux-0.4](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage)
 
-[Windows](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip)
+[Windows-0.4](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip)
 
 ### Build
 

@@ -6,8 +6,26 @@ import serve from 'serve-static';
 import compression from 'compression';
 import { Store } from 'svelte/store.js';
 import { manifest } from './manifest/server.js';
+import http from 'http';
+import https from 'https';
+import fs from 'fs';
 
 dotenv.config();
+
+const privateKey = fs.readFileSync('/home/deployusr/cert/_.stone.com.br.key');
+
+const certificate = fs.readFileSync('/home/deployusr/cert/_.stone.com.br.crt');
+
+const ca = [
+	     fs.readFileSync('/home/deployusr/cert/gd_bundle-g2-g1.crt'),
+	     fs.readFileSync('/home/deployusr/cert/be94a68b8af575bd.crt')
+	   ]
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
+}
 
 const app = express();
 
@@ -24,4 +42,12 @@ app
       },
     }),
   )
-  .listen(process.env.PORT);
+
+const httpServer = http.createServer(app);
+
+const httpsServer = https.createServer(credentials, app);
+
+
+httpServer.listen(80);
+
+httpsServer.listen(443);

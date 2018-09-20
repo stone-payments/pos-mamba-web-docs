@@ -20,7 +20,7 @@ function loader (source) {
 
   let packages = [];
 
-  let exclude = ["App"];
+  let exclude = [];
 
   packages = directories(opts.localPath).reduce((r, c) => {
     if(!exclude.includes(c)) {
@@ -28,7 +28,7 @@ function loader (source) {
     }
     return r;
   }, []);
-  
+
   return `module.exports = ${JSON.stringify(packages)};`;
 };
 

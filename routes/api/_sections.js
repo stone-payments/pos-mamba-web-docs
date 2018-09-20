@@ -66,7 +66,7 @@ export const demos = new Map()
 */
 export default function(path, options = {}) {
   let read = [path];
-  
+
   if(!options.toFile) {
     try {
       read = fs.readdirSync(path);
@@ -84,7 +84,7 @@ export default function(path, options = {}) {
     const filePath = (options.toFile ? '' : `${path}/`).concat(file);
 
     const markdown = fs.readFileSync(filePath, 'utf-8');
- 
+
     const { content, metadata, examples } = processMarkdown(markdown, `${options.examplePath}`, options.examples);
 
     const groups = [];
@@ -97,7 +97,7 @@ export default function(path, options = {}) {
       source = source.replace(/^ +/gm, match =>
         match.split('    ').join('\t'),
       )
-        
+
       const lines = source.split('\n');
 
       const meta = extractMeta(lines[0], lang);
@@ -112,7 +112,7 @@ export default function(path, options = {}) {
 
       if (meta) {
         source = lines.slice(1).join('\n')
-        const filename = meta.filename || (lang === 'html' && 'App.html')
+        const filename = meta.filename || (lang === 'html')
         if (filename) {
           if(options.mambaSlub) {
             prefix = `<div class='source-header'><i class="fas fa-external-link-alt"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/develop/packages/components/${capitalize(options.mambaSlub)}/example/${filename}'><span>${strings.sourceCode}</span></a></div>`;
@@ -157,7 +157,7 @@ export default function(path, options = {}) {
           require(`prismjs/components/prism-${language}`),
         )
       }
-        
+
       // Apply Prism js to every source code
       $elements.each(function(index, element) {
         let $element = $(this);
@@ -211,7 +211,7 @@ export default function(path, options = {}) {
         Prism.hooks.run('after-highlight', env);
         Prism.hooks.run('complete', env);
       })
-        
+
       let renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
 
       if(examples.length) {
@@ -245,7 +245,7 @@ export default function(path, options = {}) {
     }
 
     const hashes = {}
-      
+
     groups.forEach(group => {
 
       const main = group.blocks[0];
@@ -286,7 +286,7 @@ export default function(path, options = {}) {
 
     while ((match = pattern.exec(html))) {
       const slug = match[1];
-     
+
       const title = unescape(
         match[2]
           .replace(/<\/?code>/g, '')
@@ -296,7 +296,7 @@ export default function(path, options = {}) {
             return `.${$1}`
           }),
       );
-      
+
       if(metadata.title !== title) subsections.push({ slug, title });
     };
 
@@ -308,12 +308,12 @@ export default function(path, options = {}) {
       'counter',
       'h3'
     );
-      
+
     // Add Span to tables td content to allow customization
     output = insertTag(/<td>(.+?)<\/td>/gm, output, 'span');
 
     output = output.replace(/@@(\d+)/g, (m, id) => hashes[id] || m);
-      
+
     const paramsPattern = /<h2 (id="par-metros")>/;
 
     let paramsIndex = output.search(paramsPattern);

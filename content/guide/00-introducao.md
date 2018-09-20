@@ -27,7 +27,7 @@ Um componente é um arquivo html muito semelhante ao Vue.js. Ou seja, ele é um 
 npm i -g @mamba/cli
 
 # Crie um novo aplicativo em 'my-mamba-app'
-mamba app new my-mamba-app
+mamba new app my-mamba-app
 
 ? Name: My Mamba App
 ? Version: 0.0.1
@@ -130,7 +130,7 @@ yarn build
 Para testar suas aplicações em seu POS você deve primeiro ter o Aplicativo de Developer instalado e antes ter realizado o `build` da sua aplicação. Após, digite no terminal do seu computador:
 
 ```bash
-yarn start:http-server
+yarn serve
 
 ```
 Após o servidor iniciar, abra o aplicativo de developer em seu `POS` e digite o IP local da máquina. Após alguns segundos o seu app será automaticamente baixado e aparecerá na lista de aplicativos instalados do Aplicativo de Developer.

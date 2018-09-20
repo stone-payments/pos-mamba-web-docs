@@ -1,10 +1,7 @@
 {
   "name": "@mamba/dialog",
-  "version": "1.0.0-prealpha.9",
-  "svelte": "src/index.js",
-  "files": [
-    "src/"
-  ],
+  "version": "1.0.0-rc.3",
+  "svelte": "Dialog.html",
   "author": "Stone Payments - Mamba Team",
   "contributors": [
     "Christian Kaisermann <christian.kaisermann@stone.com.br>"
@@ -16,10 +13,10 @@
     "build:dev": "exit 0"
   },
   "devDependencies": {
-    "@mamba/sprite": "^1.0.0-prealpha.9"
+    "@mamba/sprite": "^1.0.0-rc.3"
   },
   "dependencies": {
-    "@mamba/styles": "^1.0.0-prealpha.9",
-    "@mamba/icon": "^1.0.0-prealpha.9"
+    "@mamba/styles": "^1.0.0-rc.3",
+    "@mamba/icon": "^1.0.0-rc.3"
   }
 }

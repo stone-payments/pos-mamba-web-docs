@@ -45,7 +45,7 @@ Para iniciar, execute o seguinte comando:
 git clone https://github.com/stone-payments/pos-mamba-app-template.git <my-app>
 cd <my-app>
 ```
-Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o [`Yarn`](https://yarnpkg.com/pt-BR/) para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
+Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o [`NPM`](https://docs.npmjs.com/) para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
 
 ```bash
 npm install  # Instala dependências do projeto (ou `npm install`)
@@ -64,7 +64,7 @@ npm run start # Inicie o ambiente de desenvolvimento
 **Para componentes Web, instale o componente/pacote que deseja usar no projeto:**
 
 ```bash
-npm install @mamba/buttom # Componente do botão
+npm install @mamba/button # Componente do botão
 
 
 # Se quiser usar o dialog por exemplo:

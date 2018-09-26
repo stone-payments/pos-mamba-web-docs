@@ -27,7 +27,7 @@ Um componente é um arquivo html muito semelhante ao Vue.js. Ou seja, ele é um 
 npm i -g @mamba/cli
 
 # Crie um novo aplicativo em 'my-mamba-app'
-mamba app new my-mamba-app
+mamba new app my-mamba-app
 
 ? Name: My Mamba App
 ? Version: 0.0.1
@@ -109,9 +109,11 @@ import System from '@mamba/pos/system.js'
 
 Apesar do nosso `POS Virtual` ser um excelente modo de testar rapidamente as aplicações, ele não simula o comportamento ideal do `POS`, já que este utiliza a versão do `Webkit` do seu navegador. Sendo assim, para um teste fiel é recomendado que se utilize o `Mamba Browser` ou faça `deploy` da aplicação direto no `POS`.
 
-(Linux)[https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage]
+[Baixar a versão mais atual](https://github.com/stone-payments/pos-mamba-browser/releases/)
 
-(Windows)[https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip]
+[Linux-0.4](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage)
+
+[Windows-0.4](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip)
 
 ### Build
 
@@ -130,7 +132,7 @@ yarn build
 Para testar suas aplicações em seu POS você deve primeiro ter o Aplicativo de Developer instalado e antes ter realizado o `build` da sua aplicação. Após, digite no terminal do seu computador:
 
 ```bash
-yarn start:http-server
+yarn serve
 
 ```
 Após o servidor iniciar, abra o aplicativo de developer em seu `POS` e digite o IP local da máquina. Após alguns segundos o seu app será automaticamente baixado e aparecerá na lista de aplicativos instalados do Aplicativo de Developer.

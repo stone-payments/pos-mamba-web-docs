@@ -1,7 +1,7 @@
 <header class="appbar" {style}>
   <div class="content">
-    {#if !isAtHome && _isNavigationEnabled}
-      <div class="icon-left" on:click="goback()">
+    {#if _showBack}
+      <div class="icon-left" on:click="goBack()">
         <Icon symbol="chevron-left" width="10px" color={textColor} />
       </div>
     {/if}
@@ -10,17 +10,15 @@
       <div class="title">{title}</div>
     {/if}
 
-    {#if _isNavigationEnabled}
-      <div class="icon-right" on:click="gohome()">
-        <Icon symbol={homeIcon} color={textColor}/>
+    {#if _showHome}
+      <div class="icon-right" on:click="goHome()">
+        <Icon symbol={_isAtHome ? 'home' : 'app-home'} color={textColor}/>
       </div>
     {/if}
   </div>
 </header>
 
 <script>
-  import Router from 'svelte-page';
-
   export default {
     components: {
       Icon: '@mamba/icon',
@@ -28,7 +26,7 @@
     data() {
       return {
         _location: undefined,
-        _isNavigationEnabled: false,
+        _isNavigationEnabled: { back: false, home: true },
         title: undefined,
         textColor: '#425963',
         bgColor: '#f2f2f2',
@@ -45,18 +43,32 @@
           .filter(Boolean)
           .join(';');
       },
-      isAtHome: ({ _location }) => _location === '/',
-      homeIcon: ({ isAtHome }) => (isAtHome ? 'home' : 'app-home'),
+      _isAtHome: ({ _location }) => _location === '/',
+      _showBack: ({ _isAtHome, _isNavigationEnabled }) =>
+        !_isAtHome && _isNavigationEnabled.back,
+      _showHome: ({ _isNavigationEnabled }) => _isNavigationEnabled.home,
     },
     oncreate() {
       const { root } = this;
 
       /** Listen for route changes and appbar prop changes */
       root.on('appbar:modify', state => this.set(state));
-      root.on('router:navigation', ctx => this.set({ _location: ctx.path }));
-      root.on('navigation:change', value => {
-        this.set({ _isNavigationEnabled: value });
-      });
+
+      if (root.router) {
+        root.router.on('update', ({ changed, current }) => {
+          if (changed.context && current.context) {
+            this.set({ _location: current.context.path });
+          }
+        });
+      }
+
+      if (root.meta) {
+        root.meta.on('update', ({ changed, current }) => {
+          if (changed.navigation) {
+            this.set({ _isNavigationEnabled: current.navigation });
+          }
+        });
+      }
     },
     onstate({ changed, current }) {
       if (changed.title) {
@@ -64,16 +76,20 @@
       }
     },
     methods: {
-      gohome() {
-        const { isAtHome } = this.get();
-        if (isAtHome) {
+      goHome() {
+        const { _isAtHome } = this.get();
+        if (_isAtHome) {
           return this.root.fire('close');
         }
 
-        Router.go('/');
+        if (this.root.router) {
+          this.root.router.go('/');
+        }
       },
-      goback() {
-        Router.back();
+      goBack() {
+        if (this.root.router) {
+          this.root.router.back();
+        }
       },
     },
   };

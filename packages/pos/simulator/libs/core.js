@@ -1,12 +1,22 @@
+/**
+ * This file is the boilerplate for the simulator core driver;
+ * */
 import { log } from './utils.js';
 
-export const SIGNALS = ['settingsChanged', 'print', 'toggleCard'];
+export const SIGNALS = [
+  'settingsChanged',
+  'print',
+  'toggleCard',
+  /** Fired when a app is opened */
+  'openApp',
+  'closeApp',
+];
 
-/** Main driver for handling the POS Simulation */
+/** Core driver for handling the POS Simulation */
 const DATA = {};
 
-export function setup(State) {
-  State.get = keyPath => {
+export function setup(Core) {
+  Core.get = keyPath => {
     if (keyPath === undefined) {
       return DATA;
     }
@@ -19,7 +29,8 @@ export function setup(State) {
     return value;
   };
 
-  State.set = (keyPath, value, fireSignal = true) => {
+  // eslint-disable-next-line
+  Core.set = (keyPath, value, fireSignal = true) => {
     if (keyPath === undefined) {
       return;
     }
@@ -44,7 +55,7 @@ export function setup(State) {
     object[lastKey] = value;
 
     if (fireSignal) {
-      State.settingsChanged(DATA);
+      Core.settingsChanged(DATA);
     }
   };
 }

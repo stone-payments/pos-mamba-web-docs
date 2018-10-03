@@ -111,10 +111,6 @@ Apesar do nosso `POS Virtual` ser um excelente modo de testar rapidamente as apl
 
 [Baixar a versão mais atual](https://github.com/stone-payments/pos-mamba-browser/releases/)
 
-[Linux-0.4](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Linux-x86_64.AppImage)
-
-[Windows-0.4](https://github.com/stone-payments/pos-mamba-browser/releases/download/0.4/MambaWebBrowser0.4-Windows.zip)
-
 ### Build
 
 Antes de enviar sua aplicação para testar no `POS` é necessário realizar o `build` desta. Para isso, em seu terminal execute:

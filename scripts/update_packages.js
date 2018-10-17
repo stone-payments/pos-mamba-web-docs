@@ -1,6 +1,11 @@
 const fs = require('fs');
+const path = require('path');
 const degit = require('degit');
 const rimraf =  require('rimraf');
+const globby = require('globby');
+
+const packageRoot = path.join(process.cwd(), 'packages');
+const componentsPath = path.join(packageRoot, 'components');
 
 // degit to temp folder
 
@@ -34,16 +39,37 @@ function createDir(dirName) {
       if(error) {
         console.log('ERROR \n'+error.message);
       }
-
     });
   }
 }
 
-function clearTemp() {
-  rimraf('.temp/', () => {
+function removePath(path) {
+  console.log(`➖ Removing path: ${path}`);
+  rimraf.sync(path);
+}
+
+function removePaths(paths) {
+  paths.forEach((file, idx) => removePath(path.join(componentsPath, file)));
+}
+
+async function clearTemp() {
+  await rimraf('.temp/', () => {
     console.log('Temporary Files Removed !');
-    console.log('SDK Updated');
   });
+
+  const paths = globby.sync(['*/*.*', '*/.*', '*/*', '!*/example', '!*/README.md', '!*/package.json'], {
+    cwd: componentsPath,
+    onlyFiles: false,
+    expandDirectories: {
+      files: ['*/assets'],
+      extensions: ['svg', 'png', 'jpg', 'jpeg'],
+    },
+  });
+  
+  // Remove undesired components
+  // paths.push('App');
+  
+  removePaths(paths)
 }
 
 // clears packages
@@ -57,14 +83,6 @@ rimraf('./packages', () =>{
 
   // clone repo
   cloneRepo().then(() => {
-    
-    // Need remove undesired components
-    // Not working. Resolved at navigation-loader
-    /* ['App'].forEach(c => {
-      const item = c;
-      const path = `./.temp/packages/components/${c}/`;
-      rimraf(path, () => console.log(`Removing ${item}`))
-    }); */
 
     // move to directory and clear temp files
     moveDir('./.temp/packages/components', './packages/components',

@@ -9,6 +9,7 @@ module.exports = {
         'nesting-rules': true,
       },
     }),
+    require('postcss-color-mod-function')(),
     require('postcss-atroot'),
     require('postcss-property-lookup'),
     require('postcss-nested'),

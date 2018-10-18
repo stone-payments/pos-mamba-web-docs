@@ -53,7 +53,7 @@ code .token.url {
 code[class*='language-'],
 pre[class*='language-'] {
   font-family: var(--code-font) !important;
-  color: color-mod(#000c1d alpha(70%));
+  color: color-mod(#000c1d alpha(80%));
   font-weight: 600;
   font-size: 13px !important;
   line-height: 19px;

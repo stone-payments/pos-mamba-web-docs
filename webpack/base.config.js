@@ -33,7 +33,7 @@ module.exports = function createWebpackConfig(type) {
       ],
       alias: {
         // '~': path.resolve(__dirname, '../'),
-        '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
+        // '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
       },
@@ -87,10 +87,7 @@ module.exports = function createWebpackConfig(type) {
         },
         { 
           test: /\.svg$/,
-          exclude: [
-            /node_modules/,
-          ],
-          include: /assets\/icons/,
+          include: /node_modules\/@mamba\/icon\/assets\/icons/,
           use: loaders.icons,
         },
       ],

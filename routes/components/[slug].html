@@ -217,7 +217,7 @@
   }
 
   section :global(strong) {
-    font-weight: 500;
+    font-weight: 600;
   }
 
   section :global(code) {
@@ -261,6 +261,10 @@
     & :global(h2) + :global(h3) {
        margin-top: 30px;
        color: var(--secondary);
+    }
+
+    & :global(h2[id="m-todos"]) ~ :global(h3) {
+      color: #378016;
     }
 
     & :global(.code-block-container) {

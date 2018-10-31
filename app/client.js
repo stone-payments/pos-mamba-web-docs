@@ -1,7 +1,7 @@
 import { init } from 'sapper/runtime.js'
 import MambaStore from '../packages/store/src/index.js';
 import { manifest } from './manifest/client.js';
-import '../packages/pos/simulator';
+// import '../packages/pos/simulator';
 import '../styles/app.css';
 
 const store = MambaStore();

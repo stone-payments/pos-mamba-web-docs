@@ -8,6 +8,7 @@ const mode = process.env.NODE_ENV;
 const {
   BUNDLE_NAME,
   IS_POS,
+  DEBUG_LVL,
   IS_BROWSER,
   IS_DEV,
   IS_PROD,
@@ -101,6 +102,7 @@ module.exports = function createWebpackConfig(type) {
         __DEV__: IS_DEV,
         __POS__: IS_POS,
         __BROWSER__: IS_BROWSER,
+        __DEBUG_LVL__: DEBUG_LVL,
       }),
     ],
     mode,

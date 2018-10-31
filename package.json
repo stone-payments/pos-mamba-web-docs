@@ -1,7 +1,7 @@
 {
   "name": "@mambasdk/docs",
   "description": "Docs and examples for Mamba Web",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "author": "Stone Payments - Mamba Team",
   "license": "Apache-2.0",
   "homepage": "https://mambasdk-docs.stone.com.br",

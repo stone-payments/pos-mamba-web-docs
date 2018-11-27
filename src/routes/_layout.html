@@ -1,0 +1,17 @@
+{#if child.props.path === "/"}
+  <div>
+    <svelte:component this={child.component} {...child.props}/>
+  </div>
+{:else}
+  <RouteTemplate path={child.props.path}>
+    <svelte:component this={child.component} {...child.props}/>
+  </RouteTemplate>
+{/if}
+
+<script>
+  import RouteTemplate from '../layout/RouteTemplate';
+
+  export default {
+    components: { RouteTemplate },
+  };
+</script>

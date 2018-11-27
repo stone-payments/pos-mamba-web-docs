@@ -1,0 +1,8 @@
+/* shared/colors.css */
+
+:root {
+  --primary: #41a713;
+  --secondary: #4ebf1a;
+  --bg-color: #f5f7f9;
+  --sidebar-bg-color: #f5f7f9;
+}

@@ -1,0 +1,156 @@
+/* layout/navigation */
+
+.SideBar {
+  background: var(--sidebar-bg-color);
+  min-width: var(--sidebar-min-width);
+  position: var(--sidebar-position);
+  user-select: none;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100vh;
+
+  &::before,
+  &::after {
+    top: 0;
+    position: absolute;
+    content: '';
+  }
+
+  &::after {
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: rgba(18, 60, 83, 0.05);
+  }
+
+  &-logo,
+  &-border,
+  nav {
+    position: absolute;
+  }
+
+  &-logo {
+    top: var(--logo-container-top);
+    right: 0;
+    width: var(--logo-container-size);
+    margin-left: 0;
+
+    & a {
+      background-position: center center;
+      background-size: contain;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      height: var(--logo-svg-height);
+    }
+  }
+
+  &-static-label {
+    color: color-mod(var(--secondary) blackness(70%));
+    opacity: 0.7;
+    line-height: 1;
+    margin-top: -7px;
+    margin-bottom: 7px;
+  }
+
+  &-border {
+    top: calc(var(--nav-top-position) - 1px);
+    right: 0;
+    width: var(--nav-hr-border-width);
+    height: 1px;
+    background: var(--nav-hr-border-color);
+    opacity: 1;
+    transition: opacity 0.25s ease-in-out;
+    pointer-events: none;
+  }
+
+  .Nav-border {
+    margin: 15px 0;
+    display: block;
+    width: 100%;
+    position: relative;
+    top: 0;
+    background: rgba(120, 134, 156, 0.16);
+  }
+
+  nav {
+    bottom: 0;
+    right: 0;
+    width: var(--nav-width);
+    top: var(--nav-top-position);
+    overflow-y: auto;
+    padding-top: 15px;
+    padding-bottom: 25px;
+    z-index: 1;
+    -webkit-overflow-scrolling: touch;
+
+    h1 a {
+      padding-left: 0;
+
+      &.selected {
+        color: var(--primary);
+        font-weight: 500;
+      }
+    }
+
+    h1,
+    h1 a {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      height: 36px;
+      line-height: 36px;
+      color: #0d2b3e;
+      transition: opacity 0.2s;
+
+      &.has-icon a i {
+        margin-right: 5px;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      & > .active {
+        color: var(--primary) !important;
+        font-weight: 500;
+      }
+    }
+  }
+
+  ul {
+    padding-left: 0;
+    overflow: hidden;
+
+    li {
+      overflow: hidden;
+
+      &.active a,
+      a.active {
+        color: var(--primary) !important;
+        font-weight: 500;
+      }
+
+      & a:hover {
+        color: var(--primary);
+      }
+
+      a {
+        position: relative;
+        display: block;
+        font-size: 14px;
+        color: #36463a;
+        min-height: 28px;
+        line-height: 20px;
+        padding: 4px 0;
+        transition: all 0.3s ease-out;
+        text-shadow: 0px 0px 0.1px rgba(59, 90, 75, 0.15);
+      }
+    }
+  }
+
+  .has-icon + ul {
+    padding-left: 24px;
+  }
+}

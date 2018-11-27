@@ -27,14 +27,11 @@ module.exports = function createWebpackConfig(type) {
       mainFields: ['svelte', 'browser', 'module', 'main', 'dist'],
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
-        // path.resolve(__dirname, '../'),
         path.resolve(__dirname, '../packages'),
         path.resolve(__dirname, '../node_modules'),
         'node_modules',
       ],
       alias: {
-        // '~': path.resolve(__dirname, '../'),
-        // '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
       },
@@ -51,12 +48,6 @@ module.exports = function createWebpackConfig(type) {
             localPath: path.join(__dirname, '..', 'packages/components'),
           },
         },
-        // {
-        //   test: /\.js?$/,
-        //   exclude: [/assets/],
-        //   include: [],
-        //   use: [loaders.babel, loaders.eslint],
-        // },
         {
           test: /\.(html|svelte)$/,
           include: [
@@ -70,7 +61,9 @@ module.exports = function createWebpackConfig(type) {
           test: /\.(css|pcss)$/,
           resolve: { mainFields: ['style', 'main'] },
           include: [
-            path.resolve(__dirname, '..'),
+            path.resolve(__dirname, '../src'),
+            path.resolve(__dirname, '../packages'),
+            path.resolve(__dirname, '../node_modules/@mamba'),
           ],
           use: [loaders.styleLoader, loaders.css, loaders.postcss],
         },
@@ -81,14 +74,17 @@ module.exports = function createWebpackConfig(type) {
         { 
           test: /\.(gif|jpe?g|png|ico)$/,
           exclude: [
-            /\assets\/icons/,
-            /\/Icon\/src\/assets\/icons/,
+            /\static\/icons/,
+            /\/Icon\/assets\/icons/,
           ],
           use: loaders.images,
         },
         { 
           test: /\.svg$/,
-          include: /node_modules\/@mamba\/icon\/assets\/icons/,
+          include: [
+            /node_modules\/@mamba\/icon\/assets\/icons/,
+            /\/Icon\/assets\/icons/,
+          ],
           use: loaders.icons,
         },
       ],

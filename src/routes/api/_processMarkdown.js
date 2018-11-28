@@ -23,12 +23,13 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
       const matchTitle = match.input.match(/#\s.+?\n/);
       const title = matchTitle && matchTitle[0].trim() || match[2];
       const index = match.index;
+
+      const contentsMeta = `<!-- {title: '${title}', repl: false, filename: '${basename(
+          match[2].trim(),
+        )}'} -->\n`;
       
-      let source = `\n\r\`\`\`html\n<!-- {title: '${title}', repl: false, filename: '${basename(
-        match[2],
-      )}'} -->\n${fileContents}\`\`\``;
+      let source = `\n\r\`\`\`html\n${contentsMeta}${fileContents}\`\`\``;
       markdown = markdown.replace(`<!-- `.concat(match[0]), source);
-      
 
       examples.push({ index, fileContents, filePath, fileName: basename(match[2]), source: source });
     }
@@ -55,11 +56,8 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
 
   // Match/Found H1 heading
   if (match === null) {
-    match = /#{1}(\s?)(\w.+)/.exec(markdown)
-    
-    metadata.title = match[2]
-    const content = markdown.slice(match[0].length)
-    return { metadata, content, examples }
+    match = /#{1}(\s?)(\w.+)/.exec(markdown);
+    metadata.title = match[2];
   }
 
   // Process metadatas

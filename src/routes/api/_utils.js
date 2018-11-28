@@ -49,4 +49,9 @@ function insertTag(regex, content, tag, spanClass = '', parentTag = null) {
   })
 }
 
-export { createGlob, createApiGlob, unescape, insertTag, unescaped, replaceTag }
+const createBuffer = () => {
+  const normalize = s => s.replace(/\r?\n|\r|\s/gm, '');
+  return (n) => Buffer.from(normalize(n));
+}
+
+export { createGlob, createApiGlob, unescape, insertTag, unescaped, replaceTag, createBuffer }

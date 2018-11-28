@@ -87,6 +87,15 @@ module.exports = function createWebpackConfig(type) {
           ],
           use: loaders.icons,
         },
+        {
+          test: /\.md$/,
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+            emitFile: false,
+            context: ''
+          }
+        }
       ],
     },
     plugins: [

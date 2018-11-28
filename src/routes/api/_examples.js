@@ -1,8 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-// import Example from './components/_components/Example.html';
-
-// const { html, css, head } = Example.render();
 
 export default function processMarkdown(markdown, dir) {
   

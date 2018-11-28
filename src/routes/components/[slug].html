@@ -263,7 +263,8 @@
     }
 
     & :global(table) + :global(h3:not(:first-child)),
-    & :global(h2) + :global(h3) {
+    & :global(h2) + :global(h3),
+    & :global(h2 ~ h3 ~ p ~ h3) {
        margin-top: 30px;
        color: var(--secondary);
     }

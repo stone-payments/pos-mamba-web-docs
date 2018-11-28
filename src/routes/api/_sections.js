@@ -7,7 +7,7 @@ import cheerio from 'cheerio';
 import marked from 'marked';
 import Prism from 'prismjs';
 
-import { unescape, insertTag, replaceTag } from './_utils';
+import { unescape, insertTag, replaceTag, createBuffer } from './_utils';
 import processMarkdown from './_processMarkdown';
 import classNameUtils from './_classNameUtils';
 import strings from './_strings';
@@ -79,7 +79,7 @@ export default function(path, options = {}) {
   }
 
   return read.map(file => {
-
+    
     const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '');
     const filePath = (options.toFile ? '' : `${path}/`).concat(file);
 
@@ -131,13 +131,13 @@ export default function(path, options = {}) {
 
       // Define proper language type from `lang` param
       const properLanguage =
-          (lang === 'js' ? 'javascript' : lang) || 'markdown'
+          (lang === 'js' ? 'javascript' : lang) || 'javascript'
 
       // Create a inline code tag
       const html = `<pre class="code-block line-numbers language-${properLanguage}"><code class="language-${properLanguage}">${source.replace(
         /[&<>]/g,
         replaceTag,
-      )}</code></pre>`
+      )}</code></pre>`;
 
       // Load cheerio with Code component output
       const $ = cheerio.load(html, cheerioOption);
@@ -147,7 +147,7 @@ export default function(path, options = {}) {
 
       // Default options for Prism
       const prismOptions = {
-        languages: ['bash', 'markup', 'markdown', 'javascript', 'css'],
+        languages: ['bash', 'markup', 'markdown', 'javascript', 'css', 'typescript'],
         fontSize: 16,
       }
 
@@ -213,8 +213,13 @@ export default function(path, options = {}) {
       })
 
       let renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
+      
+      // We need to avoid markdown code contents being confused with component examples block.
+      // Probally this aproach is too expensive
+      const bufLeft  = createBuffer()(source);
+      const bufRight = createBuffer()(examples[0].fileContents);
 
-      if(examples.length) {
+      if(examples.length && bufLeft.equals(bufRight)) {
         examples[0].source = renderBlock;
         examples[0].endIndex = renderBlock.length;
         return '';
@@ -233,7 +238,6 @@ export default function(path, options = {}) {
 
     // Process markdown with marked
     let html = marked(content, { renderer });
-
 
     // Add anchors to h3
     let match;

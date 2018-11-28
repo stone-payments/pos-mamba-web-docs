@@ -79,7 +79,7 @@ export default function(path, options = {}) {
   }
 
   return read.map(file => {
-    
+
     const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '');
     const filePath = (options.toFile ? '' : `${path}/`).concat(file);
 
@@ -214,15 +214,17 @@ export default function(path, options = {}) {
 
       let renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
       
-      // We need to avoid markdown code contents being confused with component examples block.
-      // Probally this aproach is too expensive
-      const bufLeft  = createBuffer()(source);
-      const bufRight = createBuffer()(examples[0].fileContents);
+      if(examples.length && examples[0].fileContents) {
+        // We need to avoid markdown code contents being confused with component examples block.
+        // Probally this aproach is too expensive
+        const bufLeft  = createBuffer()(source);
+        const bufRight = createBuffer()(examples[0].fileContents);
 
-      if(examples.length && bufLeft.equals(bufRight)) {
-        examples[0].source = renderBlock;
-        examples[0].endIndex = renderBlock.length;
-        return '';
+        if(bufLeft.equals(bufRight)) {
+          examples[0].source = renderBlock;
+          examples[0].endIndex = renderBlock.length;
+          return '';
+        }
       }
 
       return renderBlock;

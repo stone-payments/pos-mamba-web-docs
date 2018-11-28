@@ -32,6 +32,7 @@ module.exports = function createWebpackConfig(type) {
         'node_modules',
       ],
       alias: {
+        '@components': path.resolve(__dirname, '../packages/components/'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
         '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
       },

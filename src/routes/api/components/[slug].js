@@ -11,20 +11,14 @@ let lookup;
 
 export async function get(req, res) {
   const { slug } = req.params;
-  
-  console.info('\n -> Slug: ', slug, lookup && lookup.has(slug), '\nprocess.env.NODE_ENV:', process.env.NODE_ENV, "\n");
 
   if (!lookup || !lookup.has(slug)) {
 
     lookup = new Map();
 
     const packageRoot = path.join(process.cwd(), 'packages/components/');
-
-    console.log('packageRoot: ', packageRoot);
     
     const hasProperSlug = fs.readdirSync(packageRoot).filter(name => name.toLowerCase() === slug);
-
-    console.log('hasProperSlug: ', hasProperSlug);
     
     if(!hasProperSlug.length) {
       console.warn(strings.errors.notFound);
@@ -38,16 +32,12 @@ export async function get(req, res) {
 
     const Slug = hasProperSlug[0];
 
-    console.info('Proper Slug: ', Slug);
-
     // Create globs with our desired files
     const globs = [
       ...createGlob(`${Slug}/`),
     ].filter(p => !!p);
 
     const exclude = ['**/node_modules/** ', 'dist/**'];
-
-    console.log('globs: ', globs);
   
     // Append exclude globs
     const patterns = []
@@ -63,8 +53,6 @@ export async function get(req, res) {
         extensions: ['md', 'json', 'html'],
       },
     });
-    
-    console.log('paths: ', paths);
 
     const [ README, packageJson ] = ["README.md","package.json"];
 
@@ -84,7 +72,7 @@ export async function get(req, res) {
 
           case README:
 
-            // Get directory README.md and CHANGELOG.md sections
+            // Get directory README.md
             if(!sections) sections = getSections(filePath, {
               mambaSlub: Slug,
               examplePath: packageRoot,

@@ -13,12 +13,13 @@ dotenv.config();
 
 const app = express();
 
-console.log('path: ', path.join(__dirname, '../packages/components/Icon'));
+const serveMisc = ["Icon", "Range/example", "Sprite/example", "QRCode/example"]
+  .map(path => serve(`packages/components/${path}`, { dotfiles: 'ignore', etag: false }));
 
 app.use(
   compression({ threshold: 0 }),
   serve("static"),
-  serve("packages/components/Icon", { dotfiles: 'ignore', etag: false, index: false }),
+  serveMisc,
   sapper.middleware({
     store: req => {
       return new Store({

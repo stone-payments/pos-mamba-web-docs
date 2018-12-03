@@ -18,7 +18,8 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
     if(found) {
 
       const filePath = found; // match[2].trim();
-      const absPath = join(dir, found);
+      const absPath = join(dir, filePath);
+      console.log('absPath: ', absPath);
       const fileContents = fs.readFileSync(absPath, 'utf-8');
       const matchTitle = match.input.match(/#\s.+?\n/);
       const title = matchTitle && matchTitle[0].trim() || match[2];
@@ -37,9 +38,11 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
 
   // Create component props heading for multiple components in page
   markdown = markdown.replace(
-    /\`<([a-zA-Z]+)(\s\.\.\.props\s?)\/>\`/gm,
-    (m, $1, $2) => {
-      const scaped = `<span class="token punctuation">&lt;</span>${$1} <span class="attr-name">${$2}</span> <span class="token punctuation">/&gt;</span>`;
+    /\`<([a-zA-Z]+)(\s\.\.\.props\s?)(.+)?\/>\`/gm,
+    (m, $1, $2, $3) => {
+      const extra = $3 ? `<span class="token keyword" style="color:#428acc">${$3}</span>` : '';
+
+      const scaped = `<span class="token punctuation">&lt;</span>${$1}<span class="attr-name">${$2}</span>${extra} <span class="token punctuation">/&gt;</span>`;
       return `<h2 class="props-heading token tag">${scaped}</h2>`;
     },
   )

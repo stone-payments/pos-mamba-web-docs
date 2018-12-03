@@ -25,7 +25,7 @@ section blockquote {
     margin: 0;
   }
 
-  ~ blockquote {
+  & + blockquote {
     margin-top: -1em;
   }
 

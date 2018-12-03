@@ -21,6 +21,7 @@
 @import 'components/menu.css';
 
 /* Elements */
+@import 'elements/content.css';
 @import 'elements/button.css';
 @import 'elements/blockquote.css';
 @import 'elements/hr.css';

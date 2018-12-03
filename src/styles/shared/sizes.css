@@ -21,4 +21,7 @@
   --logo-container-top: 40px;
   --logo-container-size: var(--nav-width);
   --logo-svg-height: 90px;
+
+  /* Content */
+  --content-heading-line-height: 26px;
 }

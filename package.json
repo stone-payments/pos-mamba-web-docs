@@ -11,8 +11,8 @@
   },
   "scripts": {
     "dev": "sapper dev NODE_ENV=development",
-    "staging": "rm -rf __sapper__/ && sapper dev NODE_ENV=staging",
-    "staging:debug": "rm -rf __sapper__/ && cross-env NODE_ENV=staging && node --inspect-brk node_modules/sapper/dist/cli.js dev sapper dev",
+    "dev:debug": "rm -rf __sapper__/ && node --inspect-brk node_modules/sapper/dist/cli.js dev NODE_ENV=development",
+    "build:dev": "cross-env NODE_ENV=development sapper build",
     "build": "cross-env NODE_ENV=production sapper build",
     "export": "sapper export",
     "start": "node __sapper__/build",

@@ -5,19 +5,20 @@ import tls from 'tls';
 
 const { entries, assign } = Object;
 
-const isArray = x => Array.isArray(x)
+const isArray = x => Array.isArray(x);
 
 const readCert = path => readFileSync(path).toString();
 
-const createSecureContextOptions = certs => certs.map( ([k, some]) => {
-  if(Array.isArray(some))  return {[k]: some.map(cert => readCert(cert))};
-  if(k === 'password') return {[k]: some};
-  return {[k]: readCert(some)};
-});
+const createSecureContextOptions = certs =>
+  certs.map(([k, some]) => {
+    if (Array.isArray(some)) return { [k]: some.map(cert => readCert(cert)) };
+    if (!['cert', 'key'].includes(k)) return { [k]: some };
+    return { [k]: readCert(some) };
+  });
 
 export default compose(
   tls.createSecureContext,
-  (map => assign(...map)),
+  map => assign(...map),
   createSecureContextOptions,
-  entries
+  entries,
 );

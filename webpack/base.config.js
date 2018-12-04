@@ -104,6 +104,7 @@ module.exports = function createWebpackConfig(type) {
         __NODE_ENV__: JSON.stringify(NODE_ENV),
         __APP_ENV__: JSON.stringify(APP_ENV),
         __PROD__: IS_PROD,
+        __STAGING__: NODE_ENV === 'staging',
         __TEST__: NODE_ENV === 'test',
         __DEV__: IS_DEV,
         __POS__: IS_POS,

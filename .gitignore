@@ -8,6 +8,8 @@ npm-debug.log
 yarn-error.log
 docs.sublime-project
 docs.sublim-workspace
+*.cert
+*.key
 
 ## Directories
 log/

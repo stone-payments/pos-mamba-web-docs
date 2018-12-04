@@ -1,4 +1,10 @@
-const { IS_PROD } = require('quickenv')
+const fs = require('fs');
+const path = require('path');
+const { IS_PROD } = require('quickenv');
+
+const prettierOptions =  require('./.prettierrc.js');
+
+console.log('prettierOptions: ', prettierOptions);
 
 module.exports = {
   extends: [

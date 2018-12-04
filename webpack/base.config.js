@@ -18,10 +18,9 @@ const {
 
 module.exports = function createWebpackConfig(type) {
   return {
-
     // Sapper just ignore this property
-    stats: "verbose",
-    
+    stats: 'verbose',
+
     resolve: {
       symlinks: false,
       mainFields: ['svelte', 'browser', 'module', 'main', 'dist'],
@@ -34,7 +33,10 @@ module.exports = function createWebpackConfig(type) {
       alias: {
         '@components': path.resolve(__dirname, '../packages/components/'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
-        '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
+        '@mamba/store': path.resolve(
+          __dirname,
+          '../packages/store/src/index.js',
+        ),
       },
     },
     node: {
@@ -68,19 +70,16 @@ module.exports = function createWebpackConfig(type) {
           ],
           use: [loaders.styleLoader, loaders.css, loaders.postcss],
         },
-        { 
-          test: /\.(eot|woff2?|otf|ttf)$/, 
+        {
+          test: /\.(eot|woff2?|otf|ttf)$/,
           use: loaders.fonts,
         },
-        { 
+        {
           test: /\.(gif|jpe?g|png|ico)$/,
-          exclude: [
-            /\static\/icons/,
-            /\/Icon\/assets\/icons/,
-          ],
+          exclude: [/\static\/icons/, /\/Icon\/assets\/icons/],
           use: loaders.images,
         },
-        { 
+        {
           test: /\.svg$/,
           include: [
             /node_modules\/@mamba\/icon\/assets\/icons/,
@@ -94,9 +93,9 @@ module.exports = function createWebpackConfig(type) {
           options: {
             name: '[path][name].[ext]',
             emitFile: false,
-            context: ''
-          }
-        }
+            context: '',
+          },
+        },
       ],
     },
     plugins: [
@@ -113,5 +112,5 @@ module.exports = function createWebpackConfig(type) {
       }),
     ],
     mode,
-  }
-}
+  };
+};

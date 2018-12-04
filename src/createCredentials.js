@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import { compose } from 'lodash/fp';
-import tls from 'tls';
+// import tls from 'tls';
 
 const { entries, assign } = Object;
 
@@ -17,7 +17,7 @@ const createSecureContextOptions = certs =>
   });
 
 export default compose(
-  tls.createSecureContext,
+  // tls.createSecureContext,
   map => assign(...map),
   createSecureContextOptions,
   entries,

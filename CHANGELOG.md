@@ -1,3 +1,6 @@
+## 1.1.0 (December 06, 2018)
+
+
 ## 0.1.0 (December 06, 2018)
   - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs into develop
   - Remove yarn from docs

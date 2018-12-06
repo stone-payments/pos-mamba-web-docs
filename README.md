@@ -15,8 +15,8 @@ yarn run dev # Run development
 **To deploy** the Mamba SDK Documentation we use [Zeit.co Now](zeit.co/now), so just run:
 
 ```bash
-yarn global add now
-yarn run deploy
+npm i -g now
+npm run deploy
 ```
 
 ## Requirements

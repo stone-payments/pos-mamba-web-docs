@@ -120,7 +120,7 @@ Antes de enviar sua aplicação para testar no `POS` é necessário realizar o `
 mamba app build
 
 # Manualmente
-yarn build
+npm run build
 
 ```
 ### Deploy
@@ -128,7 +128,7 @@ yarn build
 Para testar suas aplicações em seu POS você deve primeiro ter o Aplicativo de Developer instalado e antes ter realizado o `build` da sua aplicação. Após, digite no terminal do seu computador:
 
 ```bash
-yarn serve
+npm run serve
 
 ```
 Após o servidor iniciar, abra o aplicativo de developer em seu `POS` e digite o IP local da máquina. Após alguns segundos o seu app será automaticamente baixado e aparecerá na lista de aplicativos instalados do Aplicativo de Developer.

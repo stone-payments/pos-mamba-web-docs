@@ -5,6 +5,7 @@ module.exports = {
       script: './__sapper__/build/index.js',
       watch: 'true',
       env: {
+        NODE_ENV: 'production',
         PORT: 443,
       },
     },

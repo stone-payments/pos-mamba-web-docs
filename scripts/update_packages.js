@@ -57,17 +57,19 @@ async function clearTemp() {
     console.log('Temporary Files Removed !');
   });
 
-  const paths = globby.sync(['*/*.*', '*/.*', '*/*', '!*/example', '!*/README.md', '!*/package.json'], {
+  const paths = globby.sync(['*/*.*', '*/.*', '*/*', '!Icon/assets', '!*/example', '!*/README.md', '!*/package.json'], {
     cwd: componentsPath,
     onlyFiles: false,
     expandDirectories: {
-      files: ['*/assets'],
+      files: ['*/static'],
       extensions: ['svg', 'png', 'jpg', 'jpeg'],
     },
   });
   
   // Remove undesired components
   // paths.push('App');
+
+  console.log('paths: ', paths);
   
   removePaths(paths)
 }

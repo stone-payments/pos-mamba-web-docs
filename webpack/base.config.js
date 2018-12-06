@@ -18,25 +18,25 @@ const {
 
 module.exports = function createWebpackConfig(type) {
   return {
-
     // Sapper just ignore this property
-    stats: "verbose",
-    
+    stats: 'verbose',
+
     resolve: {
       symlinks: false,
       mainFields: ['svelte', 'browser', 'module', 'main', 'dist'],
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
-        // path.resolve(__dirname, '../'),
         path.resolve(__dirname, '../packages'),
         path.resolve(__dirname, '../node_modules'),
         'node_modules',
       ],
       alias: {
-        // '~': path.resolve(__dirname, '../'),
-        // '@mamba/icon': path.resolve(__dirname, '../packages/components/Icon'),
+        '@components': path.resolve(__dirname, '../packages/components/'),
         '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
-        '@mamba/store': path.resolve(__dirname, '../packages/store/src/index.js'),
+        '@mamba/store': path.resolve(
+          __dirname,
+          '../packages/store/src/index.js',
+        ),
       },
     },
     node: {
@@ -51,12 +51,6 @@ module.exports = function createWebpackConfig(type) {
             localPath: path.join(__dirname, '..', 'packages/components'),
           },
         },
-        // {
-        //   test: /\.js?$/,
-        //   exclude: [/assets/],
-        //   include: [],
-        //   use: [loaders.babel, loaders.eslint],
-        // },
         {
           test: /\.(html|svelte)$/,
           include: [
@@ -70,26 +64,37 @@ module.exports = function createWebpackConfig(type) {
           test: /\.(css|pcss)$/,
           resolve: { mainFields: ['style', 'main'] },
           include: [
-            path.resolve(__dirname, '..'),
+            path.resolve(__dirname, '../src'),
+            path.resolve(__dirname, '../packages'),
+            path.resolve(__dirname, '../node_modules/@mamba'),
           ],
           use: [loaders.styleLoader, loaders.css, loaders.postcss],
         },
-        { 
-          test: /\.(eot|woff2?|otf|ttf)$/, 
+        {
+          test: /\.(eot|woff2?|otf|ttf)$/,
           use: loaders.fonts,
         },
-        { 
+        {
           test: /\.(gif|jpe?g|png|ico)$/,
-          exclude: [
-            /\assets\/icons/,
-            /\/Icon\/src\/assets\/icons/,
-          ],
+          exclude: [/\static\/icons/, /\/Icon\/assets\/icons/],
           use: loaders.images,
         },
-        { 
+        {
           test: /\.svg$/,
-          include: /node_modules\/@mamba\/icon\/assets\/icons/,
+          include: [
+            /node_modules\/@mamba\/icon\/assets\/icons/,
+            /\/Icon\/assets\/icons/,
+          ],
           use: loaders.icons,
+        },
+        {
+          test: /\.md$/,
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+            emitFile: false,
+            context: '',
+          },
         },
       ],
     },
@@ -98,6 +103,7 @@ module.exports = function createWebpackConfig(type) {
         __NODE_ENV__: JSON.stringify(NODE_ENV),
         __APP_ENV__: JSON.stringify(APP_ENV),
         __PROD__: IS_PROD,
+        __STAGING__: NODE_ENV === 'staging',
         __TEST__: NODE_ENV === 'test',
         __DEV__: IS_DEV,
         __POS__: IS_POS,
@@ -106,5 +112,5 @@ module.exports = function createWebpackConfig(type) {
       }),
     ],
     mode,
-  }
-}
+  };
+};

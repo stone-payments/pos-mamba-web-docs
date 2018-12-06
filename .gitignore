@@ -8,6 +8,8 @@ npm-debug.log
 yarn-error.log
 docs.sublime-project
 docs.sublim-workspace
+*.cert
+*.key
 
 ## Directories
 log/
@@ -23,6 +25,7 @@ bower_components/
 /sdk/
 /.temp
 /packages
+__sapper__
 
 ## Ignore yarn .lock, Use package-lock.json instead
 yarn.lock

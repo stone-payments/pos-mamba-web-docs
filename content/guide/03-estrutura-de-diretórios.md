@@ -6,7 +6,7 @@
 
 A estrutura de diretórios de nível superior se parece com o diagrama a seguir:
 
-```
+```markup
 Mamba Web
 ├─ packages ······· Pacotes públicos
 ├─ tools ·········· Ferramentas de projeto, utilitários para construção e teste

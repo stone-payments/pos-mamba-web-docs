@@ -1,4 +1,10 @@
-const { IS_PROD } = require('quickenv')
+const fs = require('fs');
+const path = require('path');
+const { IS_PROD } = require('quickenv');
+
+const prettierOptions =  require('./.prettierrc.js');
+
+console.log('prettierOptions: ', prettierOptions);
 
 module.exports = {
   extends: [
@@ -21,11 +27,19 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    indent: ['error', 2, { SwitchCase: 1 }],
+    indent: [
+      2,
+      2,
+      {
+        SwitchCase: 1,
+      },
+    ],
     camelcase: 'off',
+    'prettier/prettier': ['error', prettierOptions],
+    'class-methods-use-this': 0,
     'no-console': IS_PROD() ? ['error', { allow: ['warn', 'error'] }] : 'off',
     'no-var': 'error',
-    'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': [2, 'always-multiline'],
     'no-new': 'off',
     'no-sequences': 'off',
   },

@@ -83,7 +83,7 @@ module.exports = function createWebpackConfig(type) {
           test: /\.svg$/,
           include: [
             /node_modules\/@mamba\/icon\/assets\/icons/,
-            /\/Icon\/assets\/icons/,
+            /packages\/components\/.+\/assets\/*/,
           ],
           use: loaders.icons,
         },

@@ -77,7 +77,7 @@ pre[class*='language-'] {
 }
 
 .line-numbers.language-bash .line-numbers-rows span:first-child::before,
-.line-numbers .line-numbers-rows span:only-child::before {
+.line-numbers.language-bash .line-numbers-rows span:only-child::before {
   content: '$';
 }
 

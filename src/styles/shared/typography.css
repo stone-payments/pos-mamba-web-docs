@@ -31,13 +31,21 @@ h2 {
   padding-top: 10px;
 }
 
-h2:not(:first-child) {
-  margin-top: 45px;
+h2:not(:first-child):not(.props-heading) {
+  margin-top: 55px;
+}
+
+hr + h2:not(:first-child).props-heading {
+  margin-top: 25px;
 }
 
 h2:not(.props-heading) {
   margin-bottom: 30px;
 }
+
+/*.Component > header > h1:first-child {
+  margin-bottom: 30px;
+}*/
 
 h3:not(:first-child),
 h3:not(:first-child) + p {

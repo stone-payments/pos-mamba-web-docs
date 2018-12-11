@@ -1,5 +1,5 @@
 
-*:not(.row) button {
+*:not(.row) button:not(.button) {
   padding: 6px 12px;
   border-radius: 4px;
   border: 1px solid #4fb123;

@@ -5,7 +5,7 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 /** Read the project's .babelrc.js to enforce it in 'babel-loader' */
 const babelrc = require(fromProject('.babelrc.js'));
 /** 'babel-loader' already appends 'sourceMap: true'. Cannot have both. */
-delete babelrc.sourceMaps
+delete babelrc.sourceMaps;
 
 module.exports = {
   babel: {
@@ -65,7 +65,7 @@ module.exports = {
     loader: 'file-loader',
     options: {
       context: path.resolve(__dirname, '../..'),
-      publicPath: '../assets/icons/',
+      publicPath: '../assets/',
       outputPath: '../',
       name: '[name].[ext]',
       useRelativePath: true,
@@ -81,13 +81,13 @@ module.exports = {
     loader: 'html-loader',
   },
   svelte: type => {
-    const [server, client] = ['server', 'client']
+    const [server, client] = ['server', 'client'];
 
     if (type !== client && type !== server) {
-      throw new Error(`Unknown svelte type: ${type}`)
+      throw new Error(`Unknown svelte type: ${type}`);
     }
 
-    let loader = { loader: 'svelte-loader' }
+    let loader = { loader: 'svelte-loader' };
 
     switch (type) {
       case 'server':
@@ -95,17 +95,17 @@ module.exports = {
           css: false,
           generate: 'ssr',
           ...require(fromProject('svelte.config.js')),
-        }
-        break
+        };
+        break;
       default:
         loader.options = {
           emitCss: true,
           hydratable: true,
           hotReload: IS_DEV,
           ...require(fromProject('svelte.config.js')),
-        }
+        };
     }
 
-    return loader
+    return loader;
   },
-}
+};

@@ -10,7 +10,7 @@ let lookup;
 export async function get(req, res, next) {
   const { slug } = req.params;
 
-  if (!lookup || !lookup.has(slug)) {
+  if (process.env.NODE_ENV === 'development' || !lookup || !lookup.has(slug)) {
     lookup = new Map();
 
     const packageRoot = path.join(process.cwd(), 'packages/pos/docs');

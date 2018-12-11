@@ -73,6 +73,7 @@ export async function get(req, res) {
                 mambaSlub: Slug,
                 examplePath: packageRoot,
                 examples: examples,
+                anchorPath: `components/${slug}`,
                 toFile: true,
               });
 

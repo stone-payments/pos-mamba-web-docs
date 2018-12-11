@@ -85,3 +85,7 @@ pre[class*='language-'] {
   color: var(--code-color);
 }
 
+.Source-wrapper .code-block.code-block-container pre.code-block {
+  margin: 0 !important;
+}
+

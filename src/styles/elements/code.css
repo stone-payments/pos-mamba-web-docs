@@ -56,7 +56,7 @@ pre[class*='language-'] {
   color: color-mod(#000c1d alpha(80%));
   font-weight: 600;
   font-size: 13px !important;
-  line-height: 19px;
+  line-height: 18px;
 }
 
 .line-numbers .line-numbers-rows {
@@ -65,7 +65,7 @@ pre[class*='language-'] {
   width: 30px;
   top: 0;
   left: -35px;
-  line-height: 19px;
+  line-height: 18px;
 }
 
 .line-numbers .line-numbers-rows span::before {

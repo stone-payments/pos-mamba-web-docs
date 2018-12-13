@@ -1,3 +1,33 @@
+## 1.1.1 (December 13, 2018)
+  - Ajust space after table example
+  - Reindent file
+  - Fix webpack loader for images
+  - Fix github link
+  - Melhora stylo dos botoes
+  - Conserta entrada de linha de número para bash na dica de como instalar
+  - Reduce code line-height
+  - Update icons path
+  - Lock stuff
+  - Fix npm install description
+  - Fix npm install description
+  - Fix anchor path
+  - Fix margin for code source block
+  - Fix button style to not change button component style
+  - Update examples styles
+  - Fix styles for exemples rows
+  - Lock stuff
+  - Fix regex for generate more complex Header Props
+  - Add development flag to reload docs files every time in development
+  - Fix resolve for .svg in packages
+  - Fix server port
+  - refator pm2 config file
+  - Update version
+  - Merge branch 'develop'
+  - Update machine pm2 config
+  - Merge branch 'release-1.1.0' into develop
+  - Merge branch 'release-1.1.0'
+  - Add bump version script
+
 ## 1.1.0 (December 06, 2018)
 
 

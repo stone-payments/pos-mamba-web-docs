@@ -1,0 +1,8 @@
+h1 ~ .row[class*="svelte-"],
+h2 ~ .row[class*="svelte-"],
+h3 ~ .row[class*="svelte-"],
+h4 ~ .row[class*="svelte-"],
+h5 ~ .row[class*="svelte-"],
+h6 ~ .row[class*="svelte-"] {
+    margin: 5px 0px 20px 0px;
+}

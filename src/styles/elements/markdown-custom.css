@@ -38,3 +38,7 @@
 #par-metros + .props-heading {
   margin-top: 0 !important;
 }
+
+.code-block.code-block-container + .props-heading {
+  margin-top: 25px;
+}

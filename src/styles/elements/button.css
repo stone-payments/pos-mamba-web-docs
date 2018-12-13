@@ -1,17 +1,25 @@
-/*@custom-selector :--button button, .button;
-@custom-selector :--enter :hover, :focus;
 
-:--button {
-
+*:not(.row) button:not(.button) {
+  padding: 6px 12px;
+  border-radius: 3px;
+  border: 1px solid #4fb123;
+  background-color: #4bb719;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
 }
 
-:--button:--enter {
-
+.row div:not(.range) button:not(.button), 
+.row ~ h1,
+.row ~ h2,
+.row ~ h3,
+.row ~ h4,
+.row ~ h5,
+.row ~ h6 {
+  clear: both;
 }
-*/
 
-
-.row div:not(.range) button:not(.button), .row ~ button:not(.button) {
+.row ~ button:not(.button) {
   position: relative;
   vertical-align: top;
   background-color: #ffffff;
@@ -28,7 +36,7 @@
   -webkit-box-align: center;
   align-items: center;
   border: 1px solid var(--primary);
-  border-radius: 4px;
+  border-radius: 3px;
   box-shadow: none;
   display: inline-block;
   font-size: 13px;

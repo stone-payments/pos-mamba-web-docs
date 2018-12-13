@@ -9,16 +9,16 @@
       <header>
         <h1>
           {manifest.docs.metadata.title}
-          <small><a href='https://github.com/stone-payments/pos-mamba-web/tree/develop/packages/components/{manifest.info.slug}'>editar esta seção</a></small>
+          <small><a href='https://github.com/stone-payments/pos-mamba-sdk/tree/develop/packages/components/{manifest.info.slug}'>editar esta seção</a></small>
         </h1>
         <div class="code-block code-block-container install-block">
           <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
-            <code class="language-bash">npm install <span class="token string">{manifest.info.package.name}</span>
+            <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
               <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
             </code>
           </pre>
           <div class="links">
-            <a class="github-link" href="https://github.com/stone-payments/pos-mamba-web/tree/develop/packages/components/{manifest.info.slug}" target="_blank"><i class="fab fa-github"></i>Github</a>
+            <a class="github-link" href="https://github.com/stone-payments/pos-mamba-sdk/tree/develop/packages/components/{manifest.info.slug}" target="_blank"><i class="fab fa-github"></i>Github</a>
             <a class="npm-link" href="https://www.npmjs.com/package/{manifest.info.package.name}" target="_blank"><i class="fas fa-external-link-alt"></i>NPM</a>
           </div>
         </div>
@@ -274,7 +274,7 @@
     }
 
     & :global(.code-block-container) {
-      margin-top: 18px;
+      margin-top: 7px;
     }
 
     & :global(h4) {
@@ -316,6 +316,10 @@
     max-height: 300px;
     overflow: auto;
     margin: 0;
+  }
+
+  .Component section :global(.code-block.code-block-container pre.code-block) {
+    margin: 0 0 35px 0;
   }
 
   .Code-run {

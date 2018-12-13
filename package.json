@@ -1,7 +1,7 @@
 {
   "name": "@mamba/docs",
   "description": "Docs and examples for Mamba Web",
-  "version": "1.1.1",
+  "version": "1.1.0",
   "author": "Stone Payments - Mamba Team",
   "license": "Apache-2.0",
   "homepage": "https://mambasdk-docs.stone.com.br",
@@ -17,7 +17,8 @@
     "export": "sapper export",
     "start": "node __sapper__/build",
     "now-start": "node scripts/slack_webhook.js && node build",
-    "deploy": "now --public && now alias",
+    "deploy:staging": "now --public && now alias",
+    "deploy": "deploy/work.sh",
     "pull:packages": "node scripts/update_packages.js ",
     "pull:packages:bash": "ls ./ && chmod +x scripts/update_packages.sh && scripts/update_packages.sh && ls ./packages",
     "postinstall": "npm run pull:packages && ls ./packages/components",

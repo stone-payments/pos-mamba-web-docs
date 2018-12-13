@@ -5,29 +5,14 @@ set -e
 
 ### Configuration ###
 export NODE_ENV=production
+APP_DIR=~deployusr/site/pos-mamba-sdk-docs
 
-
-### Automation steps ###
-
-
-cd $(git rev-parse --show-toplevel)
-
-while true; do
-    read -p "Do you wish go to master branch?( Y/n ) " yn
-    case $yn in
-        [Yy]* ) git checkout master; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-
-set -x
-
-git pull
-
+cd $(APP_DIR)
 
 # Install dependencies
 npm install --production
 npm prune --production
 
 # Restart app
+
+pm2 restart mambadocs

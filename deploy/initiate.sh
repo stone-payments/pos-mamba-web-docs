@@ -27,41 +27,46 @@ fi
 
 FORCE_REMOTE=false
 
+# set -x
+
 while true; do
-    read -p "Re-add remote url?( Y/n ) " yn
-    case $yn in
-        [Yy]* ) FORCE_REMOTE=true; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-  done
-
-PROD_REMOTE=$(git ls-remote --exit-code ${REMOTE_GIT})
-
+  read -p "Re-add remote url?( Y/n ) " yn
+  case $yn in
+      [Yy]* ) FORCE_REMOTE=true; break;;
+      [Nn]* ) exit;;
+      * ) echo "Please answer yes or no.";;
+  esac
+done
 
 function addRemote {
   echo "Add production remote $REMOTE_GIT"
   git remote add prod $REMOTE_GIT
 }
+echo "Checking if you have prod remote already"
 
-# Remote exists - Exit script if remote does not exist
-$PROD_REMOTE >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  addRemote
-elif [ "$FORCE_REMOTE" = true ]; then
+
+if [ "$FORCE_REMOTE" = true ]; then
   git remote remove prod
+  addRemote
+fi
+
+# Weird?
+git ls-remote --exit-code ${REMOTE_GIT} >/dev/null 2>&1
+if [ $? -ne 0 ]; then
   addRemote
 fi
 
 echo "Prod remote is: $(git config --get remote.prod.url)"
 
-set -x
 git fetch --all
 
 HEADHASH=$(git rev-parse HEAD)
-UPSTREAMHASH=$(git rev-parse prod master@{upstream})
+UPSTREAMHASH=$(git rev-parse --remotes=prod master@{upstream})
 
-if [ "$HEADHASH" != "$UPSTREAMHASH" ] then
+echo -e "UPSTREAMHASH: $UPSTREAMHASH"
+echo -e "HEADHASH: $HEADHASH"
+
+if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
   echo -e ${ERROR}Not up to date with origin. Aborting.${NOCOLOR}
   echo
   exit 0
@@ -69,10 +74,14 @@ else
   echo -e ${FINISHED}Current branch is up to date with origin/master.${NOCOLOR}
 fi
 
-echo "Updading"
-git pull
+# echo "Updading"
+# git pull
 
-git push prod master
+# git push prod master
+
+
+###########
+
 
 # echo "Removing old sapper build"
 # rm -rf __sapper__

@@ -4,34 +4,37 @@ set -e
 # Basically deploy do: git clean -fdx && git reset --hard HEAD && git pull origin master && cross-env NODE_ENV=production npm install --production && npm run build && pm2 restart mambadocs
 
 ### Configuration ###
-export NODE_ENV=production
 SITE_DIR=~deployusr/site
 APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
 PROD_DIR="$SITE_DIR/mambadocs-prod/"
+export NODE_ENV=production
 
 cd $APP_DIR
 
 set -x
+
+if [ ! -d "$SITE_DIR/mambadocs-prod" ]; then
+  mkdir "$SITE_DIR/mambadocs-prod"
+else
+  sudo rm -rf "$PROD_DIR/__sapper__"
+  sudo rm -rf "$PROD_DIR/packages"
+fi
 
 # Slow deploy
 # Clear all untracked files
 sudo rm -rf __sapper__
 
 # Ignore remote hard-coded changes
-sudo git reset --hard HEAD
+# sudo git reset --hard HEAD
 
 # Update lasted update
 sudo git pull origin master -f
 
 # Install dependencies
-npm install
+sudo npm install
 
 # Build project
 npm run build
-
-if [ ! -d "$SITE_DIR/mambadocs-prod" ]; then
-  mkdir "$SITE_DIR/mambadocs-prod"
-fi
 
 
 # Copy build to prod dest
@@ -55,4 +58,4 @@ npm install --production --ignore-scripts
 npm prune --production --ignore-scripts
 
 (pm2 delete mambadocs || true)
-pm2 start npm --name mambadocs -- start
+pm2 start ecosystem.config.js

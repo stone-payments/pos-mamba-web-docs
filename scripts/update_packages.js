@@ -74,22 +74,24 @@ async function clearTemp() {
   removePaths(paths)
 }
 
-// clears packages
-rimraf('./packages', () =>{
-  console.log('Cleaning Packages.');
+if(process.env.NODE_ENV !== 'production') {
+  // clears packages
+  rimraf('./packages', () => {
+    console.log('Cleaning Packages.');
 
-  // create dirs
-  createDir('packages/');
-  createDir('packages/pos');
-  createDir('packages/components');
+    // create dirs
+    createDir('packages/');
+    createDir('packages/pos');
+    createDir('packages/components');
 
-  // clone repo
-  cloneRepo().then(() => {
+    // clone repo
+    cloneRepo().then(() => {
 
-    // move to directory and clear temp files
-    moveDir('./.temp/packages/components', './packages/components',
-      moveDir('./.temp/packages/pos', './packages/pos',
-        moveDir('./.temp/packages/store','./packages/store',
-          clearTemp())));
-  });
-})
+      // move to directory and clear temp files
+      moveDir('./.temp/packages/components', './packages/components',
+        moveDir('./.temp/packages/pos', './packages/pos',
+          moveDir('./.temp/packages/store','./packages/store',
+            clearTemp())));
+    });
+  })
+}

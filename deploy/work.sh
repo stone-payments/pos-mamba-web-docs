@@ -27,18 +27,20 @@ fi
 sudo rm -rf __sapper__
 
 # Ignore remote hard-coded changes
-# sudo git reset --hard HEAD
-sudo git checkout master -- package-lock.json
+sudo git reset --hard origin/master
+# sudo git checkout master -- package-lock.json
 
 # Update lasted update
 sudo git pull origin master -f
 
 # Install dependencies
-sudo npm install -verbose
+sudo npm install
+
+# Update packages
+sudo npm run pull:packages
 
 # Build project
 sudo npm run build
-
 
 # Copy build to prod dest
 cp -rp "__sapper__" $PROD_DIR

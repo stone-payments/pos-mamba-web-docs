@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'mambadocs',
-      script: './__sapper__/build/index.js',
+      script: '/home/deployusr/site/mambadocs-prod/__sapper__/build/index.js',
       watch: 'true',
       env: {
         NODE_ENV: 'production',

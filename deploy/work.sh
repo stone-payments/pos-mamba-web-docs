@@ -11,6 +11,8 @@ export NODE_ENV=production
 
 cd $APP_DIR
 
+echo pwd
+
 set -x
 
 if [ ! -d "$SITE_DIR/mambadocs-prod" ]; then
@@ -31,10 +33,10 @@ sudo rm -rf __sapper__
 sudo git pull origin master -f
 
 # Install dependencies
-sudo npm install
+sudo npm install -verbose
 
 # Build project
-npm run build
+sudo npm run build
 
 
 # Copy build to prod dest
@@ -54,8 +56,8 @@ cp -rp "./static" $PROD_DIR
 
 cd $PROD_DIR
 # Install dependencies
-npm install --production --ignore-scripts
-npm prune --production --ignore-scripts
+sudo npm install --production --ignore-scripts
+sudo npm prune --production --ignore-scripts
 
 (pm2 delete mambadocs || true)
 pm2 start ecosystem.config.js

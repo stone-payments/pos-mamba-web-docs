@@ -29,10 +29,10 @@ module.exports = {
       // path in the server
       path: "/home/deployusr/site/pos-mamba-sdk-docs",
       // Pre-setup command or path to a script on your local machine
-      pre-setup: "sudo sh /home/deployusr/site/pos-mamba-sdk-docs/deploy/work.sh",
+      "pre-setup": "sudo sh /home/deployusr/site/pos-mamba-sdk-docs/deploy/work.sh",
       // Post-setup commands or path to a script on the host machine
       // eg: placing configurations in the shared dir etc
-      post-setup: "ls -la"
+      "post-setup": "ls -la"
     },
   }
 };

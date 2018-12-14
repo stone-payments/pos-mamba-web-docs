@@ -45,6 +45,8 @@ sudo npm run build
 # Copy build to prod dest
 cp -rp "__sapper__" $PROD_DIR
 
+cp -rp "content" $PROD_DIR
+
 # Copy package.json 
 cp -rp "./package.json" $PROD_DIR
 

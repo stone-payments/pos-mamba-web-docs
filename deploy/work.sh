@@ -28,6 +28,7 @@ sudo rm -rf __sapper__
 
 # Ignore remote hard-coded changes
 # sudo git reset --hard HEAD
+sudo git checkout master -- package-lock.json
 
 # Update lasted update
 sudo git pull origin master -f

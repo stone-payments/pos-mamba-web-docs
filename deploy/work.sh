@@ -35,6 +35,7 @@ sudo git pull origin master -f
 
 # Install dependencies
 sudo npm install
+sudo npm install immer
 
 # Update packages
 sudo npm run pull:packages
@@ -63,6 +64,7 @@ cd $PROD_DIR
 # Install dependencies
 sudo npm install --production --ignore-scripts
 sudo npm prune --production --ignore-scripts
+sudo npm install immer
 
 (pm2 delete mambadocs || true)
 pm2 start ecosystem.config.js

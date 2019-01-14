@@ -6,9 +6,7 @@ export default [
     title: 'Components',
     to: '/components',
     icon: 'fas fa-cube',
-    submenu: [
-      ...NAV_COMPONENTS,
-    ],
+    submenu: [...NAV_COMPONENTS],
   },
   { type: 'hr' },
   {
@@ -16,14 +14,15 @@ export default [
     to: '/native',
     icon: 'fas fa-microchip',
     submenu: [
-      { title: 'App', to: '/app'},
+      { title: 'App', to: '/app' },
+      { title: 'Card', to: '/card' },
       { title: 'Http', to: '/http' },
       { title: 'Keyboard', to: '/keyboard' },
       { title: 'Merchant', to: '/merchant' },
       { title: 'Payment', to: '/payment' },
       { title: 'Printer', to: '/printer' },
-      { title: 'System', to: '/system' },
       { title: 'Storage', to: '/storage' },
+      { title: 'System', to: '/system' },
     ],
   },
-]
+];

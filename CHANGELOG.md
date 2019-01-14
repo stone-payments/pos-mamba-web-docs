@@ -1,3 +1,26 @@
+## 1.3.1 (January 14, 2019)
+  - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs into develop
+  - Merge pull request #18 from stone-payments/deploy-mamba-2.1.0
+  - Fix theme configuration
+  - Lock file
+
+## 1.3.0 (January 14, 2019)
+  - Update packages.json
+  - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs
+  - Update build scripts
+  - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs
+  - Ignore script for production
+  - Updade deploy scripts
+  - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs
+  - Add hash
+  - Merge branch 'develop'
+  - Add more complex git control; and ssh-copy-key scripot
+  - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs
+  - Add deploy script
+  - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs
+  - Add remote production script
+  - Merge pull request #17 from stone-payments/develop
+
 ## 1.1.1 (December 13, 2018)
   - Ajust space after table example
   - Reindent file

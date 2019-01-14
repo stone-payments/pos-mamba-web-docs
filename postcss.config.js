@@ -1,5 +1,9 @@
+const postcssUniqueImports = require('@mamba/configs/postcss/includes/uniqueImports.js');
+
 module.exports = {
   plugins: [
+    /** Custom plugin to prepend imports */
+    postcssUniqueImports.plugin(['@mamba/styles/theme.pcss']),
     require('postcss-easy-import'),
     require('postcss-extend-rule'),
     require('postcss-advanced-variables'),
@@ -15,4 +19,4 @@ module.exports = {
     require('postcss-nested'),
     require('postcss-reporter')({ clearReportedMessages: true }),
   ],
-}
+};

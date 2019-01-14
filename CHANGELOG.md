@@ -1,3 +1,7 @@
+## 1.3.2 (January 14, 2019)
+  - Add API Card documentation 
+  - Fix a Not Found bug
+
 ## 1.3.1 (January 14, 2019)
   - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs into develop
   - Merge pull request #18 from stone-payments/deploy-mamba-2.1.0

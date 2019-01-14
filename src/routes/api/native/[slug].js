@@ -37,7 +37,9 @@ export async function get(req, res, next) {
       toFile: true,
     });
 
-    const section = sections.find(item => item.slug === slug);
+    const section = sections.find(
+      item => item.slug.toLowerCase() === slug.toLowerCase(),
+    );
 
     const components = {
       docs: {

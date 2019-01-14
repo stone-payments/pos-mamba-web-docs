@@ -5,14 +5,7 @@
   - Lock file
 
 ## 1.3.0 (January 14, 2019)
-  - Fix missing dependence temporally
   - Update packages.json
-  - Update scrosystem file
-  - Update scrosystem file
-  - Update scrosystem file
-  - Update scrosystem file
-  - Update scrosystem file
-  - Update scrosystem file
   - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs
   - Update build scripts
   - Merge branch 'develop' of github.com:stone-payments/pos-mamba-sdk-docs

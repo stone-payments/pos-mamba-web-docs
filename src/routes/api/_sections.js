@@ -16,44 +16,44 @@ import './_processLineNumbers';
 
 const blockTypes = 'blockquote html heading hr list listitem paragraph table tablerow tablecell'.split(
   ' ',
-)
+);
 
 // This function extract metadata in code comments
 // parse it and return the js object using fleece
 function extractMeta(line, lang = 'markup') {
   try {
     if (lang === 'html' && line.startsWith('<!--') && line.endsWith('-->')) {
-      return fleece.evaluate(line.slice(4, -3).trim())
+      return fleece.evaluate(line.slice(4, -3).trim());
     }
 
     if (
       lang === 'js' ||
       (lang === 'json' && line.startsWith('/*') && line.endsWith('*/'))
     ) {
-      return fleece.evaluate(line.slice(2, -2).trim())
+      return fleece.evaluate(line.slice(2, -2).trim());
     }
   } catch (err) {
     // TODO report these errors, don't just squelch them
-    return null
+    return null;
   }
 }
 
 // https://github.com/darkskyapp/string-hash/blob/master/index.js
 function getHash(str) {
-  let hash = 5381
-  let i = str.length
+  let hash = 5381;
+  let i = str.length;
 
-  while (i--) hash = ((hash << 5) - hash) ^ str.charCodeAt(i)
-  return (hash >>> 0).toString(36)
+  while (i--) hash = ((hash << 5) - hash) ^ str.charCodeAt(i);
+  return (hash >>> 0).toString(36);
 }
 
 const cheerioOption = {
   decodeEntities: false,
-}
+};
 
-const SELECTOR = 'pre>code[class*="language-"]'
+const SELECTOR = 'pre>code[class*="language-"]';
 
-export const demos = new Map()
+export const demos = new Map();
 
 /*
   options: {
@@ -67,10 +67,10 @@ export const demos = new Map()
 export default function(path, options = {}) {
   let read = [path];
 
-  if(!options.toFile) {
+  if (!options.toFile) {
     try {
       read = fs.readdirSync(path);
-    } catch(e) {
+    } catch (e) {
       console.warn(e.code, e.path);
       return null;
     }
@@ -79,13 +79,16 @@ export default function(path, options = {}) {
   }
 
   return read.map(file => {
-
     const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '');
     const filePath = (options.toFile ? '' : `${path}/`).concat(file);
 
     const markdown = fs.readFileSync(filePath, 'utf-8');
 
-    const { content, metadata, examples } = processMarkdown(markdown, `${options.examplePath}`, options.examples);
+    const { content, metadata, examples } = processMarkdown(
+      markdown,
+      `${options.examplePath}`,
+      options.examples,
+    );
 
     const groups = [];
     let group = null;
@@ -94,9 +97,7 @@ export default function(path, options = {}) {
     const renderer = new marked.Renderer();
 
     renderer.code = (source, lang) => {
-      source = source.replace(/^ +/gm, match =>
-        match.split('    ').join('\t'),
-      )
+      source = source.replace(/^ +/gm, match => match.split('    ').join('\t'));
 
       const lines = source.split('\n');
 
@@ -106,17 +107,21 @@ export default function(path, options = {}) {
       let className = 'code-block';
 
       if (lang === 'html' && !group) {
-        group = { id: uid++, blocks: [] }
+        group = { id: uid++, blocks: [] };
         groups.push(group);
       }
 
       if (meta) {
-        source = lines.slice(1).join('\n')
-        const filename = meta.filename || (lang === 'html')
+        source = lines.slice(1).join('\n');
+        const filename = meta.filename || lang === 'html';
         if (filename) {
-          if(options.mambaSlub) {
-            prefix = `<div class='source-header'><i class="fas fa-external-link-alt"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/develop/packages/components/${capitalize(options.mambaSlub)}/example/${filename}'><span>${strings.sourceCode}</span></a></div>`;
-          }else {
+          if (options.mambaSlub) {
+            prefix = `<div class='source-header'><i class="fas fa-external-link-alt"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/develop/packages/components/${capitalize(
+              options.mambaSlub,
+            )}/example/${filename}'><span>${
+              strings.sourceCode
+            }</span></a></div>`;
+          } else {
             prefix = `<span class='filename'>${filename}</span>`;
           }
           className += ' named';
@@ -131,7 +136,7 @@ export default function(path, options = {}) {
 
       // Define proper language type from `lang` param
       const properLanguage =
-          (lang === 'js' ? 'javascript' : lang) || 'javascript'
+        (lang === 'js' ? 'javascript' : lang) || 'javascript';
 
       // Create a inline code tag
       const html = `<pre class="code-block line-numbers language-${properLanguage}"><code class="language-${properLanguage}">${source.replace(
@@ -147,15 +152,22 @@ export default function(path, options = {}) {
 
       // Default options for Prism
       const prismOptions = {
-        languages: ['bash', 'markup', 'markdown', 'javascript', 'css', 'typescript'],
+        languages: [
+          'bash',
+          'markup',
+          'markdown',
+          'javascript',
+          'css',
+          'typescript',
+        ],
         fontSize: 16,
-      }
+      };
 
       // Import language support of every souce code block
       if ($elements.length !== 0) {
         prismOptions.languages.forEach(language =>
           require(`prismjs/components/prism-${language}`),
-        )
+        );
       }
 
       // Apply Prism js to every source code
@@ -166,7 +178,7 @@ export default function(path, options = {}) {
 
         let language = classNameUtils.getLanguageFromClassName(
           $element.attr('class'),
-        )
+        );
 
         let grammar = Prism.languages[language];
 
@@ -187,7 +199,7 @@ export default function(path, options = {}) {
           grammar: grammar,
           code: code,
           options: prismOptions,
-        }
+        };
 
         Prism.hooks.run('before-sanity-check', env);
 
@@ -196,7 +208,7 @@ export default function(path, options = {}) {
             env.$element.textContent = env.code;
           }
           Prism.hooks.run('complete', env);
-          return
+          return;
         }
 
         Prism.hooks.run('before-highlight', env);
@@ -210,17 +222,17 @@ export default function(path, options = {}) {
 
         Prism.hooks.run('after-highlight', env);
         Prism.hooks.run('complete', env);
-      })
+      });
 
       let renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
-      
-      if(examples.length && examples[0].fileContents) {
+
+      if (examples.length && examples[0].fileContents) {
         // We need to avoid markdown code contents being confused with component examples block.
         // Probally this aproach is too expensive
-        const bufLeft  = createBuffer()(source);
+        const bufLeft = createBuffer()(source);
         const bufRight = createBuffer()(examples[0].fileContents);
 
-        if(bufLeft.equals(bufRight)) {
+        if (bufLeft.equals(bufRight)) {
           examples[0].source = renderBlock;
           examples[0].endIndex = renderBlock.length;
           return '';
@@ -228,15 +240,15 @@ export default function(path, options = {}) {
       }
 
       return renderBlock;
-    }
+    };
 
     blockTypes.forEach(type => {
       const fn = renderer[type];
       renderer[type] = function() {
         group = null;
         return fn.apply(this, arguments);
-      }
-    })
+      };
+    });
 
     // Process markdown with marked
     let html = marked(content, { renderer });
@@ -246,14 +258,17 @@ export default function(path, options = {}) {
     let pattern = /<h3 id="(.+?)">(.+?)<\/h3>/g;
     while ((match = pattern.exec(html))) {
       const slug = match[1];
-      const anchor = match[0].replace(match[2], `<span>${match[2]}</span><a href="${options.anchorPath || ''}#${slug}" class="anchor">#</a>`);
+      const anchor = match[0].replace(
+        match[2],
+        `<span>${match[2]}</span><a href="${options.anchorPath ||
+          ''}#${slug}" class="anchor">#</a>`,
+      );
       html = html.replace(match[0], anchor);
     }
 
-    const hashes = {}
+    const hashes = {};
 
     groups.forEach(group => {
-
       const main = group.blocks[0];
       if (main.meta.repl === false) return;
 
@@ -272,23 +287,22 @@ export default function(path, options = {}) {
           components: group.blocks
             .filter(block => block.lang === 'html' || block.lang === 'js')
             .map(block => {
-              const [name, type] = (block.meta.filename || '').split('.')
+              const [name, type] = (block.meta.filename || '').split('.');
               return {
                 name: name || 'App',
                 type: type || 'html',
                 source: block.source,
-              }
+              };
             }),
           json5: json5 && json5.source,
         }),
       );
-    })
+    });
 
     // Create subsections with H2 heading match
     const subsections = [];
     pattern = /<h2 id="(.+?)">(.+?)<\/h2>/g;
     match;
-
 
     while ((match = pattern.exec(html))) {
       const slug = match[1];
@@ -297,14 +311,14 @@ export default function(path, options = {}) {
         match[2]
           .replace(/<\/?code>/g, '')
           .replace(/\.(\w+)(\((.+)?\))?/, (m, $1, $2, $3) => {
-            if ($3) return `.${$1}(...)`
-            if ($2) return `.${$1}()`
-            return `.${$1}`
+            if ($3) return `.${$1}(...)`;
+            if ($2) return `.${$1}()`;
+            return `.${$1}`;
           }),
       );
 
-      if(metadata.title !== title) subsections.push({ slug, title });
-    };
+      if (metadata.title !== title) subsections.push({ slug, title });
+    }
 
     // Add class to numbers before h3 Headings
     let output = insertTag(
@@ -312,7 +326,7 @@ export default function(path, options = {}) {
       html,
       'span',
       'counter',
-      'h3'
+      'h3',
     );
 
     // Add Span to tables td content to allow customization
@@ -326,14 +340,16 @@ export default function(path, options = {}) {
     paramsIndex = paramsIndex === -1 ? false : paramsIndex;
 
     return {
-      html: paramsIndex && output.slice(0, paramsIndex) || output,
-      paramsHtml: paramsIndex && output.slice(paramsIndex) || false,
-      slug: options.toFile ? basename(file).replace(/\.md$/, '') : file.replace(/^\d+-/, '').replace(/\.md$/, ''),
+      html: (paramsIndex && output.slice(0, paramsIndex)) || output,
+      paramsHtml: (paramsIndex && output.slice(paramsIndex)) || false,
+      slug: options.toFile
+        ? basename(file).replace(/\.md$/, '')
+        : file.replace(/^\d+-/, '').replace(/\.md$/, ''),
       file: basename(file),
       filePath: options.toFile ? path : `${path}/${file}`,
       metadata,
       subsections,
       examples,
-    }
-  })
+    };
+  });
 }

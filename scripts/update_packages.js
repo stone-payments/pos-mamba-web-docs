@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const degit = require('degit');
-const rimraf =  require('rimraf');
+const rimraf = require('rimraf');
 const globby = require('globby');
 
 const packageRoot = path.join(process.cwd(), 'packages');
@@ -10,11 +10,10 @@ const componentsPath = path.join(packageRoot, 'components');
 // degit to temp folder
 
 function moveDir(path, destination, callback) {
-  fs.rename(path, destination, (error) => {
-    if(error) {
-      console.log("ERROR \n" + error.message);
-    }
-    else {
+  fs.rename(path, destination, error => {
+    if (error) {
+      console.log('ERROR \n' + error.message);
+    } else {
       if (typeof callback === 'function') {
         callback();
       }
@@ -25,19 +24,22 @@ function moveDir(path, destination, callback) {
 // clone repo using degit
 
 function cloneRepo(callback) {
-  const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
-    force: true,
-    verbose: true,
-  });
+  const emmiter = degit(
+    'stone-payments/pos-mamba-sdk#feature/WEBSDK-703-tabs-component',
+    {
+      force: true,
+      verbose: true,
+    },
+  );
   return emmiter.clone('.temp/');
 }
 
 // check if dir exists and create if it doesnt
 function createDir(dirName) {
   if (!fs.existsSync(dirName)) {
-    fs.mkdirSync(dirName, (error) => {
-      if(error) {
-        console.log('ERROR \n'+error.message);
+    fs.mkdirSync(dirName, error => {
+      if (error) {
+        console.log('ERROR \n' + error.message);
       }
     });
   }
@@ -57,24 +59,35 @@ async function clearTemp() {
     console.log('Temporary Files Removed !');
   });
 
-  const paths = globby.sync(['*/*.*', '*/.*', '*/*', '!Icon/assets', '!*/example', '!*/README.md', '!*/package.json'], {
-    cwd: componentsPath,
-    onlyFiles: false,
-    expandDirectories: {
-      files: ['*/static'],
-      extensions: ['svg', 'png', 'jpg', 'jpeg'],
+  const paths = globby.sync(
+    [
+      '*/*.*',
+      '*/.*',
+      '*/*',
+      '!Icon/assets',
+      '!*/example',
+      '!*/README.md',
+      '!*/package.json',
+    ],
+    {
+      cwd: componentsPath,
+      onlyFiles: false,
+      expandDirectories: {
+        files: ['*/static'],
+        extensions: ['svg', 'png', 'jpg', 'jpeg'],
+      },
     },
-  });
-  
+  );
+
   // Remove undesired components
   // paths.push('App');
 
   console.log('paths: ', paths);
-  
-  removePaths(paths)
+
+  removePaths(paths);
 }
 
-//if(process.env.NODE_ENV !== 'production') {
+// if(process.env.NODE_ENV !== 'production') {
 // clears packages
 rimraf('./packages', () => {
   console.log('Cleaning Packages.');
@@ -86,12 +99,12 @@ rimraf('./packages', () => {
 
   // clone repo
   cloneRepo().then(() => {
-
     // move to directory and clear temp files
-    moveDir('./.temp/packages/components', './packages/components',
-      moveDir('./.temp/packages/pos', './packages/pos',
-        moveDir('./.temp/packages/store','./packages/store',
-          clearTemp())));
+    moveDir(
+      './.temp/packages/components',
+      './packages/components',
+      moveDir('./.temp/packages/pos', './packages/pos', clearTemp()),
+    );
   });
-})
-//}
+});
+// }

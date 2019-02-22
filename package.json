@@ -65,7 +65,6 @@
     "@mamba/qrcode": "latest",
     "@mamba/range": "latest",
     "@mamba/sprite": "latest",
-    "@mamba/store": "latest",
     "@mamba/styles": "latest",
     "@mamba/switch": "latest",
     "@mamba/tabs": "latest",

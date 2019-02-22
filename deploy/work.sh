@@ -35,7 +35,6 @@ sudo git pull origin master -f
 
 # Install dependencies
 sudo npm install
-sudo npm install immer
 
 # Update packages
 sudo npm run pull:packages

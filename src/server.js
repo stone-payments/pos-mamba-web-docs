@@ -1,25 +1,23 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import serve from 'serve-static';
-import compression from 'compression';
-import { Store } from 'svelte/store.js';
-import * as sapper from '../__sapper__/server.js';
-import http from 'http';
-import https from 'https';
-import fs from 'fs';
-import serverConfig from './config.js';
-import createCredentials from './createCredentials.js';
+import dotenv from 'dotenv'
+import express from 'express'
+import serve from 'serve-static'
+import compression from 'compression'
+import { Store } from 'svelte/store.js'
+import * as sapper from '../__sapper__/server.js'
+import http from 'http'
+import https from 'https'
+import serverConfig from './config.js'
+import createCredentials from './createCredentials.js'
 
-const IS_DEV = process.env.NODE_ENV === 'development';
-const IS_PROD = process.env.NODE_ENV === 'production';
+const IS_DEV = process.env.NODE_ENV === 'development'
 
 const {
-  server: { credentials, port },
-} = serverConfig;
+  server: { credentials },
+} = serverConfig
 
-dotenv.config();
+dotenv.config()
 
-const app = express();
+const app = express()
 
 const serveMisc = [
   'Icon',
@@ -28,7 +26,7 @@ const serveMisc = [
   'QRCode/example',
 ].map(path =>
   serve(`packages/components/${path}`, { dotfiles: 'ignore', etag: false }),
-);
+)
 
 app.use(
   compression({ threshold: 0 }),
@@ -38,16 +36,16 @@ app.use(
     store: req => {
       return new Store({
         guide_contents: [],
-      });
+      })
     },
   }),
-);
+)
 
-const secureConfig = IS_DEV ? credentials.dev : credentials.prod;
-const envPort = IS_DEV ? 3000 : 80;
+const secureConfig = IS_DEV ? credentials.dev : credentials.prod
+const envPort = IS_DEV ? 3000 : 80
 
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(createCredentials(secureConfig), app);
+const httpServer = http.createServer(app)
+const httpsServer = https.createServer(createCredentials(secureConfig), app)
 
-httpServer.listen(envPort);
-httpsServer.listen(443);
+httpServer.listen(envPort)
+httpsServer.listen(443)

@@ -1,4 +1,4 @@
-import NAV_COMPONENTS from './NAV_COMPONENTS';
+import NAV_COMPONENTS from './NAV_COMPONENTS'
 
 export default [
   { type: 'hr' },
@@ -25,4 +25,4 @@ export default [
       { title: 'System', to: '/system' },
     ],
   },
-];
+]

@@ -19,10 +19,7 @@ function createGlob(glob = '') {
 }
 
 function createApiGlob() {
-  return [
-    `docs/*.md`,
-    `README.md`,
-  ]
+  return [`docs/*.md`, `README.md`]
 }
 
 function unescape(str) {
@@ -42,16 +39,26 @@ const unescaped = Object.keys(escaped).reduce(
 // @param {string} parentTag - Add span class to parentClass with prefix 'has-'
 function insertTag(regex, content, tag, spanClass = '', parentTag = null) {
   return content.replace(regex, (m, $1) => {
-    if(parentTag) {
-      return m.replace(`<${parentTag}`, `<${parentTag} class="has-${spanClass}" `).replace($1, `<${tag} class="${spanClass}">${$1}</${tag}>`);
+    if (parentTag) {
+      return m
+        .replace(`<${parentTag}`, `<${parentTag} class="has-${spanClass}" `)
+        .replace($1, `<${tag} class="${spanClass}">${$1}</${tag}>`)
     }
-    return m.replace($1, `<${tag} class="${spanClass}">${$1}</${tag}>`);
+    return m.replace($1, `<${tag} class="${spanClass}">${$1}</${tag}>`)
   })
 }
 
 const createBuffer = () => {
-  const normalize = s => s.replace(/\r?\n|\r|\s/gm, '');
-  return (n) => Buffer.from(normalize(n));
+  const normalize = s => s.replace(/\r?\n|\r|\s/gm, '')
+  return n => Buffer.from(normalize(n))
 }
 
-export { createGlob, createApiGlob, unescape, insertTag, unescaped, replaceTag, createBuffer }
+export {
+  createGlob,
+  createApiGlob,
+  unescape,
+  insertTag,
+  unescaped,
+  replaceTag,
+  createBuffer,
+}

@@ -4,17 +4,14 @@ const { IS_PROD } = require('quickenv');
 
 const prettierOptions =  require('./.prettierrc.js');
 
-console.log('prettierOptions: ', prettierOptions);
-
 module.exports = {
   extends: [
-    'standard',
     'prettier',
     'prettier/standard',
     'plugin:jest/recommended',
   ],
   parser: 'babel-eslint',
-  plugins: ['standard', 'prettier', 'jest', 'html'],
+  plugins: ['prettier', 'jest', 'html'],
   settings: {
     'html/html-extensions': ['.html'],
   },
@@ -34,12 +31,12 @@ module.exports = {
         SwitchCase: 1,
       },
     ],
-    camelcase: 'off',
+    'camelcase': 'off',
     'prettier/prettier': ['error', prettierOptions],
     'class-methods-use-this': 0,
     'no-console': IS_PROD() ? ['error', { allow: ['warn', 'error'] }] : 'off',
     'no-var': 'error',
-    'comma-dangle': [2, 'always-multiline'],
+    'comma-dangle': ['error', 'always-multiline'],
     'no-new': 'off',
     'no-sequences': 'off',
   },

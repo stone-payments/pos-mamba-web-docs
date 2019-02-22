@@ -1,13 +1,13 @@
-import fs from 'fs';
-import { join, basename } from 'path';
-import strings from './_strings';
+import fs from 'fs'
+import { join, basename } from 'path'
+import strings from './_strings'
 
 export default function processMarkdown(markdown, dir, examplesPaths) {
-  const metadata = {};
+  const metadata = {}
 
-  const pattern = /(\w*@example)\s(.+)\s?-->$/gm;
-  let match;
-  let examples = [];
+  const pattern = /(\w*@example)\s(.+)\s?-->$/gm
+  let match
+  let examples = []
 
   // Match files ou code to include
   // Process example filename to include and metadata
@@ -15,22 +15,22 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
     const found = examplesPaths.find(
       k =>
         basename(k).toLowerCase() === basename(match[2].trim()).toLowerCase(),
-    );
+    )
 
     if (found) {
-      const filePath = found; // match[2].trim();
-      const absPath = join(dir, filePath);
-      const fileContents = fs.readFileSync(absPath, 'utf-8');
-      const matchTitle = match.input.match(/#\s.+?\n/);
-      const title = (matchTitle && matchTitle[0].trim()) || match[2];
-      const index = match.index;
+      const filePath = found // match[2].trim();
+      const absPath = join(dir, filePath)
+      const fileContents = fs.readFileSync(absPath, 'utf-8')
+      const matchTitle = match.input.match(/#\s.+?\n/)
+      const title = (matchTitle && matchTitle[0].trim()) || match[2]
+      const index = match.index
 
       const contentsMeta = `<!-- {title: '${title}', repl: false, filename: '${basename(
         match[2].trim(),
-      )}'} -->\n`;
+      )}'} -->\n`
 
-      let source = `\n\r\`\`\`html\n${contentsMeta}${fileContents}\`\`\``;
-      markdown = markdown.replace(`<!-- `.concat(match[0]), source);
+      let source = `\n\r\`\`\`html\n${contentsMeta}${fileContents}\`\`\``
+      markdown = markdown.replace(`<!-- `.concat(match[0]), source)
 
       examples.push({
         index,
@@ -38,7 +38,7 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
         filePath,
         fileName: basename(match[2]),
         source: source,
-      });
+      })
     }
   }
 
@@ -48,12 +48,12 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
     (m, $1, $2, $3) => {
       const extra = $3
         ? `<span class="token keyword" style="color:#428acc">${$3}</span>`
-        : '';
+        : ''
 
-      const scaped = `<span class="token punctuation">&lt;</span>${$1}<span class="attr-name">${$2}</span>${extra} <span class="token punctuation">/&gt;</span>`;
-      return `<h2 class="props-heading token tag">${scaped}</h2>`;
+      const scaped = `<span class="token punctuation">&lt;</span>${$1}<span class="attr-name">${$2}</span>${extra} <span class="token punctuation">/&gt;</span>`
+      return `<h2 class="props-heading token tag">${scaped}</h2>`
     },
-  );
+  )
 
   // This match for custom tag of:
   // ---
@@ -63,26 +63,26 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
   // ---
   // to define a section and fetch metadatas.
   // If not found, markdown must have a least H1.
-  match = /<!--\n?([\s\S]*(@*:[\s]?).+?)\n-->/isu.exec(markdown);
+  match = /<!--\n?([\s\S]*(@*:[\s]?).+?)\n-->/isu.exec(markdown)
 
   // Match/Found H1 heading
   if (match === null) {
-    match = /#{1}(\s?)(\w.+)/.exec(markdown);
-    metadata.title = match[2];
+    match = /#{1}(\s?)(\w.+)/.exec(markdown)
+    metadata.title = match[2]
   }
 
   // Process metadatas
-  const frontMatter = match[1];
-  const content = markdown.slice(match[0].length);
+  const frontMatter = match[1]
+  const content = markdown.slice(match[0].length)
 
   frontMatter.split('\n').forEach(pair => {
-    const colonIndex = pair.indexOf(':');
-    const arIndex = pair.indexOf('@') + 1;
+    const colonIndex = pair.indexOf(':')
+    const arIndex = pair.indexOf('@') + 1
     if (colonIndex > -1)
       metadata[pair.slice(arIndex, colonIndex).trim()] = pair
         .slice(colonIndex + 1)
-        .trim();
-  });
+        .trim()
+  })
 
-  return { metadata, content, examples };
+  return { metadata, content, examples }
 }

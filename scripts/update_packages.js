@@ -24,13 +24,10 @@ function moveDir(path, destination, callback) {
 // clone repo using degit
 
 function cloneRepo(callback) {
-  const emmiter = degit(
-    'stone-payments/pos-mamba-sdk#feature/WEBSDK-703-tabs-component',
-    {
-      force: true,
-      verbose: true,
-    },
-  );
+  const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
+    force: true,
+    verbose: true,
+  });
   return emmiter.clone('.temp/');
 }
 

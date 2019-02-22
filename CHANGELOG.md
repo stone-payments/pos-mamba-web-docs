@@ -1,3 +1,6 @@
+## 1.4.0 (February 22, 2019)
+  - feat: 🎸 Add new component @mamba/tabs
+
 ## 1.3.2 (January 14, 2019)
   - Add API Card documentation 
   - Fix a Not Found bug

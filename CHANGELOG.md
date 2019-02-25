@@ -1,3 +1,7 @@
+## 1.5.1 (February 25, 2019)
+  - fix: 🐛 Fix deploy dependencies version
+  - chore: 🤖 Add @mamba/styles to production
+
 ## 1.5.0 (February 25, 2019)
 
 

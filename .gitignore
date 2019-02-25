@@ -27,5 +27,6 @@ bower_components/
 /packages
 __sapper__
 
-## Ignore yarn .lock, Use package-lock.json instead
+## Ignore all lock files. Yes, ALL!
 yarn.lock
+package-lock.json

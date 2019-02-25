@@ -7,5 +7,9 @@ module.exports = {
   rules: {
     semi: [0, 'never'],
     'import/extensions': [0, 'never'],
+    'no-return-assign': [0, 'never'],
+    'no-sequences': [0, 'never'],
+    'global-require': [0, 'never'],
+    'no-bitwise': [0, 'never'],
   },
 }

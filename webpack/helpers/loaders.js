@@ -11,6 +11,7 @@ module.exports = {
   babel: {
     loader: 'babel-loader',
     options: {
+      sourceMaps: IS_DEV,
       compact: false,
       cacheDirectory: IS_DEV,
       babelrc: false,

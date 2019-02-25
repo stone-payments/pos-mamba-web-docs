@@ -1,9 +1,9 @@
-const webpack = require('webpack');
-const path = require('path');
-const loaders = require('./helpers/loaders');
-const { fromWorkspace, fromProject } = require('./helpers/paths');
-const pkg = require('../package.json');
-const mode = process.env.NODE_ENV;
+const webpack = require('webpack')
+const path = require('path')
+const loaders = require('./helpers/loaders')
+const { fromWorkspace, fromProject } = require('./helpers/paths')
+const pkg = require('../package.json')
+const mode = process.env.NODE_ENV
 
 const {
   BUNDLE_NAME,
@@ -14,7 +14,7 @@ const {
   IS_PROD,
   NODE_ENV,
   APP_ENV,
-} = require('@mamba/webpack/helpers/consts.js');
+} = require('@mamba/webpack/helpers/consts.js')
 
 module.exports = function createWebpackConfig(type) {
   return {
@@ -58,7 +58,13 @@ module.exports = function createWebpackConfig(type) {
             /packages\/.+\/src/,
             path.resolve(__dirname, '..'),
           ],
-          use: loaders.svelte(type),
+          use: [loaders.babel, loaders.svelte(type)],
+        },
+        {
+          test: /\.js$/,
+          include: [path.resolve(__dirname, '../src')],
+          exclude: [/node_modules/],
+          use: [loaders.babel],
         },
         {
           test: /\.(css|pcss)$/,
@@ -113,5 +119,5 @@ module.exports = function createWebpackConfig(type) {
       }),
     ],
     mode,
-  };
-};
+  }
+}

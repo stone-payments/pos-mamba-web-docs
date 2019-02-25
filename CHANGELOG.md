@@ -1,3 +1,20 @@
+## 1.5.0 (February 25, 2019)
+
+
+## 1.5.0 (February 25, 2019)
+  - style: 💄 Fix some linters rules
+  - chore: 🤖 Add babel config to webpack
+  - chore: 🤖 Update eslint plugin prettier
+  - internal: 🏭 ignore rules for docs
+  - chore: 🤖 Add linters configs based on mamba sdk
+  - internal: 🏭 Use SDK .babelrc config
+  - internal: 🏭 Ignore all locks file...
+  - internal: 🏭 Re-configure eslint and prettier and format files
+  - internal: 🏭 Update service-worker
+  - chore: 🤖 Update dependencies
+  - internal: 🏭 Remove manually install immer
+  - chore: 🤖 Remove deprecated @mamba/store
+
 ## 1.4.0 (February 22, 2019)
   - feat: 🎸 Add new component @mamba/tabs
 

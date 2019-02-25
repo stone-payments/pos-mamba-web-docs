@@ -5,13 +5,11 @@ let json
 export function get(req, res) {
   if (!json || process.env.NODE_ENV !== 'production') {
     json = JSON.stringify(
-      getSections('content/guide').map(section => {
-        return {
-          metadata: section.metadata,
-          subsections: section.subsections,
-          slug: section.slug,
-        }
-      }),
+      getSections('content/guide').map(section => ({
+        metadata: section.metadata,
+        subsections: section.subsections,
+        slug: section.slug,
+      })),
     )
   }
 

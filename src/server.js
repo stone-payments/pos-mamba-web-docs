@@ -3,10 +3,10 @@ import express from 'express'
 import serve from 'serve-static'
 import compression from 'compression'
 import { Store } from 'svelte/store.js'
-import * as sapper from '../__sapper__/server.js'
 import http from 'http'
 import https from 'https'
 import serverConfig from './config.js'
+import * as sapper from '../__sapper__/server.js'
 import createCredentials from './createCredentials.js'
 
 const IS_DEV = process.env.NODE_ENV === 'development'
@@ -33,11 +33,10 @@ app.use(
   serve('static'),
   serveMisc,
   sapper.middleware({
-    store: req => {
-      return new Store({
+    store: () =>
+      new Store({
         guide_contents: [],
-      })
-    },
+      }),
   }),
 )
 

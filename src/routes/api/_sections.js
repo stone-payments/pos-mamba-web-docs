@@ -79,7 +79,7 @@ export default function(path, options = {}) {
   }
 
   return read.map(file => {
-    const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '')
+    // const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '')
     const filePath = (options.toFile ? '' : `${path}/`).concat(file)
 
     const markdown = fs.readFileSync(filePath, 'utf-8')
@@ -171,20 +171,20 @@ export default function(path, options = {}) {
       }
 
       // Apply Prism js to every source code
-      $elements.each(function(index, element) {
-        let $element = $(this)
+      $elements.each(function applyPrism(index, element) {
+        const $element = $(this)
 
-        let $parent = $element.parent()
+        const $parent = $element.parent()
 
-        let language = classNameUtils.getLanguageFromClassName(
+        const language = classNameUtils.getLanguageFromClassName(
           $element.attr('class'),
         )
 
-        let grammar = Prism.languages[language]
+        const grammar = Prism.languages[language]
 
         $parent
           .addClass(`language-${language}`)
-          .css('font-size', prismOptions.fontSize + 'px')
+          .css('font-size', `${prismOptions.fontSize}px`)
 
         let code = $element.html()
 
@@ -194,11 +194,11 @@ export default function(path, options = {}) {
         code = escape.tag(code)
 
         let env = {
-          $element: $element,
-          language: language,
-          grammar: grammar,
-          code: code,
           options: prismOptions,
+          $element,
+          language,
+          grammar,
+          code,
         }
 
         Prism.hooks.run('before-sanity-check', env)

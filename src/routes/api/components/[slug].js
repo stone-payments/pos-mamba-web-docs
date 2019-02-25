@@ -54,32 +54,27 @@ export async function get(req, res) {
 
     let sections = null
 
-    let examples = paths.filter(f => f.indexOf('/example/') !== -1)
+    const examples = paths.filter(f => f.indexOf('/example/') !== -1)
 
     const components = paths.reduce(
       (pkg, file) => {
         const fileName = path.basename(file)
         const filePath = path.join(packageRoot, file)
 
-        switch (fileName) {
-          case packageJson:
-            pkg.info = getPkgInfo(filePath, Slug)
-            break
+        if (fileName === packageJson) {
+          pkg.info = getPkgInfo(filePath, Slug)
+        } else if (fileName === README) {
+          // Get directory README.md
+          if (!sections)
+            sections = getSections(filePath, {
+              mambaSlub: Slug,
+              examplePath: packageRoot,
+              anchorPath: `components/${slug}`,
+              toFile: true,
+              examples,
+            })
 
-          case README:
-            // Get directory README.md
-            if (!sections)
-              sections = getSections(filePath, {
-                mambaSlub: Slug,
-                examplePath: packageRoot,
-                examples: examples,
-                anchorPath: `components/${slug}`,
-                toFile: true,
-              })
-
-            pkg.docs = sections && sections.find(item => item.file === fileName)
-
-            break
+          pkg.docs = sections && sections.find(item => item.file === fileName)
         }
 
         return pkg

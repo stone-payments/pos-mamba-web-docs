@@ -22,14 +22,14 @@ function createApiGlob() {
   return [`docs/*.md`, `README.md`]
 }
 
+const unescaped = Object.keys(escaped).reduce(
+  (unescapedObj, key) => ((unescapedObj[escaped[key]] = key), unescapedObj),
+  {},
+)
+
 function unescape(str) {
   return String(str).replace(/&.+?;/g, match => unescaped[match] || match)
 }
-
-const unescaped = Object.keys(escaped).reduce(
-  (unescaped, key) => ((unescaped[escaped[key]] = key), unescaped),
-  {},
-)
 
 // Insert tag at desired regex group
 // @param {regex}  regex - Regex expression

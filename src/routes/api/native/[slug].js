@@ -7,7 +7,7 @@ import constants from '../_constants.js'
 
 let lookup
 
-export async function get(req, res, next) {
+export async function get(req, res) {
   const { slug } = req.params
 
   if (process.env.NODE_ENV === 'development' || !lookup || !lookup.has(slug)) {

@@ -33,8 +33,12 @@ sudo git reset --hard origin/master
 # Update lasted update
 sudo git pull origin master -f
 
+# Remove lock if any
+sudo rm package-lock.json
+
 # Install dependencies
 sudo npm install
+sudo npm install immer
 
 # Update packages
 sudo npm run pull:packages

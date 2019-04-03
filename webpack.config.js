@@ -1,10 +1,10 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const webpackConfig = require('sapper/config/webpack.js');
-const clientConfig = require('./webpack/base.config.js')('client');
-const serverConfig = require('./webpack/base.config.js')('server');
-const pkg = require('./package.json');
-const { IS_DEV } = require('quickenv');
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const webpackConfig = require('sapper/config/webpack.js')
+const clientConfig = require('./webpack/base.config.js')('client')
+const serverConfig = require('./webpack/base.config.js')('server')
+const pkg = require('./package.json')
+const { IS_DEV } = require('quickenv')
 
 const client = merge([
   clientConfig,
@@ -24,7 +24,7 @@ const client = merge([
     ].filter(Boolean),
     devtool: IS_DEV && 'inline-source-map',
   },
-]);
+])
 
 const server = merge([
   serverConfig,
@@ -41,12 +41,12 @@ const server = merge([
       hints: false, // it doesn't matter if server.js is large
     },
   },
-]);
+])
 
-const serviceworker = {
-  entry: webpackConfig.serviceworker.entry(),
-  output: webpackConfig.serviceworker.output(),
-  mode: process.env.NODE_ENV,
-};
+// const serviceworker = {
+//   entry: webpackConfig.serviceworker.entry(),
+//   output: webpackConfig.serviceworker.output(),
+//   mode: process.env.NODE_ENV,
+// };
 
-module.exports = { client, server, serviceworker };
+module.exports = { client, server }

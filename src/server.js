@@ -28,6 +28,14 @@ const serveMisc = [
   serve(`packages/components/${path}`, { dotfiles: 'ignore', etag: false }),
 )
 
+if(!IS_DEV) {
+  app.use(function(request, response){
+    if(!request.secure){
+      response.redirect("https://" + request.headers.host + request.url);
+    }
+  });
+}
+
 app.use(
   compression({ threshold: 0 }),
   serve('static'),

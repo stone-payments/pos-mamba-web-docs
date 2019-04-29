@@ -28,16 +28,6 @@ const serveMisc = [
   serve(`packages/components/${path}`, { dotfiles: 'ignore', etag: false }),
 )
 
-if(!IS_DEV) {
-  app.enable('trust proxy');
-  
-  app.use(function(req, res){
-    if(!req.secure){
-      res.redirect(`https://${req.headers.host}${req.url}`);
-    }
-  });
-}
-
 app.use(
   compression({ threshold: 0 }),
   serve('static'),

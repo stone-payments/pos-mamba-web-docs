@@ -16,10 +16,10 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$BRANCH" != "master" ]; then
   while true; do
-    read -p "Do you wish go to master branch?( Y/n ) " yn
+    read -p "Do you wish go to master branch? ( Y/n ) " yn
     case $yn in
         [Yy]* ) git checkout master; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
   done

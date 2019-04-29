@@ -7,6 +7,7 @@ set -e
 SITE_DIR=~deployusr/site
 APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
 PROD_DIR="$SITE_DIR/mambadocs-prod/"
+BRANCH="develop"
 export NODE_ENV=production
 
 cd $APP_DIR
@@ -27,11 +28,11 @@ fi
 sudo rm -rf __sapper__
 
 # Ignore remote hard-coded changes
-sudo git reset --hard origin/master
-# sudo git checkout master -- package-lock.json
+sudo git reset --hard origin/$BRANCH
+# sudo git checkout $BRANCH -- package-lock.json
 
 # Update lasted update
-sudo git pull origin master -f
+sudo git pull origin $BRANCH -f
 
 # Remove lock if any
 sudo rm package-lock.json

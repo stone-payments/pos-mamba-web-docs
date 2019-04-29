@@ -40,11 +40,12 @@ app.use(
   }),
 )
 
+const hostname = '0.0.0.0';
 const secureConfig = IS_DEV ? credentials.dev : credentials.prod
-const envPort = process.env.PORT || 3000
+const envPort = IS_DEV ? 3000 : process.env.PORT || 80
 
 const httpServer = http.createServer(app)
 const httpsServer = https.createServer(createCredentials(secureConfig), app)
 
-httpServer.listen(envPort)
-httpsServer.listen(443)
+httpServer.listen(envPort, hostname)
+httpsServer.listen(443, hostname)

@@ -40,7 +40,7 @@ app.use(
   }),
 )
 
-const hostname = 'localhost';
+const hostname = '0.0.0.0';
 const secureConfig = IS_DEV ? credentials.dev : credentials.prod
 const envPort = IS_DEV ? 3000 : 80
 

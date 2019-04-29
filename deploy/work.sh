@@ -50,7 +50,7 @@ sudo npm run pull:packages
 sudo npm run build
 
 # Replace sapper loopback address to fix direct call to site inner pages
-{ sudo rm __sapper__/build/server/server.js && sudo awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js
+{ rm __sapper__/build/server/server.js && awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js
 
 # Copy build to prod dest
 cp -rp "__sapper__" $PROD_DIR

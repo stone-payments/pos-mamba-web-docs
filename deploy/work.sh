@@ -49,9 +49,6 @@ sudo npm run pull:packages
 # Build project
 sudo npm run build
 
-# Replace sapper loopback address to fix direct call to site inner pages
-{ rm __sapper__/build/server/server.js && awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js
-
 # Copy build to prod dest
 cp -rp "__sapper__" $PROD_DIR
 
@@ -74,6 +71,9 @@ cd $PROD_DIR
 sudo npm install --production --ignore-scripts
 sudo npm prune --production --ignore-scripts
 sudo npm install immer
+
+# Replace sapper loopback address to fix direct call to site inner pages
+{ sudo rm __sapper__/build/server/server.js && sudo awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js
 
 (sudo pm2 delete mambadocs || true)
 sudo pm2 start ecosystem.config.js

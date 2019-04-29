@@ -74,5 +74,5 @@ sudo npm install --production --ignore-scripts
 sudo npm prune --production --ignore-scripts
 sudo npm install immer
 
-(pm2 delete mambadocs || true)
-pm2 start ecosystem.config.js
+(sudo pm2 delete mambadocs || true)
+sudo pm2 start ecosystem.config.js

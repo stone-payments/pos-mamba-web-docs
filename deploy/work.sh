@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-sudo pm2 stop
+sudo pm2 stop all
 
 # Basically deploy do: git clean -fdx && git reset --hard HEAD && git pull origin master && cross-env NODE_ENV=production npm install --production && npm run build && pm2 restart mambadocs
 

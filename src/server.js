@@ -29,9 +29,11 @@ const serveMisc = [
 )
 
 if(!IS_DEV) {
-  app.use(function(request, response){
-    if(!request.secure){
-      response.redirect("https://" + request.headers.host + request.url);
+  app.enable('trust proxy');
+  
+  app.use(function(req, res){
+    if(!req.secure){
+      res.redirect(`https://${req.headers.host}${req.url}`);
     }
   });
 }

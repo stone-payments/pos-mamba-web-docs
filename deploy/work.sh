@@ -64,6 +64,10 @@ cp -rp "./packages" $PROD_DIR
 # Copy static
 cp -rp "./static" $PROD_DIR
 
+# Replace sapper loopback address to fix direct call to site inner pages
+awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://0.0.0.0")}' __sapper__/build/server/server.js
+awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://0.0.0.0")}' __sapper__/server.js
+
 cd $PROD_DIR
 # Install dependencies
 sudo npm install --production --ignore-scripts

@@ -1,31 +1,31 @@
 const LANG = /\blang(?:uage)?-(\w+)\b/i
 const SPACE = /\s+/g
 
-export const notIncludeLanguage = className => {
+exports.notIncludeLanguage = function notIncludeLanguage(className) {
   if (typeof className !== 'string') {
     return true
+  } else {
+    return !LANG.test(className)
   }
-  return !LANG.test(className)
 }
 
-export const getLanguageFromClassName = className => {
+exports.getLanguageFromClassName = function getLanguageFromClassName(
+  className,
+) {
   if (typeof className !== 'string') {
     return ''
   }
   return (className.match(LANG) || [''])[1].toLowerCase()
 }
 
-export const addLanguageIfNotPresent = (className, language) => {
+exports.addLanguageIfNotPresent = function addLanguageIfNotPresent(
+  className,
+  language,
+) {
   if (typeof className !== 'string') {
     className = ''
   }
-  return `${className
-    .replace(LANG, '')
-    .replace(SPACE, ' ')} language-${language}`
-}
-
-export default {
-  notIncludeLanguage,
-  getLanguageFromClassName,
-  addLanguageIfNotPresent,
+  return (
+    className.replace(LANG, '').replace(SPACE, ' ') + ' language-' + language
+  )
 }

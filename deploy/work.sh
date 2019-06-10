@@ -54,7 +54,7 @@ cp -rp "__sapper__" $PROD_DIR
 
 cp -rp "content" $PROD_DIR
 
-# Copy package.json 
+# Copy package.json
 cp -rp "./package.json" $PROD_DIR
 
 # Copy pm2 ecosystem
@@ -71,6 +71,7 @@ cd $PROD_DIR
 sudo npm install --production --ignore-scripts
 sudo npm prune --production --ignore-scripts
 sudo npm install immer
+sudo npm install core-js@3
 
 # Replace sapper loopback address to fix direct call to site inner pages
 { sudo rm __sapper__/build/server/server.js && sudo awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js

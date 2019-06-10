@@ -30,7 +30,7 @@ fi
 sudo rm -rf __sapper__
 
 # Ignore remote hard-coded changes
-sudo git reset --hard origin/$BRANCH
+sudo git reset --hard ORIG_HEAD
 # sudo git checkout $BRANCH -- package-lock.json
 
 # Update lasted update

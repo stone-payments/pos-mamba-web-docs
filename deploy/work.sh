@@ -8,7 +8,7 @@ sudo pm2 stop all
 ### Configuration ###
 SITE_DIR=~deployusr/site
 APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
-PROD_DIR="$SITE_DIR/mambadocs-prod/"
+PROD_DIR="$SITE_DIR/mambadocs-prod"
 BRANCH="develop"
 export NODE_ENV=production
 
@@ -75,6 +75,8 @@ sudo npm install core-js@3
 
 # Replace sapper loopback address to fix direct call to site inner pages
 { sudo rm __sapper__/build/server/server.js && sudo awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js
+
+echo pwd
 
 (sudo pm2 delete mambadocs || true)
 sudo pm2 start ecosystem.config.js

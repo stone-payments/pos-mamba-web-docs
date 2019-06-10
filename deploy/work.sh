@@ -6,7 +6,7 @@ sudo pm2 stop all
 # Basically deploy do: git clean -fdx && git reset --hard HEAD && git pull origin master && cross-env NODE_ENV=production npm install --production && npm run build && pm2 restart mambadocs
 
 ### Configuration ###
-SITE_DIR=~deployusr/site
+SITE_DIR=/home/deployusr/site
 APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
 PROD_DIR="$SITE_DIR/mambadocs-prod"
 BRANCH="develop"
@@ -42,6 +42,7 @@ sudo rm package-lock.json
 # Install dependencies
 sudo npm install
 sudo npm install immer
+sudo npm install core-js@3
 
 # Update packages
 sudo npm run pull:packages

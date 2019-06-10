@@ -1,113 +1,132 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
-{#if !isLoading}
-  {#if manifest.error}
-    <h1>Não encontrado</h1>
-  {:elseif manifest.docs}
-    <div class="Component">
-      <header>
-        <h1>
-          {manifest.docs.metadata.title}
-          <small><a href='https://github.com/stone-payments/pos-mamba-sdk/tree/develop/packages/components/{manifest.info.slug}'>editar esta seção</a></small>
-        </h1>
-        <div class="code-block code-block-container install-block">
-          <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
+{#if !isLoading} {#if manifest.error}
+<h1>Não encontrado</h1>
+{:elseif manifest.docs}
+<div class="Component">
+  <header>
+    <h1>
+      {manifest.docs.metadata.title}
+      <small
+        ><a
+          href="https://github.com/stone-payments/pos-mamba-sdk/tree/develop/packages/components/{manifest.info.slug}"
+          >editar esta seção</a
+        ></small
+      >
+    </h1>
+    <div class="code-block code-block-container install-block">
+      <pre
+        class="code-block line-numbers language-javascript"
+        style="font-size: 16px; white-space: normal;"
+      >
             <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
               <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
             </code>
           </pre>
-          <div class="links">
-            <a class="github-link" href="https://github.com/stone-payments/pos-mamba-sdk/tree/develop/packages/components/{manifest.info.slug}" target="_blank"><i class="fab fa-github"></i>Github</a>
-            <a class="npm-link" href="https://www.npmjs.com/package/{manifest.info.package.name}" target="_blank"><i class="fas fa-external-link-alt"></i>NPM</a>
-          </div>
-        </div>
-        <div class="version-block">
-          <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
-        </div>
-      </header>
-
-      <section>
-        <div class="part">
-          {@html manifest.docs.html}
-        </div>
-      </section>
-
-      {#if !!example}
-        <section class="Examples">
-          <div class="Examples-boxes">
-            <div class="Examples-example">
-              <header>
-                <h2>Exemplos</h2>
-              </header>
-              <div class="Code-run">
-                <svelte:component this="{Example}" name="example"/>
-              </div>
-              <div class="Source-wrapper">
-                {@html example.source}
-              </div>
-            </div>
-          </div>
-        </section>
-      {/if}
-      {#if manifest.docs.paramsHtml !== false}
-        <section class="Params-html">
-          <div class="part">
-            {@html manifest.docs.paramsHtml}
-          </div>
-        </section>
-      {/if}
+      <div class="links">
+        <a
+          class="github-link"
+          href="https://github.com/stone-payments/pos-mamba-sdk/tree/develop/packages/components/{manifest.info.slug}"
+          target="_blank"
+          ><i class="fab fa-github"></i>Github</a
+        >
+        <a
+          class="npm-link"
+          href="https://www.npmjs.com/package/{manifest.info.package.name}"
+          target="_blank"
+          ><i class="fas fa-external-link-alt"></i>NPM</a
+        >
+      </div>
     </div>
+    <div class="version-block">
+      <small class="unique">Mais recente:</small>
+      <span>v{manifest.info.package.version}</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="part">
+      {@html manifest.docs.html}
+    </div>
+  </section>
+
+  {#if !!example}
+  <section class="Examples">
+    <div class="Examples-boxes">
+      <div class="Examples-example">
+        <header>
+          <h2>Exemplos</h2>
+        </header>
+        <div class="Code-run">
+          <svelte:component this="{Example}" name="example" />
+        </div>
+        <div class="Source-wrapper">
+          {@html example.source}
+        </div>
+      </div>
+    </div>
+  </section>
+  {/if} {#if manifest.docs.paramsHtml !== false}
+  <section class="Params-html">
+    <div class="part">
+      {@html manifest.docs.paramsHtml}
+    </div>
+  </section>
   {/if}
-{/if}
+</div>
+{/if} {/if}
 
 <script>
-  import NProgress from 'nprogress';
-  import capitalize from 'lodash.capitalize';
+  import NProgress from 'nprogress'
+  import capitalize from 'lodash.capitalize'
 
   export default {
     data() {
       return {
         isLoading: true,
-        title: "Carregando"
+        title: 'Carregando',
       }
     },
 
     async oncreate() {
-      const { params } = this.get();
-      NProgress.start();
+      const { params } = this.get()
+      NProgress.start()
 
-      await fetch(`api/components/${params.slug}`).then(r => r.json()).then(async manifest => {
-        const docs = manifest && manifest.docs;
+      await fetch(`api/components/${params.slug}`)
+        .then(r => r.json())
+        .then(async manifest => {
+          const docs = manifest && manifest.docs
 
-        import(`@components/${(
-            manifest.docs.examples && 
-            manifest.docs.examples[0] && 
-            manifest.docs.examples[0].filePath) 
-          || manifest.info.slug.concat('/example/Example.html')}`
-        )
-        .then(mod => {
-          NProgress.done();
-          this.set({Example: mod.default});
-        }).catch(NProgress.done); 
+          import(
+            `@components/${(manifest.docs.examples &&
+              manifest.docs.examples[0] &&
+              manifest.docs.examples[0].filePath) ||
+              manifest.info.slug.concat('/example/Example.html')}`
+          )
+            .then(mod => {
+              NProgress.done()
+              this.set({ Example: mod.default })
+            })
+            .catch(NProgress.done)
 
-        this.set({
-          isLoading: false,
-          manifest: manifest,
-          example: docs.examples.length && docs.examples[0] || false,
-          title: docs && docs.metadata.title || capitalize(params.slug)
-        });
+          this.set({
+            isLoading: false,
+            manifest: manifest,
+            example: (docs.examples.length && docs.examples[0]) || false,
+            title: (docs && docs.metadata.title) || capitalize(params.slug),
+          })
 
-        NProgress.inc();
-      })
-      .catch((e) => {
-        NProgress.done();
-        this.set({
-          isLoading: false,
-          manifest: { error: "Falha ao carregar o component." }
-        });
-      });
-    }
+          NProgress.inc()
+        })
+        .catch(e => {
+          NProgress.done()
+          this.set({
+            isLoading: false,
+            manifest: { error: 'Falha ao carregar o component.' },
+          })
+        })
+    },
   }
 </script>
 
@@ -132,7 +151,6 @@
   }
 
   :global(article) :global(table) {
-
     tbody {
       font-size: 80%;
     }
@@ -140,6 +158,12 @@
     tr td {
       font-size: 14px;
       font-family: var(--code-font);
+
+      code {
+        background-color: #f1f0f0 !important;
+        color: #41a712;
+        border: 1px solid #efeeee;
+      }
     }
   }
 
@@ -177,7 +201,7 @@
   .Source-wrapper {
     background-color: #f7f9f8;
     padding-bottom: 1px;
-    border: 1px solid rgba(0, 10 , 0, 0.01);
+    border: 1px solid rgba(0, 10, 0, 0.01);
     border-radius: 6px;
   }
 
@@ -187,7 +211,7 @@
     :global(.source-header) {
       line-height: 1;
       width: 100%;
-      border-bottom: 1px solid rgba(0, 10 , 0, 0.06);
+      border-bottom: 1px solid rgba(0, 10, 0, 0.06);
       border-radius: 4px 4px 0 0;
       padding: 13px 13px 10px 16px;
       color: var(--primary);
@@ -201,13 +225,13 @@
   }
 
   section :global(.filename) {
-    display:inline-block;
+    display: inline-block;
     font-weight: 600;
     font-family: var(--code-font);
   }
 
   section :global(.filename) + :global(pre) {
-    border: 1px solid rgba(0, 10 , 0, 0.01);
+    border: 1px solid rgba(0, 10, 0, 0.01);
     border-top: 0;
     display: block;
     margin-bottom: 0;
@@ -240,7 +264,6 @@
   }
 
   section:not(.Examples):not(.Examples-example) {
-
     padding: 39px 0;
 
     + section {
@@ -265,11 +288,11 @@
     & :global(table) + :global(h3:not(:first-child)),
     & :global(h2) + :global(h3),
     & :global(h2 ~ h3 ~ p ~ h3) {
-       margin-top: 30px;
-       color: var(--secondary);
+      margin-top: 30px;
+      color: var(--secondary);
     }
 
-    & :global(h2[id="m-todos"]) ~ :global(h3) {
+    & :global(h2[id='m-todos']) ~ :global(h3) {
       color: #378016;
     }
 
@@ -323,7 +346,6 @@
   }
 
   .Code-run {
-
     margin: 20px 0 0 0;
     padding-bottom: 40px;
 
@@ -341,5 +363,4 @@
       }
     }
   }
-
 </style>

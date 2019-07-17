@@ -9,7 +9,7 @@ rm -rf packages
   
   # Using subtree
     
-    # git subtree add --prefix .temp https://github.com/stone-payments/pos-mamba-sdk.git develop --squash
+    # git subtree add --prefix .temp https://github.com/stone-payments/pos-mamba-sdk.git master --squash
 
     # mkdir packages
 

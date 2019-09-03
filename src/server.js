@@ -47,4 +47,6 @@ const httpServer = http.createServer(app)
 const httpsServer = https.createServer(createCredentials(secureConfig), app)
 
 httpServer.listen(envPort)
-httpsServer.listen(443)
+if(!IS_DEV) {
+  httpsServer.listen(443)
+}

@@ -10,6 +10,7 @@ docs.sublime-project
 docs.sublim-workspace
 *.cert
 *.key
+*.crt
 
 ## Directories
 log/

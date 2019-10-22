@@ -9,7 +9,7 @@ sudo pm2 stop all
 SITE_DIR=/home/deployusr/site
 APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
 PROD_DIR="$SITE_DIR/mambadocs-prod"
-BRANCH="master"
+BRANCH="develop"
 export NODE_ENV=production
 
 cd $APP_DIR
@@ -42,7 +42,7 @@ sudo rm package-lock.json
 # Install dependencies
 sudo npm install
 sudo npm install immer
-sudo npm install core-js@^3
+sudo npm install core-js@3
 
 # Update packages
 sudo npm run pull:packages
@@ -72,7 +72,7 @@ cd $PROD_DIR
 sudo npm install --production --ignore-scripts
 sudo npm prune --production --ignore-scripts
 sudo npm install immer
-sudo npm install core-js@^3
+sudo npm install core-js@3
 
 # Replace sapper loopback address to fix direct call to site inner pages
 { sudo rm __sapper__/build/server/server.js && sudo awk '{gsub(/http\:\/\/127\.0\.0\.1/,"https://mambasdk-docs.stone.com.br/", $0); print}' > __sapper__/build/server/server.js; } < __sapper__/build/server/server.js

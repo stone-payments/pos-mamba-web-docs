@@ -52,10 +52,10 @@ O `manifest.xml` é o arquivo que contém todas as instruções do app para a pu
 | -------------------------- | --------------------------------------------------- | ---------- | ----------------- |
 | appName                    | Nome do app                                         | `string`   | `Mamba App`       |
 | defaultName                | Nome único de identificação do app no TMS           | `string`   | `Mamba App`       |
-| appVersion                 | Versão do app                                       | `0.0.0`    | `2.0.0`           |
+| appVersion                 | Versão do app                                       | `number`   | `2.0.0`           |
 | appDescription             | Descrição que será exibida na loja                  | `string`   | `Starter temp...` |
-| id                         | Id único do app (4 dígitos)                         | `integer`  | `1234`            |
+| id                         | Id único do app (4 dígitos)                         | `number`   | `1234`            |
 | displayedName              | Nome do app, exibido na POS e loja                  | `string`   | `Mamba App`       |
 | iconPath                   | URL do ícone (Mínimo de 50x50, proporção 1:1)       | `url`      | `assets/logo.bmp` |
 | autoInitiable              | Define se poderá ser iniciado assim que a POS ligar | `boolean`  | `true`            |
-| appPasswordProtectionLevel | Define se o app pedirá senha antes de abrir         | `0` ou `1` | `1`               |
+| appPasswordProtectionLevel | Define se o app pedirá senha antes de abrir         | `number`   | `0` ou `1`        |

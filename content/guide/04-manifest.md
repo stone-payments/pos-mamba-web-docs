@@ -58,4 +58,4 @@ O `manifest.xml` é o arquivo que contém todas as instruções do app para a pu
 | displayedName              | Nome do app, exibido na POS e loja                  | `string`   | `Mamba App`       |
 | iconPath                   | URL do ícone (Mínimo de 50x50, proporção 1:1)       | `url`      | `assets/logo.bmp` |
 | autoInitiable              | Define se poderá ser iniciado assim que a POS ligar | `boolean`  | `true`            |
-| appPasswordProtectionLevel | Define se o app pedirá senha antes de abrir         | `boolean`  | `1`               |
+| appPasswordProtectionLevel | Define se o app pedirá senha antes de abrir         | `0` ou `1` | `1`               |

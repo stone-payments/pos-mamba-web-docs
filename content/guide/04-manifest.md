@@ -4,7 +4,7 @@
 
 ## Manifest
 
-O `manifest.xml` é o arquivo que contém todas as instruções do app para a publicação do seu app. **O manifest é gerado automaticamente a partir do `package.json`**, portanto, verifique se seu package.json está configurado corretamente nates de enviá-lo para homologação.
+O `manifest.xml` é o arquivo que contém todas as instruções do app para a publicação do seu app. **O manifest é gerado automaticamente a partir do `package.json`**, portanto, verifique se seu package.json está configurado corretamente antes de enviá-lo para homologação.
 
 #### package.json
 ```json

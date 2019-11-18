@@ -24,7 +24,7 @@ function moveDir(path, destination, callback) {
 // clone repo using degit
 
 function cloneRepo(callback) {
-  const emmiter = degit('stone-payments/pos-mamba-sdk#master', {
+  const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
     force: true,
     verbose: true,
   });

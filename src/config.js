@@ -14,8 +14,8 @@ module.exports = {
         rejectUnauthorized: false,
       },
       prod: {
-        key: '/home/deployusr/cert/Stone.key',
-        cert: '/home/deployusr/cert/stone.crt',
+        key: '/home/deployusr/cert/_.stone.com.br.key',
+        cert: '/home/deployusr/cert/_.stone.com.br.crt',
         ca: [
           '/home/deployusr/cert/gd_bundle-g2-g1.crt',
           '/home/deployusr/cert/be94a68b8af575bd.crt',

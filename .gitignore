@@ -10,6 +10,7 @@ docs.sublime-project
 docs.sublim-workspace
 *.cert
 *.key
+*.crt
 
 ## Directories
 log/
@@ -29,4 +30,3 @@ __sapper__
 
 ## Ignore all lock files. Yes, ALL!
 yarn.lock
-package-lock.json

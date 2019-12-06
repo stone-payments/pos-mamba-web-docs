@@ -12,12 +12,10 @@ const componentsPath = path.join(packageRoot, 'components');
 function moveDir(path, destination, callback) {
   fs.rename(path, destination, error => {
     if (error) {
-      console.log('ERROR \n' + error.message);
-    } else {
-      if (typeof callback === 'function') {
+      console.log(`ERROR \n${  error.message}`);
+    } else if (typeof callback === 'function') {
         callback();
       }
-    }
   });
 }
 
@@ -36,7 +34,7 @@ function createDir(dirName) {
   if (!fs.existsSync(dirName)) {
     fs.mkdirSync(dirName, error => {
       if (error) {
-        console.log('ERROR \n' + error.message);
+        console.log(`ERROR \n${  error.message}`);
       }
     });
   }
@@ -62,6 +60,7 @@ async function clearTemp() {
       '*/.*',
       '*/*',
       '!Icon/assets',
+      '!Brands/assets',
       '!*/example',
       '!*/README.md',
       '!*/package.json',

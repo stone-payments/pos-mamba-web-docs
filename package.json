@@ -54,6 +54,7 @@
   "dependencies": {
     "@mamba/appbar": "latest",
     "@mamba/barcode": "latest",
+    "@mamba/brands": "^2.19.0",
     "@mamba/button": "latest",
     "@mamba/carousel": "latest",
     "@mamba/collection": "latest",

@@ -4,11 +4,13 @@ const degit = require('degit')
 const rimraf = require('rimraf')
 const globby = require('globby')
 
-const packageRoot = fspath.join(process.cwd(), 'packages')
+const packageRoot = fspath.join(__dirname, '../packages')
 const componentsPath = fspath.join(packageRoot, 'components')
-const tempFolder = '../.temp/'
+const tempFolder = fspath.join(__dirname, '../.temp')
 
-// degit to temp folder
+console.log(`Package root folder is: ${packageRoot}`)
+console.log(`Components folder is: ${componentsPath}`)
+console.log(`Temp folder is: ${tempFolder}`)
 
 function moveDir(path, destination, callback) {
   fs.rename(path, destination, error => {
@@ -90,21 +92,21 @@ async function clearTemp() {
 
 // if(process.env.NODE_ENV !== 'production') {
 // clears packages
-rimraf('./packages', () => {
+rimraf(packageRoot, () => {
   console.log('Cleaning Packages.')
 
   // create dirs
-  createDir('packages/')
-  createDir('packages/pos')
-  createDir('packages/components')
+  createDir('../packages/')
+  createDir('../packages/pos')
+  createDir('../packages/components')
 
   // clone repo
   cloneRepo().then(() => {
     // move to directory and clear temp files
     moveDir(
       `${tempFolder}/packages/components`,
-      './packages/components',
-      moveDir(`${tempFolder}/packages/pos`, './packages/pos', clearTemp()),
+      `${packageRoot}/components`,
+      moveDir(`${tempFolder}/packages/pos`, `${packageRoot}/pos`, clearTemp()),
     )
   })
 })

@@ -1,0 +1,17 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "update_packages.js",
+  "scripts": {
+    "pull:packages": "node ./update_packages.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "degit": "^2.2.2",
+    "globby": "^11.0.0",
+    "rimraf": "^3.0.0"
+  }
+}

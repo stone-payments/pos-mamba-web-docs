@@ -6,6 +6,7 @@ const globby = require('globby')
 
 const packageRoot = fspath.join(process.cwd(), 'packages')
 const componentsPath = fspath.join(packageRoot, 'components')
+const tempFolder = '../.temp/'
 
 // degit to temp folder
 
@@ -26,7 +27,7 @@ function cloneRepo() {
     force: true,
     verbose: true,
   })
-  return emmiter.clone('.temp/')
+  return emmiter.clone(tempFolder)
 }
 
 // check if dir exists and create if it doesnt
@@ -50,7 +51,7 @@ function removePaths(paths) {
 }
 
 async function clearTemp() {
-  await rimraf('.temp/', () => {
+  await rimraf(tempFolder, () => {
     console.log('Temporary Files Removed !')
   })
 
@@ -60,6 +61,7 @@ async function clearTemp() {
       '*/.*',
       '*/*',
       '!*/libs',
+      '!*/includes',
       '!*/**.html',
       '!*/**.js',
       '*/*.test.js',
@@ -100,9 +102,9 @@ rimraf('./packages', () => {
   cloneRepo().then(() => {
     // move to directory and clear temp files
     moveDir(
-      './.temp/packages/components',
+      `${tempFolder}/packages/components`,
       './packages/components',
-      moveDir('./.temp/packages/pos', './packages/pos', clearTemp()),
+      moveDir(`${tempFolder}/packages/pos`, './packages/pos', clearTemp()),
     )
   })
 })

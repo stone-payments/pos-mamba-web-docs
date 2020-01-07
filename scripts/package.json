@@ -4,7 +4,7 @@
   "description": "",
   "main": "update_packages.js",
   "scripts": {
-    "update": "node ./update_packages.js ",
+    "update": "sudo node ./update_packages.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

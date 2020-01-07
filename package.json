@@ -55,7 +55,7 @@
     "@mamba/app": "file:./packages/components/App",
     "@mamba/appbar": "file:./packages/components/AppBar",
     "@mamba/barcode": "file:./packages/components/Barcode",
-    "@mamba/brands": "file:./packages/components/brands",
+    "@mamba/brands": "file:./packages/components/Brands",
     "@mamba/button": "file:./packages/components/Button",
     "@mamba/carousel": "file:./packages/components/Carousel",
     "@mamba/collection": "file:./packages/components/Collection",

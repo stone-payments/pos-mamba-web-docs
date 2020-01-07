@@ -1,34 +1,35 @@
-const fs = require('fs');
-const path = require('path');
-const degit = require('degit');
-const rimraf = require('rimraf');
-const globby = require('globby');
+const fs = require('fs')
+const fspath = require('path')
+const degit = require('degit')
+const rimraf = require('rimraf')
+const globby = require('globby')
 
-const packageRoot = path.join(process.cwd(), 'packages');
-const componentsPath = path.join(packageRoot, 'components');
+const packageRoot = fspath.join(__dirname, '../packages')
+const componentsPath = fspath.join(packageRoot, 'components')
+const tempFolder = fspath.join(__dirname, '../.temp')
 
-// degit to temp folder
+console.log(`Package root folder is: ${packageRoot}`)
+console.log(`Components folder is: ${componentsPath}`)
+console.log(`Temp folder is: ${tempFolder}`)
 
 function moveDir(path, destination, callback) {
   fs.rename(path, destination, error => {
     if (error) {
-      console.log('ERROR \n' + error.message);
-    } else {
-      if (typeof callback === 'function') {
-        callback();
-      }
+      console.log(`ERROR \n${error.message}`)
+    } else if (typeof callback === 'function') {
+      callback()
     }
-  });
+  })
 }
 
 // clone repo using degit
 
-function cloneRepo(callback) {
-  const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
+function cloneRepo() {
+  const emmiter = degit('stone-payments/pos-mamba-sdk#update-brands', {
     force: true,
     verbose: true,
-  });
-  return emmiter.clone('.temp/');
+  })
+  return emmiter.clone(tempFolder)
 }
 
 // check if dir exists and create if it doesnt
@@ -36,32 +37,37 @@ function createDir(dirName) {
   if (!fs.existsSync(dirName)) {
     fs.mkdirSync(dirName, error => {
       if (error) {
-        console.log('ERROR \n' + error.message);
+        console.log(`ERROR \n${error.message}`)
       }
-    });
+    })
   }
 }
 
 function removePath(path) {
-  console.log(`➖ Removing path: ${path}`);
-  rimraf.sync(path);
+  console.log(`➖ Removing path: ${path}`)
+  rimraf.sync(path)
 }
 
 function removePaths(paths) {
-  paths.forEach((file, idx) => removePath(path.join(componentsPath, file)));
+  paths.forEach(file => removePath(fspath.join(componentsPath, file)))
 }
 
 async function clearTemp() {
-  await rimraf('.temp/', () => {
-    console.log('Temporary Files Removed !');
-  });
+  await rimraf(tempFolder, () => {
+    console.log('Temporary Files Removed !')
+  })
 
   const paths = globby.sync(
     [
       '*/*.*',
       '*/.*',
       '*/*',
-      '!Icon/assets',
+      '!*/libs',
+      '!*/includes',
+      '!*/**.html',
+      '!*/**.js',
+      '*/*.test.js',
+      '!*/assets',
       '!*/example',
       '!*/README.md',
       '!*/package.json',
@@ -74,34 +80,34 @@ async function clearTemp() {
         extensions: ['svg', 'png', 'jpg', 'jpeg'],
       },
     },
-  );
+  )
 
   // Remove undesired components
   // paths.push('App');
 
-  console.log('paths: ', paths);
+  console.log('paths: ', paths)
 
-  removePaths(paths);
+  removePaths(paths)
 }
 
 // if(process.env.NODE_ENV !== 'production') {
 // clears packages
-rimraf('./packages', () => {
-  console.log('Cleaning Packages.');
+rimraf(packageRoot, () => {
+  console.log('Cleaning Packages.')
 
   // create dirs
-  createDir('packages/');
-  createDir('packages/pos');
-  createDir('packages/components');
+  createDir('../packages/')
+  createDir('../packages/pos')
+  createDir('../packages/components')
 
   // clone repo
   cloneRepo().then(() => {
     // move to directory and clear temp files
     moveDir(
-      './.temp/packages/components',
-      './packages/components',
-      moveDir('./.temp/packages/pos', './packages/pos', clearTemp()),
-    );
-  });
-});
+      `${tempFolder}/packages/components`,
+      `${packageRoot}/components`,
+      moveDir(`${tempFolder}/packages/pos`, `${packageRoot}/pos`, clearTemp()),
+    )
+  })
+})
 // }

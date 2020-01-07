@@ -21,6 +21,7 @@ const app = express()
 
 const serveMisc = [
   'Icon',
+  'Brands',
   'Range/example',
   'Sprite/example',
   'QRCode/example',

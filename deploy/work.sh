@@ -14,6 +14,9 @@ export NODE_ENV=production
 
 cd $APP_DIR
 
+sudo chmod -R 777 ./
+sudo chmod -R 777 ./node_modules/
+
 echo pwd
 
 set -x

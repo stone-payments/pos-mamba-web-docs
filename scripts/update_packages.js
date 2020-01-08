@@ -25,7 +25,7 @@ function moveDir(path, destination, callback) {
 // clone repo using degit
 
 function cloneRepo() {
-  const emmiter = degit('stone-payments/pos-mamba-sdk#update-brands', {
+  const emmiter = degit('stone-payments/pos-mamba-sdk#develop', {
     force: true,
     verbose: true,
   })

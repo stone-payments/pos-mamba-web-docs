@@ -45,6 +45,7 @@ sudo npm install immer
 sudo npm install core-js@3
 
 sudo chown -R $USER ./packages/
+sudo chown -R $USER $PROD_DIR
 
 # Build project
 sudo npm run build

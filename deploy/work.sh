@@ -43,19 +43,12 @@ sudo git pull origin $BRANCH -f
 # Remove lock if any
 sudo rm package-lock.json
 
-sudo chmod -R 777 ./packages/
-
 # Install dependencies
 sudo npm install
 sudo npm install immer
 sudo npm install core-js@3
 
-sudo chmod -R 777 ./packages/
-
-# Update packages
-sudo npm run pull:packages
-
-sudo chmod -R 777 ./packages/
+sudo chown -R $USER ./packages/
 
 # Build project
 sudo npm run build

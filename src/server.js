@@ -31,7 +31,7 @@ const serveMisc = [
 )
 
 app.use(
-  bodyParser.json(),
+  bodyParser.json({ limit: '300kb' }),
   compression({ threshold: 0 }),
   serve('static'),
   serveMisc,

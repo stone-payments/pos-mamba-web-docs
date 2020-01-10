@@ -10,8 +10,9 @@
 <h2>Mini Glifo Interface</h2>
 <div class="container">
 
-  <select bind:value='i' size='5'>
+  <select bind:value='i' size='5' on:change="listchange()">
     {#each filteredEntries as entry, i}
+      <option value='-1' hidden></option>
       <option value='{i}'>{entry.title}</option>
     {/each}
   </select>
@@ -38,12 +39,20 @@
 
   <div class='buttons'>
     <button on:click='create()' disabled='{!hasfile || !title || !image}'>Add</button>
-    <button on:click='update()' disabled='{!title || !image || !selected}'>Update</button>
+    <button on:click='update()' disabled='{!hasfile || !title || !image || !selected}'>Update</button>
     <button on:click='remove()' disabled='{!selected}'>Remove</button>
   </div>
 
   <div class="footer">
-    <button on:click='save()'>Salvar</button>
+    {#if loading === true}
+    <p>Saving ...</p>
+    {/if}
+    {#if errMsg}
+      <p>
+        {errMsg}
+      </p>
+    {/if}
+    <!-- <button on:click='save()'>Salvar</button> -->
   </div>
 
 </div>
@@ -67,6 +76,7 @@
       return {
         prefix: '',
         entries: [],
+        lastEntries: [],
         selected: null,
         title: '',
         image: '',
@@ -108,8 +118,15 @@
         this.set({ image, hasfile: true })
       },
 
+      listchange() {
+        const { i } = this.get();
+        console.log('list change', i)
+      },
+
       async create() {
         const { title, image, entries } = this.get();
+        this.set({ lastEntries: entries });
+
         entries.push({ title, image });
 
         this.set({
@@ -119,19 +136,24 @@
           i: entries.length - 1,
           hasfile: false,
         })
+        this.save()
       },
 
       update() {
         const { title, image, selected, entries } = this.get();
+        this.set({ lastEntries: entries });
 
         selected.title = title;
         selected.image = image;
 
         this.set({ entries });
+        this.save()
       },
 
       remove() {
         const { entries, selected, i } = this.get();
+        this.set({ lastEntries: entries });
+
         const index = entries.indexOf(selected);
         entries.splice(index, 1);
 
@@ -141,11 +163,14 @@
           image: '',
           i: Math.min(i, entries.length - 1),
         });
+
+        this.save()
       },
 
       save() {
         const { entries } = this.get();
-        console.log(entries);
+
+        this.set({loading: true});
 
         fetch('api/glifo', {
           method: 'POST',
@@ -153,7 +178,28 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(entries),
-        });
+        })
+          .then(r => {
+            const { status } = r;
+            const { lastEntries } = this.get()
+            console.log(r)
+
+            if(status !== 200) {
+
+              this.set({
+                entries: lastEntries,
+                errMsg: 'Cant save the images',
+              });
+
+              setTimeout(() => {
+                this.set({errMsg: null});
+              }, 4000);
+            }
+
+            setTimeout(() => {
+              this.set({loading: false});
+            }, 1000);
+          });
       },
 
     },
@@ -216,10 +262,15 @@
     padding: 20px 0 0 0;
   }
 
-  .footer button {
+  /* .footer button {
     width: 221px;
     padding: 10px 12px;
     font-size: 20px;
+  } */
+
+  .footer p {
+    font-size: 12px;
+    color: #888;
   }
 
   button:disabled {

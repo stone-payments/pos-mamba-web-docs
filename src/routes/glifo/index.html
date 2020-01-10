@@ -1,37 +1,61 @@
 <svelte:head>
   <title>Glifo</title>
 </svelte:head>
-<label>
+<!-- <label>
   <span>filter prefix</span>
   <input bind:value='prefix' placeholder=''>
-</label>
+</label> -->
 
-<select bind:value='i' size='5'>
-	{#each filteredEntries as entry, i}
-		<option value='{i}'>{entry.url}, {entry.title}</option>
-	{/each}
-</select>
 
-<label>
-  <span>Image Title</span>
-  <input bind:value='title' placeholder=''>
-</label>
-<label>
-  <span>Image URL</span>
-  <input bind:value='url' placeholder=''>
-</label>
+<h2>Mini Glifo Interface</h2>
+<div class="container">
 
-<div class='buttons'>
-	<button on:click='create()' disabled='{!title || !url}'>Add</button>
-	<button on:click='update()' disabled='{!title || !url || !selected}'>Update</button>
-	<button on:click='remove()' disabled='{!selected}'>Remove</button>
-</div>
+  <select bind:value='i' size='5'>
+    {#each filteredEntries as entry, i}
+      <option value='{i}'>{entry.title}</option>
+    {/each}
+  </select>
 
-<div class="footer">
-  <button on:click='save()'>Salvar</button>
+
+  <label>
+    <span>Image Title</span>
+    <input bind:value='title' placeholder='' type="text">
+  </label>
+  <label>
+    <span>Image Base64</span>
+    <input bind:value='image' type="hidden">
+  </label>
+  <label>
+    <span>Image</span>
+    <input type="file" name="file" on:change="filechanged(event)" />
+  </label>
+
+  {#if selected}
+  <div class="preview">
+    <img src="{selected.image}" alt="">
+  </div>
+  {/if}
+
+  <div class='buttons'>
+    <button on:click='create()' disabled='{!hasfile || !title || !image}'>Add</button>
+    <button on:click='update()' disabled='{!title || !image || !selected}'>Update</button>
+    <button on:click='remove()' disabled='{!selected}'>Remove</button>
+  </div>
+
+  <div class="footer">
+    <button on:click='save()'>Salvar</button>
+  </div>
+
 </div>
 
 <script>
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
   export default {
     preload() {
       return this.fetch('api/glifo')
@@ -45,8 +69,11 @@
         entries: [],
         selected: null,
         title: '',
-        url: '',
+        image: '',
         fields: 0,
+        dropzone: null,
+        hasfile: false,
+        preview: '',
       }
     },
 
@@ -57,7 +84,7 @@
 
         prefix = prefix.toLowerCase();
         return entries.filter(entrie => {
-          const name = `${entrie.title}, ${entrie.url}`;
+          const name = `${entrie.title}`;
           return name.toLowerCase().startsWith(prefix);
         });
       },
@@ -69,28 +96,36 @@
 
     onstate({ changed, current }) {
       if (changed.selected && current.selected) {
+        console.log(current.selected);
         this.set(current.selected);
       }
     },
 
     methods: {
-      create() {
-        const { title, url, entries } = this.get();
-        entries.push({ title, url });
+      async filechanged(e) {
+        const {files} = e.target
+        const image = await toBase64(files[0])
+        this.set({ image, hasfile: true })
+      },
+
+      async create() {
+        const { title, image, entries } = this.get();
+        entries.push({ title, image });
 
         this.set({
           entries,
           title: '',
-          url: '',
+          image: '',
           i: entries.length - 1,
+          hasfile: false,
         })
       },
 
       update() {
-        const { title, url, selected, entries } = this.get();
+        const { title, image, selected, entries } = this.get();
 
         selected.title = title;
-        selected.url = url;
+        selected.image = image;
 
         this.set({ entries });
       },
@@ -103,7 +138,7 @@
         this.set({
           entries,
           title: '',
-          url: '',
+          image: '',
           i: Math.min(i, entries.length - 1),
         });
       },
@@ -134,6 +169,10 @@
 
   :global(.Content-wrapper) {
     background-color: transparent;
+  }
+
+  .container {
+    position: relative;
   }
 
   select {
@@ -181,6 +220,22 @@
     width: 221px;
     padding: 10px 12px;
     font-size: 20px;
+  }
+
+  button:disabled {
+    opacity: 0.4;
+    background-color: #6d6d6d;
+    border: 1px solid #828282;
+    color: black;
+  }
+
+  .preview {
+    position: absolute;
+    width: 242px;
+    height: 302px;
+    top: 130px;
+    left: 240px;
+    border: 1px solid black;
   }
 
 </style>

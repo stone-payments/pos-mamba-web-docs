@@ -48,7 +48,7 @@ cd <my-app>
 Depois é necessário instalar as dependências do projeto. É recomendado que seja utilizado o [`NPM`](https://docs.npmjs.com/) para gerenciamento de dependências determinísticas, mas o `npm install` também pode ser utilizado.
 
 ```bash
-npm install  # Instala dependências do projeto (ou `npm install`)
+npm install  # Instala dependências do projeto (ou `npm i`)
 ```
 
 ## Desenvolvendo

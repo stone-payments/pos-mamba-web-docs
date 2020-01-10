@@ -1,5 +1,10 @@
 <main class="Docs Grid">
+  {#if $hidesidebar}
+  <div></div>
+  {:else}
   <Sidebar path={path} />
+  {/if}
+
   <Main>
     <slot></slot>
   </Main>

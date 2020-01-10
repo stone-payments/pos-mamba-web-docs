@@ -22,9 +22,7 @@
   export default {
 
     preload() {
-      return this.fetch(`api/guide`).then(r => r.json()).then(sections => {
-        return { sections };
-      });
+      return this.fetch(`api/guide`).then(r => r.json()).then(sections => ({ sections }));
     },
 
     oncreate() {
@@ -33,9 +31,7 @@
 
       const onresize = () => {
         const { top } = this.refs.container.getBoundingClientRect();
-        positions = [].map.call(anchors, anchor => {
-          return anchor.getBoundingClientRect().top - top;
-        });
+        positions = [].map.call(anchors, anchor => anchor.getBoundingClientRect().top - top);
       }
 
       let lastId = window.location.hash.slice(1);
@@ -97,11 +93,11 @@
       font-size: 24px;
       position: relative;
     }
-    
+
     > section > :global(h2) {
       position: relative;
     }
-    
+
     > section > :global(h2) ~ :global(h2) {
       padding-left: 0;
     }
@@ -135,9 +131,8 @@
   }
 
   section :global(.filename) {
-
     font-size: 13px;
-    font-weight: 500; 
+    font-weight: 500;
     padding: 6px 12px 8px 7px;
     display: inline-block;
     top: 0;

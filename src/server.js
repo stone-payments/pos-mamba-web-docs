@@ -5,6 +5,7 @@ import compression from 'compression'
 import { Store } from 'svelte/store.js'
 import http from 'http'
 import https from 'https'
+import bodyParser from 'body-parser'
 import serverConfig from './config.js'
 import * as sapper from '../__sapper__/server.js'
 import createCredentials from './createCredentials.js'
@@ -30,6 +31,7 @@ const serveMisc = [
 )
 
 app.use(
+  bodyParser.json(),
   compression({ threshold: 0 }),
   serve('static'),
   serveMisc,

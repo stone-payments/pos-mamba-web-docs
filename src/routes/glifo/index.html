@@ -1,0 +1,186 @@
+<svelte:head>
+  <title>Glifo</title>
+</svelte:head>
+<label>
+  <span>filter prefix</span>
+  <input bind:value='prefix' placeholder=''>
+</label>
+
+<select bind:value='i' size='5'>
+	{#each filteredEntries as entry, i}
+		<option value='{i}'>{entry.url}, {entry.title}</option>
+	{/each}
+</select>
+
+<label>
+  <span>Image Title</span>
+  <input bind:value='title' placeholder=''>
+</label>
+<label>
+  <span>Image URL</span>
+  <input bind:value='url' placeholder=''>
+</label>
+
+<div class='buttons'>
+	<button on:click='create()' disabled='{!title || !url}'>Add</button>
+	<button on:click='update()' disabled='{!title || !url || !selected}'>Update</button>
+	<button on:click='remove()' disabled='{!selected}'>Remove</button>
+</div>
+
+<div class="footer">
+  <button on:click='save()'>Salvar</button>
+</div>
+
+<script>
+  export default {
+    preload() {
+      return this.fetch('api/glifo')
+        .then(r => r.json())
+        .then(entries => ({entries}));
+    },
+
+    data() {
+      return {
+        prefix: '',
+        entries: [],
+        selected: null,
+        title: '',
+        url: '',
+        fields: 0,
+      }
+    },
+
+    computed: {
+      selected: ({ filteredEntries, i }) => filteredEntries[i],
+      filteredEntries({ entries, prefix }) {
+        if (!prefix) return entries;
+
+        prefix = prefix.toLowerCase();
+        return entries.filter(entrie => {
+          const name = `${entrie.title}, ${entrie.url}`;
+          return name.toLowerCase().startsWith(prefix);
+        });
+      },
+    },
+
+    oncreate() {
+      this.store.set({ hidesidebar: true });
+    },
+
+    onstate({ changed, current }) {
+      if (changed.selected && current.selected) {
+        this.set(current.selected);
+      }
+    },
+
+    methods: {
+      create() {
+        const { title, url, entries } = this.get();
+        entries.push({ title, url });
+
+        this.set({
+          entries,
+          title: '',
+          url: '',
+          i: entries.length - 1,
+        })
+      },
+
+      update() {
+        const { title, url, selected, entries } = this.get();
+
+        selected.title = title;
+        selected.url = url;
+
+        this.set({ entries });
+      },
+
+      remove() {
+        const { entries, selected, i } = this.get();
+        const index = entries.indexOf(selected);
+        entries.splice(index, 1);
+
+        this.set({
+          entries,
+          title: '',
+          url: '',
+          i: Math.min(i, entries.length - 1),
+        });
+      },
+
+      save() {
+        const { entries } = this.get();
+        console.log(entries);
+
+        fetch('api/glifo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(entries),
+        });
+      },
+
+    },
+  };
+</script>
+
+<style>
+
+  * {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-size: inherit;
+  }
+
+  :global(.Content-wrapper) {
+    background-color: transparent;
+  }
+
+  select {
+    float: left;
+    margin: 0 1em 1em 0;
+    width: 14em;
+    height: 180px;
+  }
+
+  .buttons {
+    clear: both;
+  }
+
+  label span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4bb719;
+    text-shadow: 1px 1px 0.8px #00000005;
+    text-transform: uppercase;
+    position: absolute;
+    margin-left: 8px;
+    margin-top: 5px;
+  }
+
+  input {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    border: none;
+    border-bottom: 2px solid #4bb719;
+    border-radius: 0;
+    padding: 8px 10px;
+    background-color: #fff;
+    margin-bottom: 6px;
+    padding-top: 26px;
+    width: 222px;
+  }
+
+  .footer {
+    width: 100%;
+    padding: 20px 0 0 0;
+  }
+
+  .footer button {
+    width: 221px;
+    padding: 10px 12px;
+    font-size: 20px;
+  }
+
+</style>

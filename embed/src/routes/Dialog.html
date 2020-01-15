@@ -1,0 +1,130 @@
+<Container>
+  <h4>Padrão</h4>
+  <div class="row">
+    <Button on:click="openDialog('defaultDialog', 2000)">
+      Open dialog
+    </Button>
+  </div>
+
+  <Dialog
+    ref:defaultDialog
+    on:open="console.log('on:open')"
+    on:close="console.log('on:close')"
+  >
+    Dialog Padrão
+  </Dialog>
+
+  <h4>Com Promise</h4>
+  <div class="row">
+    <Button on:click="refreshPromise()">
+      Initialize promise
+    </Button>
+  </div>
+
+  <PromisedDialog
+    {promise}
+    on:success="console.log('promise success', event)"
+    on:failure="console.log(event)"
+  >
+    {#await promise} Loading... {:then } Success!!! {:catch } Something went
+    wrong... {/await}
+  </PromisedDialog>
+
+  <h4>Com botões de confirmação</h4>
+  <div class="row">
+    <Button on:click="openDialog('confirmationDialog')">
+      Open dialog
+    </Button>
+  </div>
+
+  <h4>Com botões de confirmação textuais</h4>
+  <div class="row">
+    <Button on:click="openDialog('confirmationDialogLabelled')">
+      Open dialog
+    </Button>
+  </div>
+
+  <ConfirmationDialog
+    ref:confirmationDialog
+    title="IMPRESSORA SEM PAPEL"
+    on:negative="console.log('on:negative')"
+    on:positive="console.log('on:positive')"
+  >
+    Tentar imprimir novamente?
+  </ConfirmationDialog>
+
+  <ConfirmationDialog
+    ref:confirmationDialogLabelled
+    title="INTERROMPER?"
+    positiveLabel="Não"
+    negativeLabel="Interromper"
+    on:negative="console.log('on:negative')"
+    on:positive="console.log('on:positive')"
+  >
+    Tentar imprimir novamente?
+  </ConfirmationDialog>
+
+  <h4>Pop-up</h4>
+  <div class="row">
+    <Button on:click="openPopUp('defaultPopUp')">
+      Open dialog
+    </Button>
+  </div>
+
+  <Dialog
+    ref:defaultPopUp
+    on:open="console.log('on:open Pop-up')"
+    on:close="console.log('on:close Pop-up')"
+  >
+    Pop-up Padrão
+  </Dialog>
+</Container>
+
+<script>
+  export default {
+    components: {
+      Container: '@mamba/container',
+      Button: '@mamba/button',
+      Dialog: '@mamba/dialog/Dialog.html',
+      ConfirmationDialog: '@mamba/dialog/Confirmation.html',
+      PromisedDialog: '@mamba/dialog/Promised.html',
+    },
+    methods: {
+      refreshPromise() {
+        this.set({
+          promise: new Promise(resolve => setTimeout(() => resolve(), 2000)),
+        });
+      },
+      openDialog(dialog, delay) {
+        this.refs[dialog].open(delay);
+      },
+      openPopUp() {
+        this.refs.defaultPopUp.open();
+      },
+    },
+  };
+</script>
+
+<style>
+  :global(body) {
+    background-color: #ddd;
+  }
+
+  h4 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+    word-break: break-all;
+  }
+
+  .container {
+    max-width: 80%;
+    width: 700px;
+    margin: 80px auto;
+  }
+
+  .row {
+    margin: 20px 0px 20px 0px;
+  }
+</style>

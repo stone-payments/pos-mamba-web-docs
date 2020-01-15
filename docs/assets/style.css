@@ -1,0 +1,52 @@
+body {
+  background-color: #f5f7f9;
+}
+main .content {
+  padding-top: 0;
+}
+.markdown-section h3 {
+  margin: inherit;
+}
+.markdown-section pre {
+  margin: 0;
+  padding: 0;
+}
+.markdown-section p.tip,
+.markdown-section pre > code {
+  background-color: #ebebeb;
+}
+.sidebar-nav > ul {
+  margin-left: 0;
+}
+.sidebar-nav li {
+  padding-left: 15px;
+}
+.sidebar-nav li p:first-child a {
+  color: #364149;
+}
+.sidebar-nav li.active {
+  padding-left: 10px;
+}
+.sidebar-nav .divider {
+  width: 90%;
+  height: 0;
+  border: 0;
+  border-top: 1px solid #364149;
+}
+h1 span,
+h2 span {
+  font-weight: bold;
+}
+.iframe-wrapper {
+  width: 250px;
+  height: 330px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 10px solid;
+  border-radius: 10px;
+}
+.iframe-wrapper iframe {
+  height: 100%;
+  margin: 0;
+  border: 0;
+}

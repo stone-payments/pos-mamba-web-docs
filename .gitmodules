@@ -1,4 +1,0 @@
-[submodule "packages"]
-	path = packages
-	url = https://github.com/stone-payments/pos-mamba-sdk.git
-	branch = develop

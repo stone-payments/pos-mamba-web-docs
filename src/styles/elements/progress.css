@@ -1,5 +1,0 @@
-@import url('nprogress/nprogress.css');
-
-#nprogress .bar {
-  background: var(--secondary);
-}

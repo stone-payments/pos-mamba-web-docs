@@ -1,7 +1,9 @@
 import Home from './routes/Home.html';
-import About from './routes/About.html';
+import Button from './routes/Button.html';
+import Carousel from './routes/Carousel.html';
 
 export default {
   '/': Home,
-  '/about': About,
+  '/button': Button,
+  '/carousel': Carousel,
 };

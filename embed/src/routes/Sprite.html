@@ -3,8 +3,8 @@
   <div class="row">
     <Sprite ref:sprite src={stone} width="70px"/>
   </div>
-  <button on:click="refs.sprite.start()">play</button>
-  <button on:click="refs.sprite.stop()">pause</button>
+  <Button size="small" secondary on:click="refs.sprite.start()">play</Button>
+  <Button size="small" secondary on:click="refs.sprite.stop()">pause</Button>
 </Container>
 
 <script>
@@ -12,9 +12,10 @@
     components: {
       Sprite: '@mamba/sprite/Sprite.html',
       Container: '@mamba/container',
+      Button: '@mamba/button',
     },
     helpers: {
-      stone: '../assets/logo.png',
+      stone: '../assets/stone.png',
     },
   };
 </script>

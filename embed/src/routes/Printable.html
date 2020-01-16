@@ -9,12 +9,16 @@
   <br>
 </Printable>
 
-<button on:click="refs.printable.print()">Print</button>
+<Container>
+  <Button size="full" on:click="refs.printable.print()">Print</Button>
+</Container>
 
 <script>
   export default {
     components: {
       Printable: '@mamba/printable/Printable.html',
+      Button: '@mamba/button',
+      Container: '@mamba/container',
     },
   };
 </script>

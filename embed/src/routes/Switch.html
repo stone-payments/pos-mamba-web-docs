@@ -1,0 +1,40 @@
+<Container>
+
+  <h4>Padrão</h4>
+  <div class="row">
+    <Switch on:change="console.log(event)"/>
+  </div>
+
+  <h4>Selecionado</h4>
+  <div class="row">
+    <Switch checked on:change="console.log(event)"/>
+  </div>
+
+  <h4>Desativado</h4>
+  <div class="row">
+    <Switch disabled on:change="console.log(event)"/>
+  </div>
+
+</Container>
+
+<style>
+  h4 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .row {
+    margin: 20px 0px 20px 0px;
+  }
+</style>
+
+<script>
+  export default {
+    components: {
+      Switch: '@mamba/switch',
+      Container: '@mamba/container',
+    },
+  };
+</script>

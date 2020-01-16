@@ -1,11 +1,36 @@
-<h1><strong>Embed App</strong></h1>
-
-<Button on:click="this.root.router.go('/button')">Go!</Button>
+<Container>
+  <h1><strong>Componentes</strong></h1>
+</Container>
+  <Collection>
+    <Row label="Button" href="/button" />
+    <Row label="Carousel" href="/carousel" />
+    <Row label="Collection" href="/collection" />
+    <Row label="Container" href="/container" />
+    <Row label="Dialog" href="/dialog" />
+    <Row label="Icon" href="/icon" />
+    <Row label="Input" href="/input" />
+    <Row label="Printable" href="/printable" />
+    <Row label="Progress" href="/progress" />
+    <Row label="QRCode" href="/qrcode" />
+    <Row label="Range" href="/range" />
+    <Row label="Sprite" href="/sprite" />
+    <Row label="Switch" href="/switch" />
+    <Row label="Tabs" href="/tabs" />
+  </Collection>
 
 <script>
   export default {
     components  : {
-      Button: '@mamba/button',
+      Collection: '@mamba/collection',
+      Row: '@mamba/collection/Row.html',
+      Container: '@mamba/container',
     },
   }
 </script>
+
+<style>
+  h1, strong {
+    margin: 0;
+    padding: 0;
+  }
+</style>

@@ -1,0 +1,37 @@
+<Container>
+  <h4>Padrão</h4>
+  <div class="row">
+    <Sprite ref:sprite src={stone} width="70px"/>
+  </div>
+  <button on:click="refs.sprite.start()">play</button>
+  <button on:click="refs.sprite.stop()">pause</button>
+</Container>
+
+<script>
+  export default {
+    components: {
+      Sprite: '@mamba/sprite/Sprite.html',
+      Container: '@mamba/container',
+    },
+    helpers: {
+      stone: '../assets/logo.png',
+    },
+  };
+</script>
+
+<style>
+  :global(body) {
+    background-color: #ddd;
+  }
+
+  h4 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .row {
+    margin: 20px 0px 20px 0px;
+  }
+</style>

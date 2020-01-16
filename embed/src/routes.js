@@ -6,6 +6,13 @@ import Container from './routes/Container.html';
 import Dialog from './routes/Dialog.html';
 import Icon from './routes/Icon.html';
 import Input from './routes/Input.html';
+import Printable from './routes/Printable.html';
+import Progress from './routes/Progress.html';
+import QRCode from './routes/QRCode.html';
+import Range from './routes/Range.html';
+import Sprite from './routes/Sprite.html';
+import Switch from './routes/Switch.html';
+import Tabs from './routes/Tabs.html';
 
 export default {
   '/': Home,
@@ -16,4 +23,11 @@ export default {
   '/dialog': Dialog,
   '/icon': Icon,
   '/input': Input,
+  '/printable': Printable,
+  '/progress': Progress,
+  '/qrcode': QRCode,
+  '/range': Range,
+  '/sprite': Sprite,
+  '/switch': Switch,
+  '/tabs': Tabs,
 };

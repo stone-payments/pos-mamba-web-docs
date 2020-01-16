@@ -8,7 +8,8 @@
   "scripts": {
     "serve": "docsify serve ./docs",
     "css": "stylus -w ./docs/assets/style.styl -o ./docs/assets/style.css",
-    "dev": "concurrently --kill-others \"npm run serve\" \"npm run css\""
+    "dev": "concurrently --kill-others \"npm run serve\" \"npm run css\"",
+    "publish": "cd embed && npm run build-browser && now --prod dist/bundle.browser"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "concurrently": "^5.0.2",
     "docsify": "^4.10.2",
+    "now": "^16.7.3",
     "stylus": "^0.54.7"
   }
 }

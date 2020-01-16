@@ -2,11 +2,11 @@
   Espaçamento padrão <strong>10px</strong>
 </Container>
 
-<Container>
+<Container padding="0 20px">
   Espaçamento customizado com escrita CSS <strong>0 20px</strong>
 </Container>
 
-<Container>
+<Container padding="10% 20px 1em">
   Espaçamento com outros valores <strong>1em</strong>
 </Container>
 
@@ -14,28 +14,12 @@
   :global(body) {
     background-color: #ddd;
   }
-
-  h4 {
-    display: inline-block;
-    vertical-align: middle;
-    font-weight: bold;
-  }
-
-  .container {
-    max-width: 80%;
-    width: 700px;
-    margin: 80px auto;
-  }
-
-  .row {
-    margin: 20px 0px 20px 0px;
-  }
 </style>
 
 <script>
   export default {
     components: {
-      Container: '@mamba/container/Container.html',
+      Container: '@mamba/container',
     },
   };
 </script>

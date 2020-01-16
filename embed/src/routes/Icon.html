@@ -32,8 +32,8 @@
   <h4>Customizados</h4>
 
   <div class="row">
-    <Icon src="assets/account.svg" />
-    <RoundIcon src="assets/account.svg" />
+    <Icon src={accountIcon} />
+    <RoundIcon src={accountIcon} />
   </div>
 
   <h4>Graduais</h4>
@@ -57,12 +57,6 @@
     font-weight: bold;
   }
 
-  .container {
-    max-width: 80%;
-    width: 700px;
-    margin: 0 auto;
-  }
-
   .row {
     margin: 20px 0px 20px 0px;
     width: 33.12567%;
@@ -75,6 +69,9 @@
       Container: '@mamba/container',
       Icon: '@mamba/icon/Icon.html',
       RoundIcon: '@mamba/icon/Round.html',
+    },
+    helpers: {
+      accountIcon: '../assets/account.svg',
     },
     data() {
       return {

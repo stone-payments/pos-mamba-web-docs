@@ -77,6 +77,8 @@
   "dependencies": {
     "@mamba/app": "^2.14.0",
     "@mamba/appbar": "^2.14.0",
+    "@mamba/barcode": "^2.23.1",
+    "@mamba/brands": "^2.23.1",
     "@mamba/button": "^2.14.0",
     "@mamba/carousel": "^2.23.1",
     "@mamba/collection": "^2.23.1",

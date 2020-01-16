@@ -1,4 +1,7 @@
 import Home from './routes/Home.html';
+import AppBar from './routes/AppBar.html';
+import Barcode from './routes/Barcode.html';
+import Brands from './routes/Brands.html';
 import Button from './routes/Button.html';
 import Carousel from './routes/Carousel.html';
 import Collection from './routes/Collection.html';
@@ -16,6 +19,9 @@ import Tabs from './routes/Tabs.html';
 
 export default {
   '/': Home,
+  '/appbar': AppBar,
+  '/barcode': Barcode,
+  '/brands': Brands,
   '/button': Button,
   '/carousel': Carousel,
   '/collection': Collection,

@@ -15,6 +15,25 @@
 <hr class="divider" />
 
 - Componentes
-  - [Button](content/components/button.md)
+  - [App](content/components/App.md)
+  - [AppBar](content/components/AppBar.md)
+  - [Barcode](content/components/Barcode.md)
+  - [Brands](content/components/Brands.md)
+  - [Button](content/components/Button.md)
+  - [Carousel](content/components/Carousel.md)
+  - [Collection](content/components/Collection.md)
+  - [Container](content/components/Container.md)
+  - [Dialog](content/components/Dialog.md)
+  - [Icon](content/components/Icon.md)
+  - [Input](content/components/Input.md)
+  - [Printable](content/components/Printable.md)
+  - [Progress](content/components/Progress.md)
+  - [QRCode](content/components/QRCode.md)
+  - [Radio](content/components/Radio.md)
+  - [Range](content/components/Range.md)
+  - [Sprite](content/components/Sprite.md)
+  - [Switch](content/components/Switch.md)
+  - [Tabs](content/components/Tabs.md)
+
 
 - API Nativa

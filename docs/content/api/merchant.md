@@ -1,0 +1,1 @@
+[filename](https://raw.githubusercontent.com/stone-payments/pos-mamba-sdk/develop/packages/pos/docs/merchant.md ':include')

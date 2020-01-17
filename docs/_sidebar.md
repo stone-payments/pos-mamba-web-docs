@@ -1,4 +1,4 @@
-- Introdução
+- [Introdução](content/introducao.md)
 
   - [Começando](content/introducao.md#Começando)
   - [Desenvolvendo](content/introducao.md#Desenvolvendo)
@@ -14,7 +14,8 @@
 
 <hr class="divider" />
 
-- Componentes
+- <p>Componentes</p>
+
   - [App](content/components/App.md)
   - [AppBar](content/components/AppBar.md)
   - [Barcode](content/components/Barcode.md)
@@ -36,4 +37,14 @@
   - [Tabs](content/components/Tabs.md)
 
 
-- API Nativa
+- <p>API Nativa</p>
+
+  - [App](content/api/app.md)
+  - [Card](content/api/card.md)
+  - [Http](content/api/http.md)
+  - [Keyboard](content/api/keyboard.md)
+  - [Merchant](content/api/merchant.md)
+  - [Payment](content/api/payment.md)
+  - [Printer](content/api/printer.md)
+  - [Storage](content/api/storage.md)
+  - [System](content/api/system.md)

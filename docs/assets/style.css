@@ -11,6 +11,9 @@ main .content {
   margin: 0;
   padding: 0;
 }
+.markdown-section code {
+  background-color: #e6e6e6;
+}
 .markdown-section p.tip,
 .markdown-section pre > code {
   background-color: #ebebeb;

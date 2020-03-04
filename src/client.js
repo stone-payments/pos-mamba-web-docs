@@ -1,6 +1,6 @@
 import { Store } from 'svelte/store.js'
 import * as sapper from '../__sapper__/client.js'
-import '../packages/pos/simulator/index.js'
+// import '../mamba-sdk/packages/pos/simulator/index.js'
 import './styles/app.css'
 
 const store = new Store({})

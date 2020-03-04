@@ -15,7 +15,7 @@ export async function get(req, res) {
   if (process.env.NODE_ENV === 'development' || !lookup || !lookup.has(slug)) {
     lookup = new Map()
 
-    const packageRoot = path.join(process.cwd(), 'packages/components/')
+    const packageRoot = path.join(process.cwd(), 'mamba-sdk/packages/components/')
 
     const hasProperSlug = fs
       .readdirSync(packageRoot)

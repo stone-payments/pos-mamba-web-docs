@@ -15,7 +15,7 @@ function loader(source) {
   this.value = source;
 
   const opts = Object.assign(
-    { localPath: 'packages/components' },
+    { localPath: 'mamba-sdk/packages/components' },
     loaderUtils.getOptions(this) || {},
   );
 

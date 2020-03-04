@@ -26,16 +26,16 @@ module.exports = function createWebpackConfig(type) {
       mainFields: ['svelte', 'browser', 'module', 'main', 'dist'],
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
-        path.resolve(__dirname, '../packages'),
+        path.resolve(__dirname, '../mamba-sdk/packages'),
         path.resolve(__dirname, '../node_modules'),
         'node_modules',
       ],
       alias: {
-        '@components': path.resolve(__dirname, '../packages/components/'),
-        '@mamba/pos': path.resolve(__dirname, '../packages/pos/'),
+        '@components': path.resolve(__dirname, '../mamba-sdk/packages/components/'),
+        '@mamba/pos': path.resolve(__dirname, '../mamba-sdk/packages/pos/'),
         '@mamba/store': path.resolve(
           __dirname,
-          '../packages/store/src/index.js',
+          '../mamba-sdk/packages/store/src/index.js',
         ),
       },
     },
@@ -48,14 +48,14 @@ module.exports = function createWebpackConfig(type) {
           test: /NAV_COMPONENTS$/,
           loader: require.resolve('./navigation-loader'),
           options: {
-            localPath: path.join(__dirname, '..', 'packages/components'),
+            localPath: path.join(__dirname, '..', 'mamba-sdk/packages/components'),
           },
         },
         {
           test: /\.(html|svelte)$/,
           include: [
             /node_modules\/@mamba/,
-            /packages\/.+\/src/,
+            /mamba-sdk\/packages\/.+\/src/,
             path.resolve(__dirname, '..'),
           ],
           use: [loaders.babel, loaders.svelte(type)],
@@ -71,7 +71,7 @@ module.exports = function createWebpackConfig(type) {
           resolve: { mainFields: ['style', 'main'] },
           include: [
             path.resolve(__dirname, '../src'),
-            path.resolve(__dirname, '../packages'),
+            path.resolve(__dirname, '../mamba-sdk/packages'),
             path.resolve(__dirname, '../node_modules/@mamba'),
           ],
           use: [loaders.styleLoader, loaders.css, loaders.postcss],
@@ -83,7 +83,7 @@ module.exports = function createWebpackConfig(type) {
         {
           test: /\.(gif|jpe?g|png|ico)$/,
           include: [
-            /packages\/pos/,
+            /packages\/mamba-sdk\/pos/,
             /assets/,
             /\/assets\/images\//,
             /\/example\/static\//,

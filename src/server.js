@@ -20,21 +20,21 @@ dotenv.config()
 
 const app = express()
 
-const serveMisc = [
-  'Icon',
-  'Brands',
-  'Range/example',
-  'Sprite/example',
-  'QRCode/example',
-].map(path =>
-  serve(`packages/components/${path}`, { dotfiles: 'ignore', etag: false }),
-)
+// const serveMisc = [
+//   'Icon',
+//   'Brands',
+//   'Range/example',
+//   'Sprite/example',
+//   'QRCode/example',
+// ].map(path =>
+//   serve(`mamba-sdk/packages/components/${path}`, { dotfiles: 'ignore', etag: false }),
+// )
 
 app.use(
   bodyParser.json({ limit: '300kb' }),
   compression({ threshold: 0 }),
   serve('static'),
-  serveMisc,
+  // serveMisc,
   sapper.middleware({
     store: () =>
       new Store({

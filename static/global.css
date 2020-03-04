@@ -48,7 +48,7 @@ code {
   margin: 0 auto;
   border: 0;
   border-radius: 3px;
-  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.07), 0 18px 36px -18px rgba(0,0,0,.3), 0 -12px 36px -8px rgba(0,0,0,.025), 0 0 0px 3px #102d3f;
+  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.07), 0 18px 36px -18px rgba(0, 0, 0, .3), 0 -12px 36px -8px rgba(0, 0, 0, .025), 0 0 0px 3px #102d3f;
   margin-top: 50px;
   margin-bottom: 50px;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-cond-assign */
 import fs from 'fs'
 import { basename, extname } from 'path'
 
@@ -193,7 +194,7 @@ export default function(path, options = {}) {
         // &lt; -> '<', &gt; -> '>'
         code = escape.tag(code)
 
-        let env = {
+        const env = {
           options: prismOptions,
           $element,
           language,
@@ -213,7 +214,7 @@ export default function(path, options = {}) {
 
         Prism.hooks.run('before-highlight', env)
 
-        let highlightedCode = Prism.highlight(code, grammar)
+        const highlightedCode = Prism.highlight(code, grammar)
 
         env.highlightedCode = highlightedCode
         Prism.hooks.run('before-insert', env)
@@ -224,7 +225,7 @@ export default function(path, options = {}) {
         Prism.hooks.run('complete', env)
       })
 
-      let renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`
+      const renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`
 
       if (examples.length && examples[0].fileContents) {
         // We need to avoid markdown code contents being confused with component examples block.
@@ -244,7 +245,7 @@ export default function(path, options = {}) {
 
     blockTypes.forEach(type => {
       const fn = renderer[type]
-      renderer[type] = function() {
+      renderer[type] = function blockFnTy() {
         group = null
         return fn.apply(this, arguments)
       }
@@ -277,7 +278,7 @@ export default function(path, options = {}) {
 
       const json5 = group.blocks.find(block => block.lang === 'json')
       // console.log('main, main.meta: ', main, main.meta);
-      const title = main.meta.title
+      const {title} = main.meta
       if (!title) console.error(`Missing title for demo in ${file}`)
 
       demos.set(

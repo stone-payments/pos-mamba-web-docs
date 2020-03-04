@@ -7,9 +7,9 @@ sudo pm2 stop all
 
 ### Configuration ###
 SITE_DIR=/home/deployusr/site
-APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
+# APP_DIR="$SITE_DIR/pos-mamba-sdk-docs"
 PROD_DIR="$SITE_DIR/mambadocs-prod"
-BRANCH="develop"
+# BRANCH="develop"
 export NODE_ENV=production
 
 # cd $APP_DIR
@@ -20,8 +20,6 @@ set -x
 
 if [ ! -d "$SITE_DIR/mambadocs-prod" ]; then
   mkdir "$SITE_DIR/mambadocs-prod"
-else
-  sudo rm -rf "$PROD_DIR/__sapper__"
 fi
 
 # # Slow deploy

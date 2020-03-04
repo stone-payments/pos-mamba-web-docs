@@ -34,7 +34,7 @@ app.use(
   bodyParser.json({ limit: '300kb' }),
   compression({ threshold: 0 }),
   serve('static'),
-  serveMisc,
+  // serveMisc,
   sapper.middleware({
     store: () =>
       new Store({

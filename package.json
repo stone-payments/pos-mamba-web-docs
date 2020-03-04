@@ -73,6 +73,7 @@
     "@mamba/styles": "file:./mamba-sdk/packages/styles",
     "@mamba/switch": "file:./mamba-sdk/packages/components/Switch",
     "@mamba/tabs": "file:./mamba-sdk/packages/components/Tabs",
+    "@mamba/toast": "file:mamba-sdk/packages/components/Toast",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.2",
     "codemirror": "^5.40.2",

@@ -48,7 +48,7 @@
     <p>Saving ...</p>
     {/if}
     {#if errMsg}
-      <p>
+      <p style="color: red;">
         {errMsg}
       </p>
     {/if}
@@ -270,7 +270,8 @@
 
   .footer p {
     font-size: 12px;
-    color: #888;
+    color: rgb(11, 80, 54);
+    font-weight: bold;
   }
 
   button:disabled {
@@ -282,11 +283,12 @@
 
   .preview {
     position: absolute;
-    width: 242px;
-    height: 302px;
+    width: 240px;
+    height: 320px;
     top: 130px;
     left: 240px;
     border: 1px solid black;
+    overflow: auto;
   }
 
 </style>

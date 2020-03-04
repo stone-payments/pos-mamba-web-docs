@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-sudo pm2 stop all
+sudo pm2 stop ecosystem.config.js
 
 # Basically deploy do: git clean -fdx && git reset --hard HEAD && git pull origin master && cross-env NODE_ENV=production npm install --production && npm run build && pm2 restart mambadocs
 

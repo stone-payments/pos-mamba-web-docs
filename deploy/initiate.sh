@@ -4,6 +4,7 @@ set -e
 ### Configuration ###
 SERVER=deployusr@191.239.252.1
 SITE_DIR=/home/deployusr/site
+PROD_DIR=$SITE_DIR/mambadocs-prod
 REMOTE_GIT="ssh://$SERVER/$SITE_DIR/mambadocs.git"
 # KEYFILE=
 REMOTE_SCRIPT_PATH="$SITE_DIR/deploy-mambadocs.sh"
@@ -27,7 +28,12 @@ fi
 
 # set -x
 
-echo "Coping deploy script to ${SERVER}$REMOTE_SCRIPT_PATH" 
+rsync -arvc ./__sapper__ $SERVER:$PROD_DIR
+rsync -arvc ./content $SERVER:$PROD_DIR
+rsync -arvc ./static $SERVER:$PROD_DIR
+rsync -arvc ./mamba-sdk $SERVER:$PROD_DIR
+
+echo "Coping deploy script to ${SERVER}$REMOTE_SCRIPT_PATH"
 
 scp deploy/work.sh $SERVER:$REMOTE_SCRIPT_PATH
 echo

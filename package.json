@@ -114,7 +114,7 @@
     "@babel/preset-stage-3": "^7.0.0",
     "@mamba/configs": "latest",
     "@mamba/webpack": "latest",
-    "acorn": "^6.1.0",
+    "acorn": "^6.4.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",

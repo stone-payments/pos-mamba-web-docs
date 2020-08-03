@@ -107,7 +107,7 @@ import System from '@mamba/pos/system.js'
 
 ### Testando no Simulador Virtual
 
-Todos os apps da SDK, a partir da versão 2.0, possuem acoplado um simulador virtual da POS para agilizar o desenvolvimento, e então submetê-lo à POS física. Basta rodar `npm run start` e depois acessar `http://localhost:8080/` no seu navegador e o app se encontrará lá. Simples e rápido.
+Todos os apps da SDK, a partir da versão 2.0, possuem acoplado um simulador virtual da POS para agilizar o desenvolvimento. Basta rodar `npm run start` e depois acessar `http://localhost:8080/` no seu navegador e o app se encontrará lá. Simples e rápido.
 
 ### Build
 

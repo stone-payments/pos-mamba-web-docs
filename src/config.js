@@ -8,8 +8,8 @@ module.exports = {
     },
     credentials: {
       dev: {
-        key: path.join(process.cwd(), 'localhost.key'),
-        cert: path.join(process.cwd(), 'localhost.cert'),
+        // key: path.join(process.cwd(), 'localhost.key'),
+        // cert: path.join(process.cwd(), 'localhost.cert'),
         requestCert: false,
         rejectUnauthorized: false,
       },

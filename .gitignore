@@ -4,6 +4,7 @@
 .sass-cache
 bundle.stats.json
 result.xml
+package-lock.json
 npm-debug.log
 yarn-error.log
 docs.sublime-project

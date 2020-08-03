@@ -105,11 +105,9 @@ import System from '@mamba/pos/system.js'
 
 ## Finalizando
 
-### Testando no Mamba Browser
+### Testando no Simulador Virtual
 
-Apesar do nosso `POS Virtual` ser um excelente modo de testar rapidamente as aplicações, ele não simula o comportamento ideal do `POS`, já que este utiliza a versão do `Webkit` do seu navegador. Sendo assim, para um teste fiel é recomendado que se utilize o `Mamba Browser` ou faça `deploy` da aplicação direto no `POS`.
-
-[Baixar a versão mais atual](https://github.com/stone-payments/pos-mamba-browser/releases/)
+Todos os apps da SDK, a partir da versão 2.0, possuem acoplado um simulador virtual da POS para agilizar o desenvolvimento. Basta rodar `npm run start` e depois acessar `http://localhost:8080/` no seu navegador e o app se encontrará lá. Simples e rápido.
 
 ### Build
 

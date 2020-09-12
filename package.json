@@ -93,7 +93,7 @@
     "lodash-fp": "^0.10.4",
     "lodash.capitalize": "^4.2.1",
     "marked": "^0.7.0",
-    "node-fetch": "^2.2.0",
+    "node-fetch": "^2.6.1",
     "nprogress": "^0.2.0",
     "prismjs": "^1.15.0",
     "qrious": "^4.0.2",

@@ -8,6 +8,7 @@ echo pwd
 
 # Update lasted update
 git pull
+git submodule sync --recursive
 
 npm run pull:sdk:submodule
 

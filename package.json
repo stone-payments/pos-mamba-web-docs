@@ -19,7 +19,7 @@
     "now-start": "node scripts/slack_webhook.js && node build",
     "deploy:staging": "now --public && now alias",
     "deploy": "git submodule update --init --recursive && npm run build && ./deploy/initiate.sh",
-    "run": "chmod +x ./deploy/work.sh && ./deploy/work.sh",
+    "run": "./deploy/work.sh",
     "pull:packages": "cd scripts && npm i && npm run update",
     "pull:packages:bash": "ls ./ && chmod +x scripts/update_packages.sh && scripts/update_packages.sh && ls ./mamba-sdk/packages",
     "preinstall": "git submodule update --init --recursive",

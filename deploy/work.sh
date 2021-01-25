@@ -12,7 +12,7 @@ git pull
 # Install dependencies and submodule sdk
 npm ci
 
-chown -x $USER ./mamba-sdk/
+chown -R $USER ./mamba-sdk/
 
 # Build project
 npm run build

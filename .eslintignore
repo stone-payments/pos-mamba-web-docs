@@ -1,6 +1,3 @@
 node_modules/
 dist/
 /mamba-sdk
-# /packages/components/*/example/*.js
-# /packages/native/*.js
-#  /packages/utils/*.js

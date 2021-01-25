@@ -4,7 +4,6 @@
 .sass-cache
 bundle.stats.json
 result.xml
-package-lock.json
 npm-debug.log
 yarn-error.log
 docs.sublime-project
@@ -28,6 +27,3 @@ bower_components/
 /.temp
 # /packages
 __sapper__
-
-## Ignore all lock files. Yes, ALL!
-yarn.lock

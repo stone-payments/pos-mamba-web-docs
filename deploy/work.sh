@@ -10,7 +10,7 @@ echo pwd
 git pull
 
 # Install dependencies and submodule sdk
-npm ci
+npm i
 
 chown -R $USER ./mamba-sdk/
 

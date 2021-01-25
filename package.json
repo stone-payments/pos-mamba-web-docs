@@ -22,7 +22,7 @@
     "run": "./deploy/work.sh",
     "pull:packages": "cd scripts && npm i && npm run update",
     "pull:packages:bash": "ls ./ && chmod +x scripts/update_packages.sh && scripts/update_packages.sh && ls ./mamba-sdk/packages",
-    "preinstall": "git submodule update --init --recursive",
+    "pull:sdk:submodule": "git submodule update --init --recursive",
     "lint": "npm run lint:js",
     "setup": "rm -rf node_modules | npm install",
     "lint:js": "eslint \"*.js\" \"{tools,packages,docs-sapper}/**/*.{js,html,svelte}\"",

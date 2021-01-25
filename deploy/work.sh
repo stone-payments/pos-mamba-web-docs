@@ -4,7 +4,7 @@ set -x
 
 export NODE_ENV=production
 
-echo pwd
+rm -rf node_modules
 
 # Update lasted update
 git pull

@@ -4,6 +4,7 @@ set -x
 
 export NODE_ENV=production
 
+rm package-lock.json
 rm -rf node_modules
 
 # Update lasted update

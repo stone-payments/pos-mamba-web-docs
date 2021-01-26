@@ -1,11 +1,13 @@
 #!/bin/bash
-set -e
-set -x
 
-export NODE_ENV=production
+set -x
 
 rm package-lock.json
 rm -rf node_modules
+
+set -e
+
+export NODE_ENV=production
 
 # Update lasted update
 git pull

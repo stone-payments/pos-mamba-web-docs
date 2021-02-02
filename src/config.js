@@ -4,7 +4,7 @@ module.exports = {
   server: {
     port: {
       dev: 3000,
-      prod: 80,
+      prod: 8080,
     },
     credentials: {
       dev: {

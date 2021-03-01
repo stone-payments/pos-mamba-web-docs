@@ -95,7 +95,7 @@
     "marked": "^0.7.0",
     "node-fetch": "^2.2.0",
     "nprogress": "^0.2.0",
-    "prismjs": "^1.15.0",
+    "prismjs": "^1.23.0",
     "qrious": "^4.0.2",
     "serve-static": "^1.13.2",
     "sourcemap-codec": "^1.4.1",

@@ -49,7 +49,7 @@ function getHash(str) {
 }
 
 const cheerioOption = {
-  decodeEntities: false,
+  decodeEntities: true,
 }
 
 const SELECTOR = 'pre>code[class*="language-"]'
@@ -83,7 +83,8 @@ export default function(path, options = {}) {
     // const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '')
     const filePath = (options.toFile ? '' : `${path}/`).concat(file)
 
-    const markdown = fs.readFileSync(filePath, 'utf-8')
+    const markdown = fs.readFileSync(filePath, 'utf-8');
+    console.log('read.map', file, filePath, options);
 
     const { content, metadata, examples } = processMarkdown(
       markdown,
@@ -116,13 +117,7 @@ export default function(path, options = {}) {
         source = lines.slice(1).join('\n')
         const filename = meta.filename || lang === 'html'
         if (filename) {
-          if (options.mambaSlub) {
-            prefix = `<div class='source-header'><i class="fas fa-external-link-alt"></i><a class='filename' href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/${capitalize(
-              options.mambaSlub,
-            )}/example/${filename}'><span>${
-              strings.sourceCode
-            }</span></a></div>`
-          } else {
+          if (!options.mambaSlub) {
             prefix = `<span class='filename'>${filename}</span>`
           }
           className += ' named'
@@ -140,10 +135,7 @@ export default function(path, options = {}) {
         (lang === 'js' ? 'javascript' : lang) || 'javascript'
 
       // Create a inline code tag
-      const html = `<pre class="code-block line-numbers language-${properLanguage}"><code class="language-${properLanguage}">${source.replace(
-        /[&<>]/g,
-        replaceTag,
-      )}</code></pre>`
+      const html = `<pre class="code-block line-numbers language-${properLanguage}"><code class="language-${properLanguage}">${source}</code></pre>`;
 
       // Load cheerio with Code component output
       const $ = cheerio.load(html, cheerioOption)
@@ -190,9 +182,9 @@ export default function(path, options = {}) {
         let code = $element.html()
 
         // &amp; -> &
-        code = escape.amp(code)
+        // code = escape.amp(code)
         // &lt; -> '<', &gt; -> '>'
-        code = escape.tag(code)
+        // code = escape.tag(code)
 
         const env = {
           options: prismOptions,
@@ -219,13 +211,13 @@ export default function(path, options = {}) {
         env.highlightedCode = highlightedCode
         Prism.hooks.run('before-insert', env)
 
-        $element.text(highlightedCode)
+        $element.html(highlightedCode)
 
         Prism.hooks.run('after-highlight', env)
         Prism.hooks.run('complete', env)
       })
 
-      const renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`
+      const renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
 
       if (examples.length && examples[0].fileContents) {
         // We need to avoid markdown code contents being confused with component examples block.

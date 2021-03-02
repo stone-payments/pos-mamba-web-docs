@@ -53,7 +53,7 @@ export async function get(req, res) {
     const [README, packageJson] = ['README.md', 'package.json']
 
     let sections = null
-
+    console.log('paths: ', paths);
     const examples = paths.filter(f => f.indexOf('/example/') !== -1)
 
     const components = paths.reduce(
@@ -86,7 +86,7 @@ export async function get(req, res) {
       },
     )
 
-    lookup.set(slug, JSON.stringify(components))
+    lookup.set(slug, __DEV__ ? JSON.stringify(components, null, 2) : JSON.stringify(components))
   }
 
   if (lookup.has(slug)) {

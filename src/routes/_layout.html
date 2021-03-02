@@ -2,6 +2,8 @@
   <div>
     <svelte:component this={child.component} {...child.props}/>
   </div>
+{:elseif child.props.path.indexOf('framed') !== -1 }
+  <svelte:component this={child.component} {...child.props}/>
 {:else}
   <RouteTemplate path={child.props.path}>
     <svelte:component this={child.component} {...child.props}/>
@@ -9,7 +11,7 @@
 {/if}
 
 <script>
-  import RouteTemplate from '../layout/RouteTemplate';
+  import RouteTemplate from '../layout/RouteTemplate.html';
 
   export default {
     components: { RouteTemplate },

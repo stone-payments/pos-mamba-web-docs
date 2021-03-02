@@ -27,6 +27,6 @@
 
   th:first-child,
   td:first-child {
-    padding-left: 15px;
+    padding-left: 0;
   }
 }

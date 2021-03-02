@@ -1,9 +1,10 @@
 /* shared/colors.css */
 
 :root {
-  --primary: #41a713;
-  --secondary: #4ebf1a;
-  --code-color: #408e1c;
+  --primary: $green500;
+  --secondary: $green600;
+  --code-color: $green700;
   --bg-color: #f5f7f9;
   --sidebar-bg-color: #f5f7f9;
+  --nav-hr-border-color: $neutral200;
 }

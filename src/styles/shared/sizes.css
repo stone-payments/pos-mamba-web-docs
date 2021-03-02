@@ -4,7 +4,7 @@
 
 :root {
   /* Content */
-  --content-width: 900px;
+  --content-width: 100%;
 
   /* Sidebar */
   --sidebar-min-width: 280px;
@@ -12,9 +12,8 @@
   --sidebar-position: sticky;
 
   /* Nav */
-  --nav-hr-border-color: rgba(120, 134, 156, 0.08);
-  --nav-width: 85%;
-  --nav-hr-border-width: var(--nav-width);
+  --nav-width: 90%;
+  --nav-hr-border-width: 100%;
   --nav-top-position: calc(var(--logo-svg-height) + 40px);
 
   /* Logo */

@@ -6,24 +6,28 @@
 {:elseif manifest.docs}
 <div class="Component">
   <header>
-    <h1>
-      {manifest.docs.metadata.title}
-      <small
-        ><a
-          href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
-          >editar esta seção</a
-        ></small
-      >
-    </h1>
-    <div class="code-block code-block-container install-block">
-      <pre
-        class="code-block line-numbers language-javascript"
-        style="font-size: 16px; white-space: normal;"
-      >
-            <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
-              <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
-            </code>
-          </pre>
+    <div class="header-inner">
+      <h1>
+        {manifest.docs.metadata.title}
+        <div class="edit-section">
+          <small
+            ><a
+              href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
+              >editar esta seção</a
+            ></small
+          >
+        </div>
+      </h1>
+      <div class="code-block code-block-container install-block">
+        <pre
+          class="code-block line-numbers language-javascript"
+          style="font-size: 16px; white-space: normal;"
+        >
+          <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
+            <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
+          </code>
+        </pre>
+      </div>
       <div class="links">
         <a
           class="github-link"
@@ -38,10 +42,10 @@
           ><i class="fas fa-external-link-alt"></i>NPM</a
         >
       </div>
-    </div>
-    <div class="version-block">
-      <small class="unique">Mais recente:</small>
-      <span>v{manifest.info.package.version}</span>
+      <div class="version-block">
+        <small class="unique">Mais recente:</small>
+        <span>v{manifest.info.package.version}</span>
+      </div>
     </div>
   </header>
 
@@ -51,23 +55,30 @@
     </div>
   </section>
 
-  {#if !!example}
+  {#if example}
   <section class="Examples">
     <div class="Examples-boxes">
       <div class="Examples-example">
-        <header>
-          <h2>Exemplos</h2>
-        </header>
-        <div class="Code-run">
-          <svelte:component this="{Example}" name="example" />
+        <div class="iframe-wrapper">
+          <iframe title="{slug}" src="/framed/{slug}"></iframe>
         </div>
         <div class="Source-wrapper">
           {@html example.source}
         </div>
+        <div class='source-header'>
+          <i class="fas fa-external-link-alt"></i>
+          <a
+            class='filename'
+            href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{example.filePath}'
+          >
+            <span>Código fonte dos exemplos</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
-  {/if} {#if manifest.docs.paramsHtml !== false}
+  {/if}
+  {#if manifest.docs.paramsHtml !== false}
   <section class="Params-html">
     <div class="part">
       {@html manifest.docs.paramsHtml}
@@ -90,10 +101,10 @@
     },
 
     async oncreate() {
-      const { params } = this.get()
+      const { params: { slug } } = this.get()
       NProgress.start()
-
-      await fetch(`api/components/${params.slug}`)
+      this.set({ slug });
+      await fetch(`api/components/${slug}`)
         .then(r => r.json())
         .then(async manifest => {
           const docs = manifest && manifest.docs
@@ -110,16 +121,18 @@
             })
             .catch(NProgress.done)
 
+          const example = (docs.examples.length && docs.examples[0]) || false;
+          console.log(example);
           this.set({
             isLoading: false,
-            manifest: manifest,
-            example: (docs.examples.length && docs.examples[0]) || false,
-            title: (docs && docs.metadata.title) || capitalize(params.slug),
+            manifest,
+            example,
+            title: (docs && docs.metadata.title) || capitalize(slug),
           })
 
           NProgress.inc()
         })
-        .catch(e => {
+        .catch(() => {
           NProgress.done()
           this.set({
             isLoading: false,
@@ -135,13 +148,7 @@
 
   /* Check if table have four or more columns to use this class below */
   :global(table) thead th {
-    background-color: color-mod(black alpha(0.03));
     font-family: var(--code-font);
-    border-top: 1px solid color-mod(#ebf0ed alpha(60%));
-
-    &:first-child {
-      border-radius: 4px 0 0 0;
-    }
   }
 
   :global(table) tr td:nth-child(3) {
@@ -161,7 +168,6 @@
 
       code {
         background-color: #f1f0f0 !important;
-        color: #41a712;
         border: 1px solid #efeeee;
       }
     }
@@ -172,6 +178,7 @@
 
     & table tr {
       transition: all 0.3s ease-out;
+
       &:hover {
         background-color: rgba(192, 192, 192, 0.09);
       }
@@ -179,9 +186,19 @@
   }
 
   .Component > header {
-    border-bottom: 2px solid #f4f6f7;
-    position: relative;
-    min-height: 140px;
+    .header-inner {
+      padding-top: 40px;
+      margin-left: 40px;
+      margin-right: 40px;
+      flex: 1;
+      display: flex;
+      position: relative;
+      height: inherit;
+      justify-content: space-between;
+    }
+
+    border-bottom: 1px solid $neutral200;
+    height: calc(var(--nav-top-position));
   }
 
   h1 {
@@ -202,21 +219,19 @@
     background-color: #f7f9f8;
     padding-bottom: 1px;
     border: 1px solid rgba(0, 10, 0, 0.01);
-    border-radius: 6px;
   }
 
   section :global(.code-block) {
     position: relative;
+  }
 
-    :global(.source-header) {
-      line-height: 1;
-      width: 100%;
-      border-bottom: 1px solid rgba(0, 10, 0, 0.06);
-      border-radius: 4px 4px 0 0;
-      padding: 13px 13px 10px 16px;
-      color: var(--primary);
-      font-size: 13px;
-    }
+  .source-header {
+    line-height: 1;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 10, 0, 0.06);
+    padding: 13px 13px 10px 16px;
+    color: var(--primary);
+    font-size: 13px;
   }
 
   section :global(.code-block.named.code-block-container) :global(i) {
@@ -252,7 +267,6 @@
   section :global(code) {
     background-color: #f9f9f9;
     padding: 0.2em 0.4em;
-    border-radius: 3px;
   }
 
   section :global(pre) :global(code) {
@@ -293,7 +307,7 @@
     }
 
     & :global(h2[id='m-todos']) ~ :global(h3) {
-      color: #378016;
+      color: $green700;
     }
 
     & :global(.code-block-container) {
@@ -339,13 +353,24 @@
     max-height: 300px;
     overflow: auto;
     margin: 0;
+
+    /*
+    max-height: 300px;
+    overflow: auto;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    border-left: 4px solid $green500;
+    padding-left: 21px;
+    margin-left: 3px;
+    */
   }
 
   .Component section :global(.code-block.code-block-container pre.code-block) {
     margin: 0 0 35px 0;
   }
 
-  .Code-run {
+  /* .Code-run {
     margin: 20px 0 0 0;
     padding-bottom: 40px;
 
@@ -354,7 +379,7 @@
       max-width: 100%;
       margin: 0 !important;
     }
-  }
+  } */
 
   .Examples-example {
     header {

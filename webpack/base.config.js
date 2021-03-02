@@ -74,7 +74,7 @@ module.exports = function createWebpackConfig(type) {
             path.resolve(__dirname, '../mamba-sdk/packages'),
             path.resolve(__dirname, '../node_modules/@mamba'),
           ],
-          use: [loaders.styleLoader, loaders.css, loaders.postcss],
+          use: [loaders.styleLoader, loaders.css, loaders.postcss, loaders.resolveUrl],
         },
         {
           test: /\.(eot|woff2?|otf|ttf)$/,

@@ -5,7 +5,7 @@ import strings from './_strings'
 export default function processMarkdown(markdown, dir, examplesPaths) {
   const metadata = {}
 
-  const pattern = /(\w*@example)\s(.+)\s?-->$/gm
+  const pattern = /(\w*@iframe)\s(.+)\s?-->$/gm
   let match
   let examples = []
 

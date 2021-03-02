@@ -1,41 +1,29 @@
 /* layout/header.css */
 
-header .install-block,
-header .version-block {
-  bottom: 22px;
-}
-
-header .install-block {
-  position: absolute;
-  left: 0;
-  right: auto;
-
-  pre {
-    margin: 0;
-    display: block;
-    white-space: nowrap;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 25px;
-    padding-right: 19px;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 10 , 0, 0.01);
-  }
-
-  .token.string {
-    color: color-mod(var(--primary) alpha(95%));
-  }
-}
-
 header {
-  .version-block,
-  .install-block .links {
+  .edit-section {
     position: absolute;
+    right: 0;
+    top: 5px;
   }
 
   .install-block {
+    margin-left: 20px;
+    margin-right: auto;
 
-    pre[class*="language-"].line-numbers {
+    pre {
+      margin: 0;
+      display: block;
+      white-space: nowrap;
+      padding: 6px 6px 6px 25px;
+      border: 1px solid rgba(0, 10, 0, 0.01);
+    }
+
+    .token.string {
+      color: color-mod(var(--primary) alpha(95%));
+    }
+
+    pre[class*='language-'].line-numbers {
       padding-left: 25px;
     }
 
@@ -49,22 +37,22 @@ header {
 
 header {
   .version-block,
-  .install-block [class*="-link"]:not(.fas) {
-    height: 41px;
-    background-color: #f7f9f8;
-    padding: 6px 20px;
-    border-radius: 4px;
+  .links a {
+    background-color: transparent;
+    height: 32px;
+    padding: 6px 10px;
     font-weight: 600;
-    border: 1px solid rgba(0, 10 , 0, 0.01);
+    border: 1px solid $green500;
     cursor: default;
     font-family: var(--code-font);
-    color: color-mod(var(--primary) alpha(90%));
+    color: $green500;
 
     small {
       color: color-mod(black alpha(60%));
     }
 
-    span, small {
+    span,
+    small {
       font-size: 13px;
       font-family: var(--code-font);
     }
@@ -72,10 +60,6 @@ header {
     &:hover {
       border: 1px solid color-mod(var(--primary) alpha(50%));
     }
-  }
-
-  .version-block {
-    right: 0;
   }
 
   .version-block,
@@ -90,19 +74,18 @@ header {
     bottom: auto;
     white-space: nowrap;
 
-    [class*="-link"]:not(.fas) {
-      color: color-mod(black alpha(50%));
+    [class*='-link']:not(.fas) {
       white-space: pre;
       cursor: pointer;
       margin-left: 10px;
       display: inline-block;
-      background-position: 12px 14px;
-      line-height: 26px;
-      padding: 7px 13px;
+      line-height: 32px;
+      padding: 0 11px 0 10px;
       font-size: 13px;
     }
 
-    .fab, .fas {
+    .fab,
+    .fas {
       margin-right: 10px;
     }
 

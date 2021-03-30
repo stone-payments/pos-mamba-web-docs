@@ -19,7 +19,7 @@
 @import 'layout/examples.css';
 
 /* Components */
-@import 'components/menu.css';
+@import 'components/main.css';
 
 /* Elements */
 @import 'elements/content.css';

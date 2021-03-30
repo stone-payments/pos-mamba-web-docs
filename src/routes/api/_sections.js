@@ -7,8 +7,9 @@ import capitalize from 'lodash.capitalize'
 import cheerio from 'cheerio'
 import marked from 'marked'
 import Prism from 'prismjs'
+import 'prism-svelte';
 
-import { unescape, insertTag, replaceTag, createBuffer } from './_utils'
+import { unescape, insertTag, replaceTag, createBuffer, slugify } from './_utils'
 import processMarkdown from './_processMarkdown'
 import classNameUtils from './_classNameUtils'
 import strings from './_strings'
@@ -48,10 +49,6 @@ function getHash(str) {
   return (hash >>> 0).toString(36)
 }
 
-const cheerioOption = {
-  decodeEntities: true,
-}
-
 const SELECTOR = 'pre>code[class*="language-"]'
 
 export const demos = new Map()
@@ -72,7 +69,6 @@ export default function(path, options = {}) {
     try {
       read = fs.readdirSync(path)
     } catch (e) {
-      console.warn(e.code, e.path)
       return null
     }
 
@@ -84,7 +80,6 @@ export default function(path, options = {}) {
     const filePath = (options.toFile ? '' : `${path}/`).concat(file)
 
     const markdown = fs.readFileSync(filePath, 'utf-8');
-    console.log('read.map', file, filePath, options);
 
     const { content, metadata, examples } = processMarkdown(
       markdown,
@@ -135,10 +130,14 @@ export default function(path, options = {}) {
         (lang === 'js' ? 'javascript' : lang) || 'javascript'
 
       // Create a inline code tag
-      const html = `<pre class="code-block line-numbers language-${properLanguage}"><code class="language-${properLanguage}">${source}</code></pre>`;
+      const html = `<pre class="code-block language-${properLanguage}"><code class="language-${properLanguage}">${source}</code></pre>`;
 
       // Load cheerio with Code component output
-      const $ = cheerio.load(html, cheerioOption)
+      const $ = cheerio.load(html, {
+        lowerCaseTags: true,
+        lowerCaseAttributesNames: true,
+        decodeEntities: true,
+      });
 
       // Select element with cheerio
       const $elements = $(SELECTOR)
@@ -175,16 +174,14 @@ export default function(path, options = {}) {
 
         const grammar = Prism.languages[language]
 
-        $parent
-          .addClass(`language-${language}`)
-          .css('font-size', `${prismOptions.fontSize}px`)
+        $parent.addClass(`language-${language}`)
 
         let code = $element.html()
 
         // &amp; -> &
-        // code = escape.amp(code)
+        code = escape.amp(code)
         // &lt; -> '<', &gt; -> '>'
-        // code = escape.tag(code)
+        code = escape.tag(code)
 
         const env = {
           options: prismOptions,
@@ -206,7 +203,7 @@ export default function(path, options = {}) {
 
         Prism.hooks.run('before-highlight', env)
 
-        const highlightedCode = Prism.highlight(code, grammar)
+        const highlightedCode = Prism.highlight(code, grammar);
 
         env.highlightedCode = highlightedCode
         Prism.hooks.run('before-insert', env)
@@ -250,7 +247,7 @@ export default function(path, options = {}) {
     let match
     let pattern = /<h3 id="(.+?)">(.+?)<\/h3>/g
     while ((match = pattern.exec(html))) {
-      const slug = match[1]
+      const slug = slugify(match[1]);
       const anchor = match[0].replace(
         match[2],
         `<span>${match[2]}</span><a href="${options.anchorPath ||
@@ -298,7 +295,8 @@ export default function(path, options = {}) {
     match
 
     while ((match = pattern.exec(html))) {
-      const slug = match[1]
+      const slug = slugify(match[1]);
+
 
       const title = unescape(
         match[2]

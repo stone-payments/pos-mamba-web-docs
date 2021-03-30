@@ -1,9 +1,22 @@
 /* layout/header.css */
 
 header {
+  position: relative;
+  background: var(--headers-bg);
+  width: 100%;
+  color: $neutral50;
+
+  .code-block pre {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    code {
+      color: white;
+    }
+  }
+
   .edit-section {
     position: absolute;
-    right: 0;
+    right: 6px;
     top: 5px;
   }
 
@@ -15,19 +28,19 @@ header {
       margin: 0;
       display: block;
       white-space: nowrap;
-      padding: 6px 6px 6px 25px;
+      padding: 6px;
       border: 1px solid rgba(0, 10, 0, 0.01);
     }
 
     .token.string {
-      color: color-mod(var(--primary) alpha(95%));
+      color: $green400;
     }
 
     pre[class*='language-'].line-numbers {
       padding-left: 25px;
     }
 
-    .line-numbers .line-numbers-rows {
+    .install-block code {
       top: 3px;
       left: -24px;
       line-height: 19px;
@@ -39,12 +52,9 @@ header {
   .version-block,
   .links a {
     background-color: transparent;
-    height: 32px;
-    padding: 6px 10px;
+    padding: 6px 0;
     font-weight: 600;
-    border: 1px solid $green500;
     cursor: default;
-    font-family: var(--code-font);
     color: $green500;
 
     small {
@@ -53,12 +63,7 @@ header {
 
     span,
     small {
-      font-size: 13px;
       font-family: var(--code-font);
-    }
-
-    &:hover {
-      border: 1px solid color-mod(var(--primary) alpha(50%));
     }
   }
 
@@ -73,6 +78,7 @@ header {
     top: 0;
     bottom: auto;
     white-space: nowrap;
+    margin-left: auto;
 
     [class*='-link']:not(.fas) {
       white-space: pre;
@@ -81,7 +87,8 @@ header {
       display: inline-block;
       line-height: 32px;
       padding: 0 11px 0 10px;
-      font-size: 13px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
     }
 
     .fab,
@@ -98,5 +105,24 @@ header {
     .npm-link i {
       font-size: 15px;
     }
+  }
+}
+
+.Component > header,
+.guide-content > header {
+  padding-left: var(--content-pad-left);
+  padding-right: var(--content-pad-right);
+  border-bottom: 1px solid $neutral200;
+  height: calc(var(--nav-top-position));
+
+  .header-inner {
+    max-width: 100%;
+    flex: 1;
+    display: flex;
+    position: relative;
+    height: inherit;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 22px;
   }
 }

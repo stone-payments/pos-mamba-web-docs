@@ -3,7 +3,9 @@ import * as sapper from '../__sapper__/client.js'
 // import '../mamba-sdk/packages/pos/simulator/index.js'
 import './styles/app.css'
 
-const store = new Store({})
+const store = new Store({
+  activeGuideSection: '',
+});
 
 sapper.start({
   target: document.querySelector('#sapper'),

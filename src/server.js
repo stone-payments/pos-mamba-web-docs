@@ -16,6 +16,7 @@ const app = express();
 [
   'Icon',
   'Icon/assets',
+  'Icon/specialized-icons',
   'Brands',
   'Range/example',
   'Sprite/example',

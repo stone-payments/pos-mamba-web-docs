@@ -1,8 +1,12 @@
 <div class="SideBar Flex--flex Flex--grow Flex-direction--column Flex-alignItems--flexEnd">
 
-  <div class="SideBar-logo">
+  <div class="SideBar-logo" class:change-logo-bg="$changeHeader">
     <a href="/" title="Mamba">
-      <img src="images/logoMamba.svg" alt="mamba SDK">
+      {#if $changeHeader}
+        <img src="images/logoMamba.svg" alt="mamba SDK">
+      {:else}
+        <img src="images/logoMambaWhite.svg" alt="mamba SDK">
+      {/if}
     </a>
   </div>
   <!-- <div class="sdk-version">
@@ -14,21 +18,34 @@
   <div class="SideBar-border"></div>
   <nav>
 
+    <div class="guide-sections">
     {#each $guide_contents as section}
-
-    <h1 class="section">
-      <a class='{section.slug === $activeGuideSection ? "active": ""}' href='guide#{section.slug}' on:click="select(path.slice(1) !== 'guide')">{section.metadata.title}</a>
-    </h1>
-    <ul class='guide-toc'>
-      {#each section.subsections as subsection}
-        {#if subsection.title}
-          <li>
-            <a class='subsection {subsection.slug === $activeGuideSection ? "active": ""}' href='guide#{subsection.slug}'>{subsection.title}</a>
-          </li>
-        {/if}
+      <h1
+        class="section"
+        class:active="sectionActive([section.slug, section.metadata.title], section.subsections, $activeGuideSection)"
+      >
+        <a
+          href='guide#{section.slug}'
+          on:click="select(path.slice(1) !== 'guide')">
+            {section.metadata.title}
+            {#if section.subsections && section.subsections.length > 0}
+              <i class="fas fa-chevron-right"></i>
+            {/if}
+        </a>
+      </h1>
+      <ul class='guide-toc'>
+        {#each section.subsections as subsection}
+          {#if subsection.title}
+            <li class="subsection">
+              <a href="guide#{subsection.slug}" data-parent="{section.slug}">
+                {subsection.title}
+              </a>
+            </li>
+          {/if}
+        {/each}
+      </ul>
       {/each}
-    </ul>
-    {/each}
+    </div>
     {#each navigation as [idx, item]}
       {#if item.type === "hr"}
         <ul>
@@ -52,7 +69,7 @@
                 <li class='{(path === sub.to || path === (item.to + sub.to)) ? "active": ""}'>
                   <a href='{sub.to !== item.to ? item.to : ""}{sub.to}'>
                     {#if path === sub.to || path === item.to + sub.to}
-                      <i class="fas fa-angle-right"></i>
+                      <i class="fas fa-chevron-right"></i>
                     {/if}
                     {sub.title}
                   </a>
@@ -72,6 +89,22 @@
   import navigation from '../../routes/navigation';
 
   export default {
+    helpers: {
+      sectionActive(slugs, subsections, activeGuideSection) {
+        if(!Array.isArray(slugs)) return false;
+        if(typeof activeGuideSection !== 'string') return false;
+
+        const parent = slugs.some(e => e.toLowerCase() === activeGuideSection.toLowerCase());
+        const child = subsections.some(({slug}) => slug.toLowerCase() === activeGuideSection.toLowerCase());
+
+        if(__DEV__) {
+          console.log(`parent(${parent})`);
+          console.log(`child(${child})`);
+        }
+
+        return parent || child;
+      }
+    },
     data() {
       return {
         contents: [],
@@ -82,13 +115,13 @@
     oncreate () {
       // console.log('this.get(): ', this.get());
       const onhashchange = () => {
-        this.store.set({ activeGuideSection: window.location.hash.slice( 1 ) });
+        const activeGuideSection = window.location.hash.slice( 1 ).toLowerCase();
+        if(__DEV__) console.log(`activeGuideSection: ${activeGuideSection}`);
+        this.store.set({ activeGuideSection });
       };
 
       window.addEventListener( 'hashchange', onhashchange, false );
-      this.on( 'destroy', () => {
-        window.removeEventListener( 'hashchange', onhashchange, false );
-      });
+      this.on('destroy', () => window.removeEventListener( 'hashchange', onhashchange, false ));
 
       onhashchange();
     },
@@ -103,7 +136,47 @@
 
 
 <style>
-  .subsection{
-    margin-left: 5px;
+
+  .section {
+    position: relative;
+
+    .fas {
+      margin-left: 7px;
+      width: auto;
+      font-size: 14px;
+      opacity: 0.7;
+      position: absolute;
+      right: 14px;
+      text-align: right;
+      top: 9px;
+    }
+  }
+
+  .guide-sections {
+    .subsection {
+      padding-left: 3rem;
+    }
+
+    &,
+    h1,
+    h1 i,
+    h1 + ul {
+      transition: 0.3s cubic-bezier(0.15, 1, 0.33, 1);
+      transition-property: height, transform;
+    }
+
+    h1 + ul {
+      height: 0;
+    }
+
+    h1.active {
+      .fa-chevron-right {
+        transform: rotateZ(90deg);
+      }
+
+      + ul {
+        height: auto;
+      }
+    }
   }
 </style>

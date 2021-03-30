@@ -2,12 +2,13 @@
   <title>Learn Mamba</title>
 </svelte:head>
 
-<article ref:container class='content'>
+<article ref:container class='content guide-content'>
   <header>
-    <h1 id="{sections[0].slug}">
-      {sections[0].metadata.title}
-      <small><a href='https://github.com/stone-payments/pos-mamba-sdk-docs/tree/develop/content/guide/{sections[0].file}'>editar esta seção</a></small>
-    </h1>
+    <div class="header-inner">
+      <h1 id="{sections[0].slug}">
+        {sections[0].metadata.title}
+      </h1>
+    </div>
   </header>
   {#each sections as section}
     <section id='{section.slug}'>
@@ -26,7 +27,7 @@
     },
 
     oncreate() {
-      const anchors = this.refs.container.querySelectorAll('[id]');
+      /* const anchors = this.refs.container.querySelectorAll('[id]');
       let positions;
 
       const onresize = () => {
@@ -46,6 +47,7 @@
             const { id } = anchor;
 
             if (id !== lastId) {
+
               this.store.set({ activeGuideSection: id });
               this.fire('scroll', id);
 
@@ -55,13 +57,13 @@
             return;
           }
         }
-      };
+      }; */
 
-      window.addEventListener('scroll', onscroll, true);
-      window.addEventListener('resize', onresize, true);
+      // window.addEventListener('scroll', onscroll, true);
+      // window.addEventListener('resize', onresize, true);
 
       // wait for fonts to load...
-      const timeouts = [
+      /* const timeouts = [
         setTimeout(onresize, 1000),
         setTimeout(onresize, 5000),
       ];
@@ -71,10 +73,10 @@
         window.removeEventListener('resize', onresize, true);
 
         timeouts.forEach(timeout => clearTimeout(timeout));
-      });
+      }); */
 
-      onresize();
-      onscroll();
+      /* onresize();
+      onscroll(); */
       NProgress.done();
     },
   };
@@ -85,8 +87,6 @@
 
   .content {
     position: relative;
-    padding-top: 33px;
-    padding-left: 32px;
 
     > section > :global(h2:nth-child(1)) {
       margin-top: 0;
@@ -103,14 +103,8 @@
     }
   }
 
-  header {
-    padding-top: 8px;
-    padding-bottom: 39px;
-    border-bottom: 2px solid #f4f6f7;
-  }
-
   h1 {
-    color: #0d2b3e;
+    color: inherit;
     font-weight: 400;
   }
 
@@ -138,7 +132,6 @@
     top: 0;
     color: #0099e5;
     line-height: 1;
-    text-shadow: 0 0 0.1px rgba(0, 0, 0, 0.21);
   }
 
   section > :global(p) {
@@ -159,12 +152,6 @@
     font-weight: 500;
   }
 
-  section :global(code) {
-    background-color: #f9f9f9;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
-  }
-
   section :global(pre) :global(code) {
     padding: 0;
   }
@@ -175,7 +162,6 @@
 
   section {
     border-bottom: 2px solid #f4f6f7;
-    padding: 39px 0;
 
     & :global(h3:not(:first-child)) {
       margin-top: 18px;
@@ -202,19 +188,8 @@
 
   section :global(.code-block) :global(pre),
   section :global(.CodeMirror) {
-    background-color: #f7f9f8;
-    padding: 8px;
+    padding: 12px 18px;
     margin: 0 0 1em 0;
-    border-radius: 6px;
-  }
-
-  section :global(.code-block) :global(pre) {
-    padding: 12px 8px 12px 40px;
-  }
-
-  section :global(p),
-  section :global(ul) {
-    max-width: 90%;
   }
 
   section :global(ul),
@@ -232,7 +207,6 @@
     font-weight: 700;
     color: rgba(170, 30, 30, 0.8);
     padding: 0;
-    border-radius: 2px;
     font-size: 18px;
   }
 

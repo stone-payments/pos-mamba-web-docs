@@ -27,12 +27,14 @@ module.exports = function createWebpackConfig(type) {
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
         path.resolve(__dirname, '../mamba-sdk/packages'),
+        path.resolve(__dirname, '../mamba-sdk/packages/components/Icon'),
         path.resolve(__dirname, '../node_modules'),
         'node_modules',
       ],
       alias: {
         '@components': path.resolve(__dirname, '../mamba-sdk/packages/components/'),
         '@mamba/pos': path.resolve(__dirname, '../mamba-sdk/packages/pos/'),
+        '@mamba/icon': path.resolve(__dirname, '../mamba-sdk/packages/components/Icon'),
         '@mamba/store': path.resolve(
           __dirname,
           '../mamba-sdk/packages/store/src/index.js',

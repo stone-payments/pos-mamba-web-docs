@@ -102,7 +102,7 @@ code,
 kbd,
 samp {
   font-family: monospace; /* 1 */
-  font-size: 1em; /* 2 */
+  font-size: 14px; /* 2 */
 }
 
 /**

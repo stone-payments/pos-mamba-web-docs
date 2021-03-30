@@ -4,10 +4,10 @@
 
 ## Homologação
 
-Antes de publicar seu Aplicativo em nossa loja e poder disponiza-lo para seus usuários este deverá passar pelo um processo de Homologação e tudo deverá estar de acordo com `As Regras do Jogo`. 
+Antes de publicar seu Aplicativo em nossa loja e poder disponiza-lo para seus usuários este deverá passar pelo um processo de Homologação e tudo deverá estar de acordo com `As Regras`.
 
 
-##  Regras do Jogo
+##  Regras
 
 1. Sobre o preenchimento do arquivo `README` do App:
     - É preciso disponibilizar uma descrição básica da intenção de uso do App, na seção **Objetivo**

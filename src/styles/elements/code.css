@@ -1,5 +1,5 @@
 @import url('prismjs/themes/prism.css');
-@import url('prismjs/plugins/line-numbers/prism-line-numbers.css');
+/* @import url('prismjs/plugins/line-numbers/prism-line-numbers.css'); */
 
 code,
 kbd,
@@ -11,7 +11,7 @@ samp,
 
 .code-block pre {
   line-height: 1;
-  background-color: #f7f9f8;
+  background-color: #fff;
 }
 
 .code-block code {
@@ -25,13 +25,7 @@ pre code {
 
 code,
 pre {
-  font-size: 13px;
   font-weight: 500;
-}
-
-code[class*='language-'],
-pre[class*='language-'] {
-  text-shadow: none;
 }
 
 code .token.atrule,
@@ -41,23 +35,27 @@ code .token.tag {
 }
 
 code .token.keyword {
-  color: #6772e5;
+  color: $purple700;
 }
 
 code.language-url,
-code .token.function,
 code .token.url {
-  font-weight: 600;
-  color: #3297d3;
+  font-weight: 500;
+  color: $green600;
+}
+
+code .token.function {
+  color: $blue700;
 }
 
 code[class*='language-'],
 pre[class*='language-'] {
   font-family: var(--code-font) !important;
   color: color-mod(#000c1d alpha(80%));
-  font-weight: 600;
+  font-weight: 500;
   font-size: 13px !important;
   line-height: 18px;
+  text-shadow: none !important;
 }
 
 .line-numbers .line-numbers-rows {
@@ -98,5 +96,26 @@ pre[class*='language-'] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #b53179;
+  color: $orange700;
+}
+
+code {
+  font-family: var(--code-font);
+  font-size: 13px;
+  background-color: #dcdcdc;
+  padding: 0.1em 0.4em;
+  font-weight: 500;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: $green600;
+}
+
+section :global(.code-block) :global(pre) {
+  padding: 12px;
 }

@@ -1,15 +1,12 @@
-
 *:not(.row) button:not(.button) {
   padding: 6px 12px;
-  border-radius: 3px;
-  border: 1px solid #4fb123;
-  background-color: #4bb719;
+  border: 1px solid $green500;
+  background-color: $green500;
   color: white;
   font-weight: 600;
-  font-size: 14px;
 }
 
-.row div:not(.range) button:not(.button), 
+.row div:not(.range) button:not(.button),
 .row ~ h1,
 .row ~ h2,
 .row ~ h3,
@@ -27,19 +24,17 @@
   cursor: pointer !important;
   -webkit-box-pack: center;
   justify-content: center;
-  padding-bottom: calc(.375em - 1px);
-  padding-left: .75em;
-  padding-right: .75em;
-  padding-top: calc(.375em - 1px);
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: calc(0.375em - 1px);
   text-align: center;
   white-space: nowrap;
   -webkit-box-align: center;
   align-items: center;
   border: 1px solid var(--primary);
-  border-radius: 3px;
   box-shadow: none;
   display: inline-block;
-  font-size: 13px;
   height: 2.25em;
   line-height: 1.5;
   font-weight: 500;

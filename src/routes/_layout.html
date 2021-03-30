@@ -15,5 +15,13 @@
 
   export default {
     components: { RouteTemplate },
+    oncreate() {
+      const onscroll = () => {
+        this.store.set({ changeHeader: window.scrollY > 0 });
+      };
+
+      window.addEventListener('scroll', onscroll, true);
+      window.addEventListener('resize', onresize, true);
+    },
   };
 </script>

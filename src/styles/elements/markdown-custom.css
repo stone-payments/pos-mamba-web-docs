@@ -1,14 +1,12 @@
 .props-heading {
+  font-size: 13px !important;
   margin-top: 50px;
-  color: hsl(330, 72%, 35%);
-  font-weight: 600;
-  background-color: rgba(192, 192, 192, 0.21);
+  color: $neutral900;
+  font-weight: 500;
+  background-color: #fff;
   display: inline-block;
   clear: both;
-  padding: 12px 10px !important;
-  border-radius: 4px 4px 0 0;
-  font-size: 14px;
-  letter-spacing: 0;
+  padding: 10px 8px !important;
   font-family: var(--code-font);
   border-bottom: 1px solid #3535351a;
   width: 100%;
@@ -22,16 +20,6 @@
 
   .attr-name {
     color: var(--primary);
-  }
-
-  &:hover {
-    background-color: rgba(192, 192, 192, 0.31);
-
-    & + table,
-    + p + table,
-    + div + table {
-      background-color: rgba(192, 192, 192, 0.06);
-    }
   }
 }
 

@@ -4,6 +4,8 @@ module.exports = {
     'string-quotes': 'single',
     'at-rule-no-unknown': null,
     'declaration-no-important': null,
-    'no-duplicate-selectors': null
+    'no-duplicate-selectors': null,
+    'selector-max-id': null,
+    'function-url-quotes': null,
   }
 };

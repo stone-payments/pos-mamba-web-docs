@@ -1,5 +1,5 @@
 const postcssUniqueImports = require('@mamba/configs/postcss/includes/uniqueImports.js');
-const colorsMamba = require('@mamba/configs/postcss/includes/colors.js');
+const colorsMamba = require('@mamba/styles/colors.js');
 
 module.exports = {
   plugins: [

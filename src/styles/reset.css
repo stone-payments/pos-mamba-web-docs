@@ -23,6 +23,12 @@ input[type='radio'] {
   outline: none !important;
 }
 
+html {
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
 body,
 html {
   height: 100%;
@@ -30,6 +36,7 @@ html {
 }
 
 body {
+  line-height: 1.5;
   font-style: normal;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -37,11 +44,12 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-feature-settings: 'pnum';
   font-feature-settings: 'pnum';
+  color: $neutral700;
   font-variant-numeric: proportional-nums;
 }
 
 small {
-  font-size: 12px;
+  font-size: 0.875rem;
 }
 
 var,
@@ -54,25 +62,6 @@ cite {
 abbr {
   border-bottom: 1px #ccc dotted;
   cursor: help;
-}
-
-article blockquote,
-article dl,
-article ol,
-article table tbody,
-article ul {
-  font-size: 14px;
-  color: #373e42;
-  line-height: 26px;
-}
-
-article p {
-  font-size: 16px;
-  line-height: 30px;
-}
-
-article p:first-child {
-  font-size: 16px;
 }
 
 a,

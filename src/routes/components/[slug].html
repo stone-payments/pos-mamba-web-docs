@@ -9,22 +9,22 @@
     <div class="header-inner">
       <h1>
         {manifest.docs.metadata.title}
-        <div class="edit-section">
+        <!-- <div class="edit-section">
           <small
             ><a
               href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
               >editar esta seção</a
             ></small
           >
-        </div>
+        </div> -->
       </h1>
       <div class="code-block code-block-container install-block">
         <pre
-          class="code-block line-numbers language-javascript"
+          class="code-block language-javascript"
           style="font-size: 16px; white-space: normal;"
         >
           <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
-            <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
+
           </code>
         </pre>
       </div>
@@ -42,49 +42,50 @@
           ><i class="fas fa-external-link-alt"></i>NPM</a
         >
       </div>
-      <div class="version-block">
+      <!-- <div class="version-block">
         <small class="unique">Mais recente:</small>
         <span>v{manifest.info.package.version}</span>
-      </div>
+      </div> -->
     </div>
   </header>
+  <div class="sections-wrapper">
+    <section>
+      <div class="part">
+        {@html manifest.docs.html}
+      </div>
+    </section>
 
-  <section>
-    <div class="part">
-      {@html manifest.docs.html}
-    </div>
-  </section>
-
-  {#if example}
-  <section class="Examples">
-    <div class="Examples-boxes">
-      <div class="Examples-example">
-        <div class="iframe-wrapper">
-          <iframe title="{slug}" src="/framed/{slug}"></iframe>
-        </div>
-        <div class="Source-wrapper">
-          {@html example.source}
-        </div>
-        <div class='source-header'>
-          <i class="fas fa-external-link-alt"></i>
-          <a
-            class='filename'
-            href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{example.filePath}'
-          >
-            <span>Código fonte dos exemplos</span>
-          </a>
+    {#if example}
+    <section class="Examples">
+      <div class="Examples-boxes">
+        <div class="Examples-example">
+          <div class="iframe-wrapper">
+            <iframe title="{slug}" src="/framed/{slug}"></iframe>
+          </div>
+          <div class="Source-wrapper">
+            {@html example.source}
+          </div>
+          <div class='source-header'>
+            <i class="fas fa-external-link-alt"></i>
+            <a
+              class='filename'
+              href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{example.filePath}'
+            >
+              <span>Código fonte dos exemplos</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  {/if}
-  {#if manifest.docs.paramsHtml !== false}
-  <section class="Params-html">
-    <div class="part">
-      {@html manifest.docs.paramsHtml}
-    </div>
-  </section>
-  {/if}
+    </section>
+    {/if}
+    {#if manifest.docs.paramsHtml !== false}
+    <section class="Params-html">
+      <div class="part">
+        {@html manifest.docs.paramsHtml}
+      </div>
+    </section>
+    {/if}
+  </div>
 </div>
 {/if} {/if}
 
@@ -146,77 +147,31 @@
 <style>
   @import '../../styles/shared/colors.css';
 
-  /* Check if table have four or more columns to use this class below */
-  :global(table) thead th {
-    font-family: var(--code-font);
-  }
-
   :global(table) tr td:nth-child(3) {
-    color: #800051;
+    color: $purple700;
     font-weight: 600;
     opacity: 0.8;
   }
 
-  :global(article) :global(table) {
-    tbody {
-      font-size: 80%;
-    }
-
-    tr td {
-      font-size: 14px;
-      font-family: var(--code-font);
-
-      code {
-        background-color: #f1f0f0 !important;
-        border: 1px solid #efeeee;
-      }
-    }
-  }
-
   :global(.Component) {
     position: relative;
-
-    & table tr {
-      transition: all 0.3s ease-out;
-
-      &:hover {
-        background-color: rgba(192, 192, 192, 0.09);
-      }
-    }
-  }
-
-  .Component > header {
-    .header-inner {
-      padding-top: 40px;
-      margin-left: 40px;
-      margin-right: 40px;
-      flex: 1;
-      display: flex;
-      position: relative;
-      height: inherit;
-      justify-content: space-between;
-    }
-
-    border-bottom: 1px solid $neutral200;
-    height: calc(var(--nav-top-position));
   }
 
   h1 {
     font-size: 31px;
-    color: #0d2b3e;
-    font-weight: 400;
+    color: inherit;
+    font-weight: 500;
   }
 
   small:not(.unique) {
-    font-size: 14px;
-    opacity: 0.5;
+    opacity: 0.2;
     float: right;
     line-height: 3.4rem;
     pointer-events: all;
   }
 
   .Source-wrapper {
-    background-color: #f7f9f8;
+    background-color: #fff;
     padding-bottom: 1px;
     border: 1px solid rgba(0, 10, 0, 0.01);
   }
@@ -231,7 +186,6 @@
     border-bottom: 1px solid rgba(0, 10, 0, 0.06);
     padding: 13px 13px 10px 16px;
     color: var(--primary);
-    font-size: 13px;
   }
 
   section :global(.code-block.named.code-block-container) :global(i) {
@@ -256,17 +210,8 @@
     text-decoration: underline;
   }
 
-  section :global(a:not(.anchor):not(.filename)) {
-    border-bottom: 1px solid #e3d9d9;
-  }
-
   section :global(strong) {
     font-weight: 600;
-  }
-
-  section :global(code) {
-    background-color: #f9f9f9;
-    padding: 0.2em 0.4em;
   }
 
   section :global(pre) :global(code) {
@@ -278,8 +223,6 @@
   }
 
   section:not(.Examples):not(.Examples-example) {
-    padding: 39px 0;
-
     + section {
       padding-bottom: 46px;
       border-bottom: 2px solid #f4f6f7;
@@ -316,7 +259,7 @@
 
     & :global(h4) {
       margin-top: 30px;
-      margin-bottom: 25px;
+      margin-bottom: 12px;
     }
   }
 
@@ -341,12 +284,12 @@
 
   section :global(.code-block) :global(pre),
   section :global(.CodeMirror) {
-    background-color: #f7f9f8;
+    background-color: #fff;
     padding: 8px;
   }
 
   section :global(.code-block) :global(pre) {
-    padding: 12px 8px 12px 40px;
+    padding: 12px;
   }
 
   .Component :global(.code-block.code-block-container pre.code-block) {
@@ -381,11 +324,11 @@
     }
   } */
 
-  .Examples-example {
+  /* .Examples-example {
     header {
       h2 {
         margin-bottom: 0;
       }
     }
-  }
+  } */
 </style>

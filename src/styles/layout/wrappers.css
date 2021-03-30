@@ -1,6 +1,5 @@
 .Content {
   &-wrapper {
-    background: #fff;
     display: flex;
     justify-content: center;
   }
@@ -9,12 +8,22 @@
     width: 100%;
     position: relative;
   }
+
+  .sections-wrapper,
+  .content > header,
+  header ~ section {
+    padding-left: var(--content-pad-left);
+    padding-right: var(--content-pad-right);
+  }
+
+  .sections-wrapper,
+  header + section {
+    padding-top: 28px;
+    padding-bottom: 60px;
+  }
 }
 
 .Docs {
   width: 100%;
   height: 100%;
-  grid-template-columns:
-    minmax(var(--sidebar-min-width), calc(25% - var(--sidebar-width)))
-    1fr;
 }

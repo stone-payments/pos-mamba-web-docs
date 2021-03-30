@@ -5,21 +5,22 @@
 :root {
   /* Content */
   --content-width: 100%;
+  --content-pad-left: calc(25% + 2rem);
+  --content-pad-right: 4rem;
 
   /* Sidebar */
-  --sidebar-min-width: 280px;
-  --sidebar-width: 280px;
-  --sidebar-position: sticky;
+  --sidebar-width: 255px;
+  --sidebar-position: fixed;
 
   /* Nav */
-  --nav-width: 90%;
+  --nav-left: 2rem;
+  --nav-width: 100%;
   --nav-hr-border-width: 100%;
-  --nav-top-position: calc(var(--logo-svg-height) + 40px);
+  --nav-top-position: calc(var(--logo-svg-height) + 35px);
 
   /* Logo */
-  --logo-container-top: 40px;
   --logo-container-size: var(--nav-width);
-  --logo-svg-height: 90px;
+  --logo-svg-height: 61px;
 
   /* Content */
   --content-heading-line-height: 26px;

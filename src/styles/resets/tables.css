@@ -27,6 +27,5 @@ caption {
 
 table tr td strong,
 table th td strong {
-  font-weight: 800 !important;
   color: color-mod(var(--secondary) blackness(60%));
 }

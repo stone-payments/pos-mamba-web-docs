@@ -119,3 +119,7 @@ code {
 section :global(.code-block) :global(pre) {
   padding: 12px;
 }
+
+.code-block-container {
+  margin: 0;
+}

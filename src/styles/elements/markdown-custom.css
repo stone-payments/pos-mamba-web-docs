@@ -1,6 +1,5 @@
 .props-heading {
   font-size: 13px !important;
-  margin-top: 50px;
   color: $neutral900;
   font-weight: 500;
   background-color: #fff;
@@ -12,6 +11,12 @@
   width: 100%;
   text-indent: 3px;
   cursor: default;
+  line-height: 20px;
+  margin-top: 1.5rem;
+
+  + table {
+    margin-top: 0;
+  }
 
   &,
   table {
@@ -29,4 +34,29 @@
 
 .code-block.code-block-container + .props-heading {
   margin-top: 25px;
+}
+
+li {
+  p:first-child {
+    margin-bottom: 3px;
+  }
+
+  position: relative;
+  list-style: none;
+}
+
+li::before {
+  position: absolute;
+  left: -1rem;
+  content: '\2013';
+}
+
+h3 ~ ul li p ~ p {
+  color: $neutral600;
+  font-size: 14px;
+}
+
+h2[id] + ul,
+p + .code-block {
+  margin-top: 5px;
 }

@@ -19,7 +19,6 @@
   .sections-wrapper,
   header + section {
     padding-top: 28px;
-    padding-bottom: 60px;
   }
 }
 

@@ -38,11 +38,9 @@ html {
 body {
   line-height: 1.5;
   font-style: normal;
-  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  -webkit-font-feature-settings: 'pnum';
   font-feature-settings: 'pnum';
   color: $neutral700;
   font-variant-numeric: proportional-nums;

@@ -2,16 +2,21 @@ blockquote,
 article blockquote,
 section blockquote {
   position: relative;
-  color: #697b8c;
-  margin: 1em 0;
-  padding: 2px 2px 2px 10px;
+  color: $neutral300;
+  margin-top: 1em;
+  padding: 8px 10px;
   font-size: small;
-  border-left: 4px solid #ebedf0;
+  border-left: 4px solid $green400;
   font-weight: 500;
-  opacity: 0.75;
+  opacity: 1;
+  background-color: $neutral100;
 
   a {
     color: var(--primary);
+  }
+
+  p {
+    line-height: 22px;
   }
 
   p,
@@ -27,6 +32,7 @@ section blockquote {
 
   & + blockquote {
     margin-top: -1em;
+    padding-top: 0;
   }
 
   &:last-of-type {

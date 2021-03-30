@@ -7,7 +7,10 @@ import capitalize from 'lodash.capitalize'
 import cheerio from 'cheerio'
 import marked from 'marked'
 import Prism from 'prismjs'
+import loadLanguages from 'prismjs/components/index.js'
 import 'prism-svelte';
+
+loadLanguages(['javascript', 'jsx', 'css', 'typescript', 'markup', 'bash', 'json']);
 
 import { unescape, insertTag, replaceTag, createBuffer, slugify } from './_utils'
 import processMarkdown from './_processMarkdown'
@@ -15,10 +18,6 @@ import classNameUtils from './_classNameUtils'
 import strings from './_strings'
 import escape from './_escape'
 import './_processLineNumbers'
-
-const blockTypes = 'blockquote html heading hr list listitem paragraph table tablerow tablecell'.split(
-  ' ',
-)
 
 // This function extract metadata in code comments
 // parse it and return the js object using fleece
@@ -49,7 +48,7 @@ function getHash(str) {
   return (hash >>> 0).toString(36)
 }
 
-const SELECTOR = 'pre>code[class*="language-"]'
+// const SELECTOR = 'pre>code[class*="language-"]'
 
 export const demos = new Map()
 
@@ -76,7 +75,7 @@ export default function(path, options = {}) {
   }
 
   return read.map(file => {
-    // const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '')
+    const sectionSlug = file.replace(/^\d+-/, '').replace(/\.md$/, '')
     const filePath = (options.toFile ? '' : `${path}/`).concat(file)
 
     const markdown = fs.readFileSync(filePath, 'utf-8');
@@ -91,157 +90,23 @@ export default function(path, options = {}) {
     let group = null
     let uid = 1
 
-    const renderer = new marked.Renderer()
+    const renderer = new marked.Renderer();
 
-    renderer.code = (source, lang) => {
-      source = source.replace(/^ +/gm, match => match.split('    ').join('\t'))
+    renderer.code = (code, lang) => {
+      const properLanguage = (lang === 'js' ? 'javascript' : lang) || 'javascript';
+      let source = code;
 
-      const lines = source.split('\n')
-
-      const meta = extractMeta(lines[0], lang)
-
-      let prefix = ''
-      let className = 'code-block'
-
-      if (lang === 'html' && !group) {
-        group = { id: uid++, blocks: [] }
-        groups.push(group)
+      if (Prism.languages[lang]) {
+        source = Prism.highlight(code, Prism.languages[lang], lang);
       }
 
-      if (meta) {
-        source = lines.slice(1).join('\n')
-        const filename = meta.filename || lang === 'html'
-        if (filename) {
-          if (!options.mambaSlub) {
-            prefix = `<span class='filename'>${filename}</span>`
-          }
-          className += ' named'
-        }
-      }
+      source = `<pre class="code-block language-${properLanguage}"><code class="language-${properLanguage}">${source}</code></pre>`;
 
-      if (group) group.blocks.push({ meta: meta || {}, lang, source })
-
-      if (meta && meta.hidden) return ''
-
-      // Start Code highlight with Prism
-
-      // Define proper language type from `lang` param
-      const properLanguage =
-        (lang === 'js' ? 'javascript' : lang) || 'javascript'
-
-      // Create a inline code tag
-      const html = `<pre class="code-block language-${properLanguage}"><code class="language-${properLanguage}">${source}</code></pre>`;
-
-      // Load cheerio with Code component output
-      const $ = cheerio.load(html, {
-        lowerCaseTags: true,
-        lowerCaseAttributesNames: true,
-        decodeEntities: true,
-      });
-
-      // Select element with cheerio
-      const $elements = $(SELECTOR)
-
-      // Default options for Prism
-      const prismOptions = {
-        languages: [
-          'bash',
-          'markup',
-          'markdown',
-          'javascript',
-          'css',
-          'typescript',
-        ],
-        fontSize: 16,
-      }
-
-      // Import language support of every souce code block
-      if ($elements.length !== 0) {
-        prismOptions.languages.forEach(language =>
-          require(`prismjs/components/prism-${language}`),
-        )
-      }
-
-      // Apply Prism js to every source code
-      $elements.each(function applyPrism(index, element) {
-        const $element = $(this)
-
-        const $parent = $element.parent()
-
-        const language = classNameUtils.getLanguageFromClassName(
-          $element.attr('class'),
-        )
-
-        const grammar = Prism.languages[language]
-
-        $parent.addClass(`language-${language}`)
-
-        let code = $element.html()
-
-        // &amp; -> &
-        code = escape.amp(code)
-        // &lt; -> '<', &gt; -> '>'
-        code = escape.tag(code)
-
-        const env = {
-          options: prismOptions,
-          $element,
-          language,
-          grammar,
-          code,
-        }
-
-        Prism.hooks.run('before-sanity-check', env)
-
-        if (!env.code || !env.grammar) {
-          if (env.code) {
-            env.$element.textContent = env.code
-          }
-          Prism.hooks.run('complete', env)
-          return
-        }
-
-        Prism.hooks.run('before-highlight', env)
-
-        const highlightedCode = Prism.highlight(code, grammar);
-
-        env.highlightedCode = highlightedCode
-        Prism.hooks.run('before-insert', env)
-
-        $element.html(highlightedCode)
-
-        Prism.hooks.run('after-highlight', env)
-        Prism.hooks.run('complete', env)
-      })
-
-      const renderBlock = `<div class='${className} code-block-container'>${prefix}${$.html()}</div>`;
-
-      if (examples.length && examples[0].fileContents) {
-        // We need to avoid markdown code contents being confused with component examples block.
-        // Probally this aproach is too expensive
-        const bufLeft = createBuffer()(source)
-        const bufRight = createBuffer()(examples[0].fileContents)
-
-        if (bufLeft.equals(bufRight)) {
-          examples[0].source = renderBlock
-          examples[0].endIndex = renderBlock.length
-          return ''
-        }
-      }
-
-      return renderBlock
+      return `<div class="code-block code-block-container">${source}</div>`;;
     }
 
-    blockTypes.forEach(type => {
-      const fn = renderer[type]
-      renderer[type] = function blockFnTy() {
-        group = null
-        return fn.apply(this, arguments)
-      }
-    })
-
     // Process markdown with marked
-    let html = marked(content, { renderer })
+    let html = marked(content, { renderer });
 
     // Add anchors to h3
     let match
@@ -325,14 +190,8 @@ export default function(path, options = {}) {
 
     output = output.replace(/@@(\d+)/g, (m, id) => hashes[id] || m)
 
-    const paramsPattern = /<h2 (id="par-metros")>/
-
-    let paramsIndex = output.search(paramsPattern)
-    paramsIndex = paramsIndex === -1 ? false : paramsIndex
-
     return {
-      html: (paramsIndex && output.slice(0, paramsIndex)) || output,
-      paramsHtml: (paramsIndex && output.slice(paramsIndex)) || false,
+      html: output,
       slug: options.toFile
         ? basename(file).replace(/\.md$/, '')
         : file.replace(/^\d+-/, '').replace(/\.md$/, ''),

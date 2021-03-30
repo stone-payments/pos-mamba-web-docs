@@ -21,7 +21,7 @@
       <div class="code-block code-block-container install-block">
         <pre
           class="code-block language-javascript"
-          style="font-size: 16px; white-space: normal;"
+          style="font-size: 15px; white-space: normal;"
         >
           <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
 
@@ -49,11 +49,13 @@
     </div>
   </header>
   <div class="sections-wrapper">
+    {#if manifest.docs.html}
     <section>
       <div class="part">
         {@html manifest.docs.html}
       </div>
     </section>
+    {/if}
 
     {#if example}
     <section class="Examples">
@@ -78,7 +80,7 @@
       </div>
     </section>
     {/if}
-    {#if manifest.docs.paramsHtml !== false}
+    {#if manifest.docs.paramsHtml}
     <section class="Params-html">
       <div class="part">
         {@html manifest.docs.paramsHtml}
@@ -163,12 +165,12 @@
     font-weight: 500;
   }
 
-  small:not(.unique) {
+  /* small:not(.unique) {
     opacity: 0.2;
     float: right;
     line-height: 3.4rem;
     pointer-events: all;
-  }
+  } */
 
   .Source-wrapper {
     background-color: #fff;
@@ -210,10 +212,6 @@
     text-decoration: underline;
   }
 
-  section :global(strong) {
-    font-weight: 600;
-  }
-
   section :global(pre) :global(code) {
     padding: 0;
   }
@@ -225,12 +223,12 @@
   section:not(.Examples):not(.Examples-example) {
     + section {
       padding-bottom: 46px;
-      border-bottom: 2px solid #f4f6f7;
+      border-bottom: 2px solid $neutral200;
     }
 
     & :global(h3:not(:first-child)) {
-      margin-top: 18px;
-      padding-top: 16px;
+      /* margin-top: 18px;
+      padding-top: 16px; */
 
       & :global(.counter) {
         font-weight: 500;
@@ -245,21 +243,12 @@
     & :global(table) + :global(h3:not(:first-child)),
     & :global(h2) + :global(h3),
     & :global(h2 ~ h3 ~ p ~ h3) {
-      margin-top: 30px;
+      /* margin-top: 30px; */
       color: var(--secondary);
     }
 
     & :global(h2[id='m-todos']) ~ :global(h3) {
       color: $green700;
-    }
-
-    & :global(.code-block-container) {
-      margin-top: 7px;
-    }
-
-    & :global(h4) {
-      margin-top: 30px;
-      margin-bottom: 12px;
     }
   }
 
@@ -290,23 +279,6 @@
 
   section :global(.code-block) :global(pre) {
     padding: 12px;
-  }
-
-  .Component :global(.code-block.code-block-container pre.code-block) {
-    max-height: 300px;
-    overflow: auto;
-    margin: 0;
-
-    /*
-    max-height: 300px;
-    overflow: auto;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    border-left: 4px solid $green500;
-    padding-left: 21px;
-    margin-left: 3px;
-    */
   }
 
   .Component section :global(.code-block.code-block-container pre.code-block) {

@@ -124,5 +124,10 @@ header {
     justify-content: space-between;
     align-items: flex-end;
     padding-bottom: 22px;
+
+    h1 {
+      vertical-align: baseline;
+      line-height: 34px;
+    }
   }
 }

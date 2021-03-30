@@ -51,7 +51,7 @@
     border-right: 1px solid rgba(56, 56, 75, 0.15);
 
     &:not(.change-logo-bg) {
-      background: var(--headers-bg);
+      background: color-mod(var(--headers-bg) lightness(11%));
     }
 
     & a {
@@ -105,12 +105,16 @@
     z-index: 1;
     -webkit-overflow-scrolling: touch;
 
-    h1 a {
-      padding-left: var(--nav-left);
+    h1 {
+      margin: 0;
 
-      &.selected {
-        color: var(--primary);
-        font-weight: 500;
+      a {
+        padding-left: var(--nav-left);
+
+        &.selected {
+          color: var(--primary);
+          font-weight: 500;
+        }
       }
     }
 

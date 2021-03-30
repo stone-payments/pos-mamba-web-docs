@@ -22,7 +22,7 @@
         <div class="code-block code-block-container install-block">
           <pre
             class="code-block language-javascript"
-            style="font-size: 16px; white-space: normal;"
+            style="font-size: 15px; white-space: normal;"
           >
             <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
             </code>
@@ -48,11 +48,13 @@
         </div> -->
       </div>
     </header>
+    {#if manifest.docs.html}
       <section>
         <div class="part">
           {@html manifest.docs.html}
         </div>
       </section>
+    {/if}
     </div>
   {/if}
 {/if}
@@ -120,14 +122,6 @@
     font-weight: 400;
   }
 
-  small:not(.unique) {
-    font-size: 14px;
-    opacity: 0.2;
-    float: right;
-    line-height: 3.4rem;
-    pointer-events: all;
-  }
-
   section :global(.code-block) {
     position: relative;
   }
@@ -159,7 +153,8 @@
   }
 
   section:not(.Examples-example) {
-    border-bottom: 2px solid #f4f6f7;
+    padding-top: 18px;
+    border-bottom: 2px solid $neutral200;
 
     & :global(h3:not(:first-child)) {
       margin-top: 65px;
@@ -183,17 +178,12 @@
 
     & :global(table) + :global(h3:not(:first-child)),
     & :global(h2) + :global(h3) {
-      margin-top: 30px;
+      /* margin-top: 30px; */
       color: var(--secondary);
     }
 
     & :global(.code-block-container) {
-      margin-top: 18px;
-    }
-
-    & :global(h4) {
-      margin-top: 30px;
-      margin-bottom: 25px;
+      margin-top: 10px;
     }
   }
 

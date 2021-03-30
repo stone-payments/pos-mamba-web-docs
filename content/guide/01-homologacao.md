@@ -4,7 +4,7 @@
 
 ## Homologação
 
-Antes de publicar seu Aplicativo em nossa loja e poder disponiza-lo para seus usuários este deverá passar pelo um processo de Homologação e tudo deverá estar de acordo com `As Regras`.
+Antes de publicar seu Aplicativo em nossa loja e poder disponiza-lo para seus usuários este deverá passar pelo um processo de Homologação e tudo deverá estar de acordo com as _Regras_.
 
 
 ###  Regras
@@ -14,12 +14,15 @@ Antes de publicar seu Aplicativo em nossa loja e poder disponiza-lo para seus us
   - Caso o aplicativo não consiga ser testado completamente, a **liberação do aplicativo será negada**.
   - A estrutura de arquivos e de configuração do build deve ser compatível com as mais atuais alterações do repositório https://posgitlab.stone.com.br/stone-payments/pos-mamba-3rdparty-template
 
-  #### Sobre o preenchimento do arquivo `README` do App:
+#### Sobre o preenchimento do arquivo `README.md` do App:
   - É preciso disponibilizar uma descrição básica da intenção de uso do App, na seção **Objetivo**
   - Precisamos que seja descrito o fluxo de funcionamento do App na seção **Fluxo da Aplicação**, com detalhes como usar o aplicativo, para ajudar no processo de homologação e fazer a liberação ser mais ágil.
   - Todas as dependências do App, bem como a disponibilização das instruções de build, precisam ser sinalizadas na seção **Dependências**.
   - Se o App utilizar comunicação por rede, é preciso listar **com antecedência** hosts e/ou IPs utilizados, na seção **Endpoints**. Cada alteração nos endpoints requer cadastro no proxy de aplicação e **pode demorar até 5 dias úteis**.
   - Precisamos que sejam fornecidos usuários e/ou chaves de testes, acesso temporário, entre outros,  para testes das funcionalidades do APP durante o processo de Homologação. Devem ser listados, assim como qualquer passo necessário ao processo de Homologação, na seção **Instruções para Homologação**.
+
+#### Sobre o preenchimento do arquivo `CHANGELOG.md` do App:
+  - A cada versão enviada para homologação, é necessário especificar as alterações feitas no app. O modelo desse arquivo é livre, desde que tenha declarado as alterações que foram feiras na versão a ser homologada. Um bom exmeplo é o [keepachangelog.com](https://keepachangelog.com/pt-BR/1.0.0/)
 
 
 ### Tempo de Atendimento

@@ -53,7 +53,7 @@ export async function get(req, res) {
     const [README, packageJson] = ['README.md', 'package.json']
 
     let sections = null
-    console.log('paths: ', paths);
+    if(__DEV__) console.log('paths: ', paths);
     const examples = paths.filter(f => f.indexOf('/example/') !== -1)
 
     const components = paths.reduce(

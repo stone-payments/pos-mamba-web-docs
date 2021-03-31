@@ -13,6 +13,8 @@ dotenv.config();
 
 const app = express();
 
+const components = p => `${process.cwd()}/mamba-sdk/packages/components/${p}`;
+
 [
   'Icon',
   'Icon/assets',
@@ -22,9 +24,10 @@ const app = express();
   'Sprite/example',
   'QRCode/example',
 ].forEach(path => {
-  const p = `${process.cwd()}/mamba-sdk/packages/components/${path}`;
-  app.use(serve(p, { dotfiles: 'ignore', etag: false }));
-})
+  app.use(serve(components(path), { dotfiles: 'ignore', etag: false }));
+});
+
+app.use('/framed/assets', express.static(components('Icon/assets')));
 
 app.use(
   bodyParser.json({ limit: '300kb' }),

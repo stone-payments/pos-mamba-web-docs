@@ -46,15 +46,15 @@ stages:
           - task: ArchiveFiles@2
             inputs:
               #rootFolderOrFile: '$(Build.BinariesDirectory)'
-              rootFolderOrFile: '$(Build.SourcesDirectory)/dist/bundle.pos'
+              rootFolderOrFile: '$(Build.SourcesDirectory)/__sapper__/build'
               includeRootFolder: false
               archiveType: 'zip'
-              archiveFile: '$(Build.ArtifactStagingDirectory)/$(package-name)_v$(tag).ppk'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(package-name)_v$(tag).zip'
               replaceExistingArchive: true
           - task: PublishBuildArtifacts@1
             inputs:
-              pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(package-name)_v$(tag).ppk'
-              artifactName: 'PPK'
+              pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(package-name)_v$(tag).zip'
+              artifactName: 'ZIP'
 
   - stage: CD
     dependsOn: CI
@@ -76,7 +76,7 @@ stages:
               buildType: 'current'
               buildVersionToDownload: 'latest'
               downloadType: 'single'
-              artifactName: 'PPK'
+              artifactName: 'ZIP'
               path: '$(Build.ArtifactStagingDirectory)'
 
           - task: GitHubRelease@0
@@ -94,7 +94,7 @@ stages:
               #releaseNotesSource: 'file' # Optional. Options: file, input
               #releaseNotesFile: # Optional
               #releaseNotes: # Optional
-              assets: '$(Build.ArtifactStagingDirectory)/$(package-name)_v$(tag).ppk' # Optional
+              assets: '$(Build.ArtifactStagingDirectory)/$(package-name)_v$(tag).zip' # Optional
               #assetUploadMode: 'delete' # Optional. Options: delete, replace
               #isDraft: false # Optional
               #isPreRelease: false # Optional

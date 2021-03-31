@@ -16,11 +16,11 @@
       <div class="Cards Cards-wrapper">
           <a rel='prefetch' class='box learn-mamba' href='guide'>
             <h3>Começando com o MAMBA SDK</h3>
-            <p>Fácil, rápido e moderno. Com o Mamba SDK, desenvolver aplicativos para o POS se tornou tão simples quanto criar para celular. Comece agora ;) </p>
+            <p>Fácil, rápido e moderno. Com o Mamba SDK, desenvolver aplicativos para o POS se tornou tão simples quanto criar para celular. </p>
           </a>
           <a rel='prefetch' class='box components-pos' href='guide'>
             <h3>Componentes e Interface com POS</h3>
-            <p>Veja os componentes e ferramentas para iniciar seu desenvolvimento e criar rapidamente aplicativos no POS.</p>
+            <p>Os componentes e ferramentas para iniciar seu desenvolvimento e criar rapidamente aplicativos no POS.</p>
           </a>
           <a rel='prefetch' class='box stone-payments' href='https://devcenter.stone.com.br/'>
             <h3>Stone</h3>
@@ -35,11 +35,7 @@
   </div>
 </div>
 
-
 <style>
-
-  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
-
   :global(body) {
     height: 100vh;
     background-color: #fff;
@@ -55,7 +51,6 @@
     padding: 0px 8px;
 
     &-vstack {
-      -webkit-box-flex: 1;
       flex-grow: 1;
       flex-shrink: 0;
       flex-basis: auto;
@@ -69,6 +64,7 @@
       text-align: center;
       padding: 30px 0 30px 0;
       background-color: none;
+
       .stone-logo {
         opacity: 0.6;
       }
@@ -78,11 +74,10 @@
   .Hero {
     position: relative;
     display: block;
-    font-family: 'Roboto', sans-serif;
     min-height: 100vh;
-    color: #003920;
+    color: $green700;
     text-align: center;
-    background-color: #F4F4F4;
+    background-color: #f4f4f4;
     padding: 50px;
     background-clip: content-box;
   }
@@ -97,23 +92,21 @@
 
     > span {
       font-weight: 500;
-      color: #142C40;
+      color: $neutral900;
     }
 
     .low-sub {
       font-size: 23px;
       font-weight: 300;
-      color: #142C40;
+      color: $neutral900;
       line-height: 35px;
     }
   }
 
   .Cards {
-
     &-wrapper {
       display: flex;
       max-width: 1000px;
-      -webkit-box-pack: center;
       justify-content: center;
       box-sizing: border-box;
       margin-top: 38px;
@@ -129,17 +122,16 @@
       position: relative;
       background-color: rgb(255, 255, 255);
       opacity: 1;
-      color: rgb(9, 30, 66);
+      color: $neutral900;
       box-sizing: border-box;
       text-align: left;
       z-index: 100;
-      box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.25) 0px 0px 0.5px 0px;
+      box-shadow: -1px -1px 2px rgba(0, 169, 98, 0.1), 1px 1px 2px rgba(0, 169, 98, 0.2);
       background-size: contain;
-      border-radius: 3px;
       overflow: hidden;
       margin: 8px;
       background-repeat: no-repeat;
-      transition: all 0.3s cubic-bezier(0.15, 1, 0.33, 1);
+      transition: all 0.6s cubic-bezier(0.15, 1, 0.33, 1);
       background-position: center bottom;
       padding: 20px;
       min-height: 261px;
@@ -147,7 +139,7 @@
 
       h3 {
         font-size: 20px;
-        color: #6D9D0D;
+        color: $green500;
         font-weight: 500;
       }
 
@@ -155,19 +147,21 @@
         padding: 10px 0 0 0;
         font-size: 15px;
         line-height: 26px;
-        color: #142C40;
+        color: $neutral900;
       }
 
-      &:hover{
-        box-shadow: 2px 2px 8px rgba(90, 100, 100, 0.5);
+      &:hover {
+        border-radius: 3px;
+        transform: translateY(-3px);
+        box-shadow: 0px 0px 2px rgba(0, 169, 98, 0.1), 0px 15px 45px rgba(0, 169, 98, 0.3);
       }
     }
-
   }
 
   .logo {
     margin-top: 80px;
     margin-bottom: 20px;
+
     img {
       height: 125px;
     }
@@ -192,9 +186,10 @@
       padding: 0px;
     }
 
-    .logo  {
+    .logo {
       margin-top: 30px;
       margin-bottom: 10px;
+
       img {
         max-height: 90px;
       }
@@ -205,7 +200,7 @@
       line-height: 24px;
 
       .low-sub {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 20px;
       }
     }

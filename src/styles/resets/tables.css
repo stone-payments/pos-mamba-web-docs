@@ -6,28 +6,18 @@ table {
 thead,
 tbody,
 tfoot {
-  border-bottom: 2px solid #ebf0ed;
+  border-bottom: 1px solid #ebf0ed;
 }
 
 td,
 th {
   border: none;
-  padding: 8px 16px 8px 8px;
+  padding: 8px 16px;
   text-align: left;
 }
 
 th {
   vertical-align: top;
-}
-
-td:first-child,
-th:first-child {
-  padding-left: 0;
-}
-
-td:last-child,
-th:last-child {
-  padding-right: 0;
 }
 
 caption {
@@ -37,6 +27,5 @@ caption {
 
 table tr td strong,
 table th td strong {
-  font-weight: 800 !important;
   color: color-mod(var(--secondary) blackness(60%));
 }

@@ -12,7 +12,8 @@ export const getLanguageFromClassName = className => {
   if (typeof className !== 'string') {
     return ''
   }
-  return (className.match(LANG) || [''])[1].toLowerCase()
+  const val = (className.match(LANG) || [''])[1].toLowerCase();
+  return val;
 }
 
 export const addLanguageIfNotPresent = (className, language) => {

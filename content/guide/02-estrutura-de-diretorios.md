@@ -47,7 +47,7 @@ A estrutura para cada pacote (módulo) se parece com isso:
       └─ package.json ··· Configuração do NPM / Pacote
 ```
 
-#### `example(s)`
+#### Exemplos
 
 A pasta `example` é onde todos os exemplos específicos de cada pacote estão localizados.
 

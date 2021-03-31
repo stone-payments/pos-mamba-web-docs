@@ -1,37 +1,32 @@
 .props-heading {
-  margin-top: 50px;
-  color: hsl(330, 72%, 35%);
-  font-weight: 600;
-  background-color: rgba(192, 192, 192, 0.21);
+  font-size: 13px !important;
+  color: $neutral900;
+  font-weight: 500;
+  background-color: #fff;
   display: inline-block;
   clear: both;
-  padding: 12px 10px !important;
-  border-radius: 4px 4px 0 0;
-  font-size: 14px;
-  letter-spacing: 0;
+  padding: 10px 8px !important;
   font-family: var(--code-font);
   border-bottom: 1px solid #3535351a;
   width: 100%;
   text-indent: 3px;
   cursor: default;
+  line-height: 20px;
+  margin-top: 1.5rem;
+
+  + table,
+  + .table-wrapper table {
+    margin-top: 0;
+  }
 
   &,
-  table {
+  table,
+  .table-wrapper {
     transition: all 0.3s ease-out;
   }
 
   .attr-name {
     color: var(--primary);
-  }
-
-  &:hover {
-    background-color: rgba(192, 192, 192, 0.31);
-
-    & + table,
-    + p + table,
-    + div + table {
-      background-color: rgba(192, 192, 192, 0.06);
-    }
   }
 }
 
@@ -41,4 +36,29 @@
 
 .code-block.code-block-container + .props-heading {
   margin-top: 25px;
+}
+
+li {
+  p:first-child {
+    margin-bottom: 3px;
+  }
+
+  position: relative;
+  list-style: none;
+}
+
+li::before {
+  position: absolute;
+  left: -1rem;
+  content: '\2013';
+}
+
+h3 ~ ul li p ~ p {
+  color: $neutral600;
+  font-size: 14px;
+}
+
+h2[id] + ul,
+p + .code-block {
+  margin-top: 15px;
 }

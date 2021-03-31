@@ -11,5 +11,6 @@ module.exports = {
     'no-sequences': [0, 'never'],
     'global-require': [0, 'never'],
     'no-bitwise': [0, 'never'],
+    'no-cond-assign': null
   },
 }

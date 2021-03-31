@@ -33,14 +33,14 @@ module.exports = {
       sourceMap: IS_DEV,
       minimize: !IS_DEV,
       /** Apply the two last loaders */
-      importLoaders: 1,
+      importLoaders: 2,
     },
   },
   postcss: {
     loader: 'postcss-loader',
     options: {
-      ident: 'postcss',
-      plugins: [...require('../../postcss.config.js').plugins],
+      // ident: 'postcss',
+      // plugins: [...require('../../postcss.config.js').plugins],
       sourceMap: true,
     },
   },
@@ -78,6 +78,14 @@ module.exports = {
       limit: 2048,
     },
   },
+  resolveUrl: {
+    loader: 'resolve-url-loader',
+    options: {
+      sourceMap: IS_DEV,
+      keepQuery: true,
+      debug: false, // IS_DEV,
+    },
+  },
   html: {
     loader: 'html-loader',
   },
@@ -103,6 +111,7 @@ module.exports = {
           emitCss: true,
           hydratable: true,
           hotReload: IS_DEV,
+          css: false,
           ...require(fromProject('svelte.config.js')),
         };
     }

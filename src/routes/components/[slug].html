@@ -6,24 +6,28 @@
 {:elseif manifest.docs}
 <div class="Component">
   <header>
-    <h1>
-      {manifest.docs.metadata.title}
-      <small
-        ><a
-          href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
-          >editar esta seção</a
-        ></small
-      >
-    </h1>
-    <div class="code-block code-block-container install-block">
-      <pre
-        class="code-block line-numbers language-javascript"
-        style="font-size: 16px; white-space: normal;"
-      >
-            <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
-              <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
-            </code>
-          </pre>
+    <div class="header-inner">
+      <h1>
+        {manifest.docs.metadata.title}
+        <!-- <div class="edit-section">
+          <small
+            ><a
+              href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
+              >editar esta seção</a
+            ></small
+          >
+        </div> -->
+      </h1>
+      <div class="code-block code-block-container install-block">
+        <pre
+          class="code-block language-javascript"
+          style="font-size: 15px; white-space: normal;"
+        >
+          <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
+
+          </code>
+        </pre>
+      </div>
       <div class="links">
         <a
           class="github-link"
@@ -38,42 +42,52 @@
           ><i class="fas fa-external-link-alt"></i>NPM</a
         >
       </div>
-    </div>
-    <div class="version-block">
-      <small class="unique">Mais recente:</small>
-      <span>v{manifest.info.package.version}</span>
+      <!-- <div class="version-block">
+        <small class="unique">Mais recente:</small>
+        <span>v{manifest.info.package.version}</span>
+      </div> -->
     </div>
   </header>
-
-  <section>
-    <div class="part">
-      {@html manifest.docs.html}
-    </div>
-  </section>
-
-  {#if !!example}
-  <section class="Examples">
-    <div class="Examples-boxes">
-      <div class="Examples-example">
-        <header>
-          <h2>Exemplos</h2>
-        </header>
-        <div class="Code-run">
-          <svelte:component this="{Example}" name="example" />
-        </div>
-        <div class="Source-wrapper">
-          {@html example.source}
-        </div>
-      </div>
-    </div>
-  </section>
-  {/if} {#if manifest.docs.paramsHtml !== false}
-  <section class="Params-html">
-    <div class="part">
-      {@html manifest.docs.paramsHtml}
-    </div>
-  </section>
-  {/if}
+  <div class="sections-wrapper">
+    {#if startHtml !== ''}
+      {@html startHtml}
+    {/if}
+    {#await examplesPromise}
+      <p></p>
+    {:then data}
+    <section class="Examples">
+      {#if data.examples && data.examples.length > 0}
+        {#each data.examples as { title, path, source, ih }}
+          <div class="Example">
+            <div class="Example-title">{title}</div>
+            <div class="iframe-wrapper" style="max-height: {ih}px;">
+              <iframe title="{data.slug}" src="/framed/{path}?slug={data.package}"></iframe>
+            </div>
+            <div class="Source-wrapper">
+              <div class='Source-wrapper-header'>
+                <a
+                  class='filename'
+                  href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{data.package}/{path}'
+                >
+                  <span>Source</span>
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </div>
+              <div class="Source-wrapper-content">
+                {@html source}
+              </div>
+            </div>
+          </div>
+        {/each}
+      {/if}
+    </section>
+    {:catch error}
+      <p></p>
+    {/await}
+    {#if lastHtml !== ''}
+      {@html lastHtml}
+    {/if}
+  </div>
 </div>
 {/if} {/if}
 
@@ -82,50 +96,63 @@
   import capitalize from 'lodash.capitalize'
 
   export default {
+    computed: {
+      startHtml({ manifest }) {
+        if(!manifest) return '';
+        const { docs: { html } } = manifest;
+        const propsHeadings = html.indexOf('<h2 class="props-heading');
+        if(propsHeadings !== -1) return html.slice(0, propsHeadings);
+        return html.slice(0, html.indexOf('<div class="table-wrapper"'));
+      },
+      lastHtml({ manifest }) {
+        if(!manifest) return '';
+        const { docs: { html } } = manifest;
+        const propsHeadings = html.indexOf('<h2 class="props-heading');
+        if(propsHeadings !== -1) return html.slice(propsHeadings);
+        return html.slice(html.indexOf('<div class="table-wrapper"'));
+      }
+    },
     data() {
       return {
         isLoading: true,
         title: 'Carregando',
+        examplesPromise: undefined,
       }
     },
+    oncreate() {
+      const { params: { slug } } = this.get();
 
-    async oncreate() {
-      const { params } = this.get()
-      NProgress.start()
+      NProgress.start();
+      this.set({
+        slug,
+        examplesPromise: new Promise((resolve, reject) => {
+          fetch(`api/examples/${slug}`)
+          .then(r => r.json())
+          .then(resolve)
+          .catch(reject);
+        }),
+      });
 
-      await fetch(`api/components/${params.slug}`)
+      fetch(`api/components/${slug}`)
         .then(r => r.json())
-        .then(async manifest => {
-          const docs = manifest && manifest.docs
-
-          import(
-            `@components/${(manifest.docs.examples &&
-              manifest.docs.examples[0] &&
-              manifest.docs.examples[0].filePath) ||
-              manifest.info.slug.concat('/example/Example.html')}`
-          )
-            .then(mod => {
-              NProgress.done()
-              this.set({ Example: mod.default })
-            })
-            .catch(NProgress.done)
+        .then(manifest => {
+          const { hasExamples, docs } = manifest;
 
           this.set({
             isLoading: false,
-            manifest: manifest,
-            example: (docs.examples.length && docs.examples[0]) || false,
-            title: (docs && docs.metadata.title) || capitalize(params.slug),
-          })
+            hasExamples,
+            manifest,
+            title: (docs && docs.metadata.title) || capitalize(slug),
+          });
 
-          NProgress.inc()
         })
-        .catch(e => {
-          NProgress.done()
+        .catch(() => {
           this.set({
             isLoading: false,
             manifest: { error: 'Falha ao carregar o component.' },
           })
         })
+        .finally(() => NProgress.done());
     },
   }
 </script>
@@ -133,90 +160,38 @@
 <style>
   @import '../../styles/shared/colors.css';
 
-  /* Check if table have four or more columns to use this class below */
-  :global(table) thead th {
-    background-color: color-mod(black alpha(0.03));
-    font-family: var(--code-font);
-    border-top: 1px solid color-mod(#ebf0ed alpha(60%));
-
-    &:first-child {
-      border-radius: 4px 0 0 0;
-    }
-  }
-
   :global(table) tr td:nth-child(3) {
-    color: #800051;
+    color: $purple700;
     font-weight: 600;
     opacity: 0.8;
   }
 
-  :global(article) :global(table) {
-    tbody {
-      font-size: 80%;
-    }
-
-    tr td {
-      font-size: 14px;
-      font-family: var(--code-font);
-
-      code {
-        background-color: #f1f0f0 !important;
-        color: #41a712;
-        border: 1px solid #efeeee;
-      }
-    }
-  }
-
   :global(.Component) {
     position: relative;
-
-    & table tr {
-      transition: all 0.3s ease-out;
-      &:hover {
-        background-color: rgba(192, 192, 192, 0.09);
-      }
-    }
-  }
-
-  .Component > header {
-    border-bottom: 2px solid #f4f6f7;
-    position: relative;
-    min-height: 140px;
   }
 
   h1 {
     font-size: 31px;
-    color: #0d2b3e;
-    font-weight: 400;
-  }
-
-  small:not(.unique) {
-    font-size: 14px;
-    opacity: 0.5;
-    float: right;
-    line-height: 3.4rem;
-    pointer-events: all;
+    color: inherit;
+    font-weight: 500;
   }
 
   .Source-wrapper {
-    background-color: #f7f9f8;
+    background-color: #fff;
     padding-bottom: 1px;
     border: 1px solid rgba(0, 10, 0, 0.01);
-    border-radius: 6px;
   }
 
   section :global(.code-block) {
     position: relative;
+  }
 
-    :global(.source-header) {
-      line-height: 1;
-      width: 100%;
-      border-bottom: 1px solid rgba(0, 10, 0, 0.06);
-      border-radius: 4px 4px 0 0;
-      padding: 13px 13px 10px 16px;
-      color: var(--primary);
-      font-size: 13px;
-    }
+  .source-header {
+    line-height: 1;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 10, 0, 0.06);
+    padding: 13px 13px 10px 16px;
+    color: var(--primary);
   }
 
   section :global(.code-block.named.code-block-container) :global(i) {
@@ -241,20 +216,6 @@
     text-decoration: underline;
   }
 
-  section :global(a:not(.anchor):not(.filename)) {
-    border-bottom: 1px solid #e3d9d9;
-  }
-
-  section :global(strong) {
-    font-weight: 600;
-  }
-
-  section :global(code) {
-    background-color: #f9f9f9;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
-  }
-
   section :global(pre) :global(code) {
     padding: 0;
   }
@@ -264,16 +225,14 @@
   }
 
   section:not(.Examples):not(.Examples-example) {
-    padding: 39px 0;
-
     + section {
       padding-bottom: 46px;
-      border-bottom: 2px solid #f4f6f7;
+      border-bottom: 2px solid $neutral200;
     }
 
     & :global(h3:not(:first-child)) {
-      margin-top: 18px;
-      padding-top: 16px;
+      /* margin-top: 18px;
+      padding-top: 16px; */
 
       & :global(.counter) {
         font-weight: 500;
@@ -288,21 +247,12 @@
     & :global(table) + :global(h3:not(:first-child)),
     & :global(h2) + :global(h3),
     & :global(h2 ~ h3 ~ p ~ h3) {
-      margin-top: 30px;
+      /* margin-top: 30px; */
       color: var(--secondary);
     }
 
     & :global(h2[id='m-todos']) ~ :global(h3) {
-      color: #378016;
-    }
-
-    & :global(.code-block-container) {
-      margin-top: 7px;
-    }
-
-    & :global(h4) {
-      margin-top: 30px;
-      margin-bottom: 25px;
+      color: $green700;
     }
   }
 
@@ -327,40 +277,90 @@
 
   section :global(.code-block) :global(pre),
   section :global(.CodeMirror) {
-    background-color: #f7f9f8;
+    background-color: #fff;
     padding: 8px;
   }
 
   section :global(.code-block) :global(pre) {
-    padding: 12px 8px 12px 40px;
-  }
-
-  .Component :global(.code-block.code-block-container pre.code-block) {
-    max-height: 300px;
-    overflow: auto;
-    margin: 0;
+    padding: 12px;
   }
 
   .Component section :global(.code-block.code-block-container pre.code-block) {
     margin: 0 0 35px 0;
   }
 
-  .Code-run {
-    margin: 20px 0 0 0;
-    padding-bottom: 40px;
+  .Examples {
+    overflow: hidden;
+    max-width: calc(100vw - var(--content-pad-right));
+    margin-bottom: 60px;
+  }
 
-    :global(.container) {
-      width: 100%;
-      max-width: 100%;
-      margin: 0 !important;
+  @media screen and (min-width: 412px) {
+    :global(.Component > *:not(header)) {
+      max-width: 99rem;
     }
   }
 
-  .Examples-example {
-    header {
-      h2 {
-        margin-bottom: 0;
+  .Example {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    .iframe-wrapper {
+      display: flex;
+      flex: 1;
+      height: 300px;
+    }
+
+    iframe {
+      display: flex;
+      flex: 1;
+      border: none;
+      background-color: transparent;
+    }
+
+    &-title {
+      margin-top: 33px;
+      line-height: 58px;
+      font-size: 28px;
+    }
+  }
+
+  .Source-wrapper {
+    display: flex;
+    flex: 1;
+    border-top: none;
+    background: color-mod(var(--headers-bg) lightness(14%));
+    flex-direction: column;
+    position: relative;
+
+    &-header {
+      z-index: 100;
+      right: 0;
+      top: 0;
+      position: absolute;
+      padding: 8px 8px;
+      text-align: right;
+
+      a {
+        font-weight: 400;
+        text-shadow: none;
+        color: $gray100;
       }
+    }
+
+    &-content {
+      opacity: 0.9;
+      padding: 18px 96px 18px 24px;
+
+      :global(.code-block) {
+        line-height: 18px;
+      }
+    }
+
+    pre {
+      width: 100%;
     }
   }
 </style>

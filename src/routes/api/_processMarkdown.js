@@ -5,9 +5,8 @@ import strings from './_strings'
 export default function processMarkdown(markdown, dir, examplesPaths) {
   const metadata = {}
 
-  const pattern = /(\w*@example)\s(.+)\s?-->$/gm
+  const pattern = /(\w*@iframe)\s(.+)\s?-->$/gm
   let match
-  let examples = []
 
   // Match files ou code to include
   // Process example filename to include and metadata
@@ -31,14 +30,6 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
 
       let source = `\n\r\`\`\`html\n${contentsMeta}${fileContents}\`\`\``
       markdown = markdown.replace(`<!-- `.concat(match[0]), source)
-
-      examples.push({
-        index,
-        fileContents,
-        filePath,
-        fileName: basename(match[2]),
-        source: source,
-      })
     }
   }
 
@@ -84,5 +75,5 @@ export default function processMarkdown(markdown, dir, examplesPaths) {
         .trim()
   })
 
-  return { metadata, content, examples }
+  return { metadata, content }
 }

@@ -1,45 +1,54 @@
 /* layout/header.css */
 
-header .install-block,
-header .version-block {
-  bottom: 22px;
-}
-
-header .install-block {
-  position: absolute;
-  left: 0;
-  right: auto;
-
-  pre {
-    margin: 0;
-    display: block;
-    white-space: nowrap;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 25px;
-    padding-right: 19px;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 10 , 0, 0.01);
-  }
-
-  .token.string {
-    color: color-mod(var(--primary) alpha(95%));
-  }
-}
-
 header {
-  .version-block,
-  .install-block .links {
+  position: relative;
+  background: var(--headers-bg);
+  width: 100%;
+  max-width: 100vw;
+  color: $neutral50;
+
+  @media screen and (max-width: 980px) {
+    & {
+      position: fixed;
+      z-index: 200;
+    }
+  }
+
+  .code-block pre {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    code {
+      color: white;
+    }
+  }
+
+  .edit-section {
     position: absolute;
+    right: 6px;
+    top: 5px;
   }
 
   .install-block {
+    margin-left: 20px;
+    margin-right: auto;
 
-    pre[class*="language-"].line-numbers {
+    pre {
+      margin: 0;
+      display: block;
+      white-space: nowrap;
+      padding: 6px;
+      border: 1px solid rgba(0, 10, 0, 0.01);
+    }
+
+    .token.string {
+      color: $green400;
+    }
+
+    pre[class*='language-'].line-numbers {
       padding-left: 25px;
     }
 
-    .line-numbers .line-numbers-rows {
+    .install-block code {
       top: 3px;
       left: -24px;
       line-height: 19px;
@@ -49,33 +58,21 @@ header {
 
 header {
   .version-block,
-  .install-block [class*="-link"]:not(.fas) {
-    height: 41px;
-    background-color: #f7f9f8;
-    padding: 6px 20px;
-    border-radius: 4px;
+  .links a {
+    background-color: transparent;
+    padding: 6px 0;
     font-weight: 600;
-    border: 1px solid rgba(0, 10 , 0, 0.01);
     cursor: default;
-    font-family: var(--code-font);
-    color: color-mod(var(--primary) alpha(90%));
+    color: $green500;
 
     small {
       color: color-mod(black alpha(60%));
     }
 
-    span, small {
-      font-size: 13px;
+    span,
+    small {
       font-family: var(--code-font);
     }
-
-    &:hover {
-      border: 1px solid color-mod(var(--primary) alpha(50%));
-    }
-  }
-
-  .version-block {
-    right: 0;
   }
 
   .version-block,
@@ -89,20 +86,21 @@ header {
     top: 0;
     bottom: auto;
     white-space: nowrap;
+    margin-left: auto;
 
-    [class*="-link"]:not(.fas) {
-      color: color-mod(black alpha(50%));
+    [class*='-link']:not(.fas) {
       white-space: pre;
       cursor: pointer;
       margin-left: 10px;
       display: inline-block;
-      background-position: 12px 14px;
-      line-height: 26px;
-      padding: 7px 13px;
-      font-size: 13px;
+      line-height: 32px;
+      padding: 0 11px 0 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
     }
 
-    .fab, .fas {
+    .fab,
+    .fas {
       margin-right: 10px;
     }
 
@@ -114,6 +112,87 @@ header {
 
     .npm-link i {
       font-size: 15px;
+    }
+  }
+}
+
+.Component > header,
+.guide-content > header {
+  padding-left: var(--content-pad-left);
+  padding-right: var(--content-pad-right);
+  height: calc(var(--nav-top-position));
+
+  @media screen and (max-width: 412px) {
+    & {
+      padding-left: var(--nav-left);
+      position: static;
+      margin-top: calc(var(--nav-top-position));
+      height: auto;
+      margin-bottom: 20px;
+    }
+  }
+
+  @media screen and (max-width: 980px) and (min-width: 412px) {
+    & {
+      padding-left: calc(var(--sidebar-width) + var(--nav-left));
+    }
+  }
+
+  @media screen and (min-width: 412px) {
+    &::before {
+      background: var(--headers-bg);
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 0;
+      height: calc(var(--nav-top-position));
+    }
+  }
+
+  @media screen and (min-width: 980px) {
+    .header-inner {
+      max-width: calc(
+        99rem - var(--content-pad-left) - var(--content-pad-right)
+      );
+    }
+  }
+
+  .header-inner {
+    flex: 1;
+    display: flex;
+    position: relative;
+    height: inherit;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 22px;
+
+    @media screen and (max-width: 412px) {
+      & {
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+
+        .install-block,
+        .links {
+          margin-top: 10px;
+          margin-left: 0;
+        }
+
+        .github-link {
+          margin-left: 0;
+        }
+
+        h1 {
+          margin-top: 20px;
+        }
+      }
+    }
+
+    h1 {
+      vertical-align: baseline;
+      line-height: 34px;
     }
   }
 }

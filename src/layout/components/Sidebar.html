@@ -1,8 +1,15 @@
-<div class="SideBar Flex--flex Flex--grow Flex-direction--column Flex-alignItems--flexEnd">
+<div class:open="menuOpen" class="SideBar Flex--flex Flex--grow Flex-direction--column Flex-alignItems--flexEnd">
 
-  <div class="SideBar-logo">
+  <div class="SideBar-logo" class:change-logo-bg="$changeHeader">
+    <button aria-label="Open menu" title="Open menu" type="button" class="hamburguer" class:active="menuOpen" on:click="set({ menuOpen: !menuOpen })">
+      <i class="fas fa-bars"></i>
+    </button>
     <a href="/" title="Mamba">
-      <img src="images/logoMamba.svg" alt="mamba SDK">
+      {#if $changeHeader}
+        <img src="images/logoMamba.svg" alt="mamba SDK">
+      {:else}
+        <img src="images/logoMambaWhite.svg" alt="mamba SDK">
+      {/if}
     </a>
   </div>
   <!-- <div class="sdk-version">
@@ -12,23 +19,44 @@
     </select>
   </div> -->
   <div class="SideBar-border"></div>
-  <nav>
+  <nav aria-label="Side navigation" aria-hidden="{!menuOpen}">
 
-    {#each $guide_contents as section}
-
-    <h1 class="section">
-      <a class='{section.slug === $activeGuideSection ? "active": ""}' href='guide#{section.slug}' on:click="select(path.slice(1) !== 'guide')">{section.metadata.title}</a>
-    </h1>
-    <ul class='guide-toc'>
-      {#each section.subsections as subsection}
-        {#if subsection.title}
-          <li>
-            <a class='subsection {subsection.slug === $activeGuideSection ? "active": ""}' href='guide#{subsection.slug}'>{subsection.title}</a>
-          </li>
-        {/if}
+    <div class="guide-sections" ref:guides>
+    {#each $guide_contents as section, idx}
+      <h1
+        on:click="toggle(this, section.slug, $activeGuideSection)"
+        class="section"
+        class:active="sectionActive([section.slug, section.metadata.title], section.subsections, $activeGuideSection)"
+      >
+        <a
+          href='guide#{section.slug}'
+          on:mouseup="set({ menuOpen: false })"
+          on:click="select(path.slice(1) !== 'guide')">
+            {section.metadata.title}
+            {#if section.subsections && section.subsections.length > 0}
+              <i class="fas fa-chevron-right"></i>
+            {/if}
+        </a>
+      </h1>
+      <ul class='guide-toc'>
+        {#each section.subsections as subsection}
+          {#if subsection.title}
+            <li
+              class="subsection"
+              on:click="set({ menuOpen: false })"
+            >
+              <a
+                href="guide#{subsection.slug}"
+                data-parent="{section.slug}"
+              >
+                {subsection.title}
+              </a>
+            </li>
+          {/if}
+        {/each}
+      </ul>
       {/each}
-    </ul>
-    {/each}
+    </div>
     {#each navigation as [idx, item]}
       {#if item.type === "hr"}
         <ul>
@@ -36,7 +64,7 @@
         </ul>
       {:else}
         <h1 class='{item.icon ? "has-icon": ""}'>
-          <a href={item.to}>
+          <a href={item.to} on:click="set({ menuOpen: false })">
             {#if item.icon}
               <i class="{item.icon}"></i>
             {/if}
@@ -50,9 +78,9 @@
                 <li class="SideBar-static-label"><small>{sub.description}</small></li>
               {:elseif sub.title}
                 <li class='{(path === sub.to || path === (item.to + sub.to)) ? "active": ""}'>
-                  <a href='{sub.to !== item.to ? item.to : ""}{sub.to}'>
+                  <a href='{sub.to !== item.to ? item.to : ""}{sub.to}' on:click="set({ menuOpen: false })">
                     {#if path === sub.to || path === item.to + sub.to}
-                      <i class="fas fa-angle-right"></i>
+                      <i class="fas fa-chevron-right"></i>
                     {/if}
                     {sub.title}
                   </a>
@@ -72,38 +100,149 @@
   import navigation from '../../routes/navigation';
 
   export default {
+    helpers: {
+      sectionActive(slugs, subsections, activeGuideSection) {
+        if(!Array.isArray(slugs)) return false;
+        if(typeof activeGuideSection !== 'string') return false;
+
+        const parent = slugs.some(e => e.toLowerCase() === activeGuideSection.toLowerCase());
+        const child = subsections.some(({slug}) => slug.toLowerCase() === activeGuideSection.toLowerCase());
+
+        return parent || child;
+      }
+    },
     data() {
       return {
         contents: [],
         navigation: navigation,
+        menuOpen: false,
       }
     },
 
     oncreate () {
-      // console.log('this.get(): ', this.get());
       const onhashchange = () => {
-        this.store.set({ activeGuideSection: window.location.hash.slice( 1 ) });
+        const activeGuideSection = window.location.hash.slice( 1 ).toLowerCase();
+        if(__DEV__) console.log(`activeGuideSection: ${activeGuideSection}`);
+        this.store.set({ activeGuideSection });
       };
 
       window.addEventListener( 'hashchange', onhashchange, false );
-      this.on( 'destroy', () => {
-        window.removeEventListener( 'hashchange', onhashchange, false );
-      });
 
       onhashchange();
-    },
 
+      const postProcess = () => setTimeout(() => {
+        const { guides } = this.refs;
+        if(!guides || guides.children.length === 0) return postProcess();
+        guides.children[0].classList.add("open");
+      }, 1000);
+
+      postProcess();
+
+      const popstate = () => {
+        this.set({ menuOpen: false });
+      }
+
+      window.addEventListener('popstate', popstate);
+
+      this.on('destroy', () => {
+        window.removeEventListener( 'hashchange', onhashchange, false );
+        window.removeEventListener( 'popstate', popstate, false );
+      });
+    },
     methods: {
       select(must = true) {
         if(must) NProgress.start();
-      }
-    }
-  }
+      },
+      toggle(elm, slug, active) {
+        if(slug === active) {
+          elm.classList.toggle("open");
+        } else {
+          elm.classList.add("open");
+        }
+      },
+    },
+  };
 </script>
 
 
 <style>
-  .subsection{
-    margin-left: 5px;
+
+  .section {
+    position: relative;
+
+    .fas {
+      margin-left: 7px;
+      width: auto;
+      font-size: 14px;
+      opacity: 0.7;
+      position: absolute;
+      right: 14px;
+      text-align: right;
+      top: 9px;
+    }
+  }
+
+  .guide-sections {
+    .subsection {
+      padding-left: 3rem;
+    }
+
+    &,
+    h1,
+    h1 i,
+    h1 + ul {
+      transition: 0.3s cubic-bezier(0.15, 1, 0.33, 1);
+      transition-property: height, transform;
+    }
+
+    h1 + ul {
+      height: 0;
+    }
+  }
+
+  :global(.guide-sections h1.open) {
+    .fas {
+      transform: rotateZ(90deg) !important;
+    }
+
+    + ul {
+      height: auto;
+    }
+  }
+
+  .hamburguer {
+    border: 0;
+    cursor: pointer;
+    padding: 8px 12px;
+    background-color: color-mod($neutral500 alpha(20%));
+    color: white;
+    transition: 0.3s cubic-bezier(0.15, 1, 0.33, 1);
+    transition-property: transform, background-color;
+
+    &.active {
+      background-color: $neutral50;
+      color: $neutral500;
+    }
+
+    &:not(.active):hover {
+      background-color: $green500;
+    }
+
+    .fas {
+      font-size: 23px;
+    }
+  }
+
+  button.hamburguer {
+    &:focus {
+      outline: 1px solid color-mod(#fff alpha(80%));
+      outline-offset: -1px;
+    }
+  }
+
+  @media screen and (min-width: 980px) {
+    .hamburguer {
+      display: none;
+    }
   }
 </style>

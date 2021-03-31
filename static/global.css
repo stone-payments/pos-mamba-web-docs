@@ -7,54 +7,20 @@ body {
   opacity: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 0.5em 0;
-  font-weight: 400;
-  line-height: 1.2;
-}
-
-h1 {
-  font-size: 2em;
-}
-
 a {
   color: inherit;
 }
 
-code {
-  font-family: 'menlo', 'inconsolata', monospace;
-  font-size: calc(1em - 2px);
-  color: #555;
-  background-color: #f0f0f0;
-  padding: 0.2em 0.4em;
-  border-radius: 2px;
+@font-face {
+  font-family: 'Sharon Sans';
+  font-weight: normal;
+  src: url('./webfonts/SharonSans-Regular.woff2') format('woff2'),
+    url('./webfonts/SharonSans-Regular.woff') format('woff');
 }
 
-@media (min-width: 400px) {
-  body {
-    font-size: 16px;
-  }
-}
-
-.iframe-wrapper {
-  width: 300px;
-  height: 320px;
-  overflow: hidden;
-  margin: 0 auto;
-  border: 0;
-  border-radius: 3px;
-  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.07), 0 18px 36px -18px rgba(0, 0, 0, .3), 0 -12px 36px -8px rgba(0, 0, 0, .025), 0 0 0px 3px #102d3f;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.iframe-wrapper iframe {
-  height: 100%;
-  margin: 0;
-  border: 0;
+@font-face {
+  font-family: 'Sharon Sans';
+  font-weight: 600;
+  src: url('./webfonts/SharonSans-Medium.woff2') format('woff2'),
+    url('./webfonts/SharonSans-Medium.woff') format('woff');
 }

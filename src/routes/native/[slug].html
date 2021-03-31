@@ -6,31 +6,55 @@
     <h1>Não encontrado</h1>
   {:elseif manifest.docs}
    <div class="Component">
-      <header>
+    <header>
+      <div class="header-inner">
         <h1>
           {manifest.docs.metadata.title}
-          <small><a href='https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/pos/docs/{manifest.info.slug}'>editar esta seção</a></small>
+          <!-- <div class="edit-section">
+            <small
+              ><a
+                href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
+                >editar esta seção</a
+              ></small
+            >
+          </div> -->
         </h1>
         <div class="code-block code-block-container install-block">
-          <pre class="code-block line-numbers language-javascript" style="font-size: 16px; white-space: normal;">
+          <pre
+            class="code-block language-javascript"
+            style="font-size: 15px; white-space: normal;"
+          >
             <code class="language-bash">npm install -S <span class="token string">{manifest.info.package.name}</span>
-              <span aria-hidden="true" class="line-numbers-rows force-dolar"><span></span></span>
             </code>
           </pre>
-          <div class="links">
-            <a class="github-link" href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/pos" target="_blank"><i class="fab fa-github"></i>Github</a>
-            <a class="npm-link" href="https://www.npmjs.com/package/{manifest.info.package.name}" target="_blank"><i class="fas fa-external-link-alt"></i>NPM</a>
-          </div>
         </div>
-        <div class="version-block">
-          <small class="unique">Mais recente:</small> <span>v{manifest.info.package.version}</span>
+        <div class="links">
+          <a
+            class="github-link"
+            href="https://github.com/stone-payments/pos-mamba-sdk/tree/master/packages/components/{manifest.info.slug}"
+            target="_blank"
+            ><i class="fab fa-github"></i>Github</a
+          >
+          <a
+            class="npm-link"
+            href="https://www.npmjs.com/package/{manifest.info.package.name}"
+            target="_blank"
+            ><i class="fas fa-external-link-alt"></i>NPM</a
+          >
         </div>
-      </header>
+        <!-- <div class="version-block">
+          <small class="unique">Mais recente:</small>
+          <span>v{manifest.info.package.version}</span>
+        </div> -->
+      </div>
+    </header>
+    {#if manifest.docs.html}
       <section>
         <div class="part">
           {@html manifest.docs.html}
         </div>
       </section>
+    {/if}
     </div>
   {/if}
 {/if}
@@ -73,58 +97,35 @@
 
   /* Check if table have four or more columns to use this class below */
   :global(table) thead th {
-    background-color: color-mod(black alpha(0.028));
-    font-family: var(--code-font);
     border-top: 1px solid color-mod(#ebf0ed alpha(50%));
   }
 
   :global(table) tr td:nth-child(3) {
-    color: #800051;
+    color: $purple700;
     font-weight: 600;
     opacity: 0.8;
   }
 
   :global(article) :global(table) {
-
-    tbody {
-      font-size: 80%;
-    }
-
     tr td {
-      font-size: 14px;
       font-family: var(--code-font);
     }
   }
 
   :global(.Component) {
     position: relative;
-
-    & table tr {
-      transition: all 0.3s ease-out;
-      &:hover {
-        background-color: rgba(192, 192, 192, 0.09);
-      }
-    }
   }
 
-  .Component > header {
-    border-bottom: 2px solid #f4f6f7;
-    position: relative;
-    min-height: 140px;
+  @media screen and (min-width: 412px) {
+    :global(.Component > *:not(header)) {
+      max-width: 99rem;
+    }
   }
 
   h1 {
     font-size: 31px;
-    color: #0d2b3e;
+    color: inherit;
     font-weight: 400;
-  }
-
-  small:not(.unique) {
-    font-size: 14px;
-    opacity: 0.5;
-    float: right;
-    line-height: 3.4rem;
-    pointer-events: all;
   }
 
   section :global(.code-block) {
@@ -139,7 +140,6 @@
     top: 0;
     color: #0099e5;
     line-height: 1;
-    text-shadow: 0 0 0.1px rgba(0, 0, 0, 0.21);
   }
 
   section :global(a:not(.anchor)) {
@@ -148,11 +148,6 @@
 
   section :global(strong) {
     font-weight: 500;
-  }
-
-  section :global(code) {
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
   }
 
   section :global(pre) :global(code) {
@@ -164,8 +159,8 @@
   }
 
   section:not(.Examples-example) {
-    border-bottom: 2px solid #f4f6f7;
-    padding: 39px 0;
+    padding-top: 18px;
+    border-bottom: 2px solid $neutral200;
 
     & :global(h3:not(:first-child)) {
       margin-top: 65px;
@@ -176,7 +171,6 @@
       padding-bottom: 10px;
       margin-bottom: 10px;
       border-bottom: 2px solid color-mod(silver alpha(20%));
-      text-shadow: 0 0 0.1px color-mod(var(--primary) alpha(1%));
 
       & :global(.counter) {
         font-weight: 500;
@@ -190,17 +184,12 @@
 
     & :global(table) + :global(h3:not(:first-child)),
     & :global(h2) + :global(h3) {
-       margin-top: 30px;
-       color: var(--secondary);
+      /* margin-top: 30px; */
+      color: var(--secondary);
     }
 
     & :global(.code-block-container) {
-      margin-top: 18px;
-    }
-
-    & :global(h4) {
-      margin-top: 30px;
-      margin-bottom: 25px;
+      margin-top: 10px;
     }
   }
 
@@ -225,23 +214,15 @@
 
   section :global(.code-block) :global(pre),
   section :global(.CodeMirror) {
-    background-color: #f7f9f8;
-    padding: 8px;
+    padding: 12px 18px;
     margin: 0 0 1em 0;
-    border-radius: 6px;
   }
 
   :global(p) > code {
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  section :global(.code-block) :global(pre) {
-    padding: 12px 8px 12px 40px;
+    font-weight: 500;
   }
 
   .Component :global(.code-block.code-block-container pre.code-block) {
-    max-height: 350px;
     overflow: auto;
   }
 

@@ -27,12 +27,16 @@ module.exports = function createWebpackConfig(type) {
       extensions: ['.js', '.json', '.css', '.pcss', '.html'],
       modules: [
         path.resolve(__dirname, '../mamba-sdk/packages'),
+        path.resolve(__dirname, '../mamba-sdk/packages/components/Icon'),
         path.resolve(__dirname, '../node_modules'),
+        path.resolve(__dirname, '../node_modules/svelte'),
         'node_modules',
       ],
       alias: {
+        'svelte': path.resolve(__dirname, '../node_modules/svelte'),
         '@components': path.resolve(__dirname, '../mamba-sdk/packages/components/'),
         '@mamba/pos': path.resolve(__dirname, '../mamba-sdk/packages/pos/'),
+        '@mamba/icon': path.resolve(__dirname, '../mamba-sdk/packages/components/Icon'),
         '@mamba/store': path.resolve(
           __dirname,
           '../mamba-sdk/packages/store/src/index.js',
@@ -74,7 +78,7 @@ module.exports = function createWebpackConfig(type) {
             path.resolve(__dirname, '../mamba-sdk/packages'),
             path.resolve(__dirname, '../node_modules/@mamba'),
           ],
-          use: [loaders.styleLoader, loaders.css, loaders.postcss],
+          use: [loaders.styleLoader, loaders.css, loaders.postcss, loaders.resolveUrl],
         },
         {
           test: /\.(eot|woff2?|otf|ttf)$/,

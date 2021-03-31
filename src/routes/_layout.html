@@ -2,6 +2,8 @@
   <div>
     <svelte:component this={child.component} {...child.props}/>
   </div>
+{:elseif child.props.path.indexOf('framed') !== -1 }
+  <svelte:component this={child.component} {...child.props}/>
 {:else}
   <RouteTemplate path={child.props.path}>
     <svelte:component this={child.component} {...child.props}/>
@@ -9,9 +11,23 @@
 {/if}
 
 <script>
-  import RouteTemplate from '../layout/RouteTemplate';
+  import RouteTemplate from '../layout/RouteTemplate.html';
 
   export default {
     components: { RouteTemplate },
+    oncreate() {
+      let id;
+      const onscroll = () => {
+        if(id) clearTimeout(id);
+        setTimeout(() => {
+          if(window.innerWidth > 980) {
+            this.store.set({ changeHeader: window.scrollY > 0 });
+          }
+        }, 200);
+      };
+
+      window.addEventListener('scroll', onscroll, true);
+      window.addEventListener('resize', onresize, true);
+    },
   };
 </script>

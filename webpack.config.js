@@ -1,10 +1,10 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const { IS_DEV } = require('quickenv')
 const webpackConfig = require('sapper/config/webpack.js')
 const clientConfig = require('./webpack/base.config.js')('client')
 const serverConfig = require('./webpack/base.config.js')('server')
 const pkg = require('./package.json')
-const { IS_DEV } = require('quickenv')
 
 const client = merge([
   clientConfig,

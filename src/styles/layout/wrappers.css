@@ -1,26 +1,74 @@
 .Content {
+  max-width: 100vw;
+
   &-wrapper {
-    background: #fff;
     display: flex;
     justify-content: center;
   }
 
   &.Content {
-    width: var(--content-width);
-    padding-top: 33px;
+    width: 100%;
     position: relative;
-    overflow-x: visible;
+  }
+
+  .sections-wrapper,
+  .content > header,
+  header ~ section {
+    padding-left: var(--content-pad-left);
+    padding-right: var(--content-pad-right);
+  }
+
+  @media screen and (min-width: 80rem) {
+    .sections-wrapper,
+    .content > header,
+    header ~ section {
+      padding-right: var(--content-pad-right);
+    }
+
+    header ~ section:first-child,
+    header + .sections-wrapper {
+      padding-top: 42px;
+    }
+  }
+
+  @media screen and (max-width: 980px) and (min-width: 412px) {
+    .sections-wrapper,
+    .content > header,
+    header ~ section {
+      padding-left: var(--nav-left);
+      padding-right: var(--content-pad-right);
+      overflow: hidden;
+    }
+  }
+
+  @media screen and (max-width: 980px) and (min-width: 412px) {
+    .sections-wrapper,
+    header + section {
+      padding-top: calc(var(--nav-top-position) + 28px);
+    }
+  }
+
+  @media screen and (max-width: 412px) {
+    .sections-wrapper,
+    .content > header,
+    header ~ section {
+      padding-left: var(--nav-left);
+      padding-right: var(--nav-left);
+      overflow: hidden;
+    }
+
+    .props-heading {
+      width: 100%;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
   }
 }
 
 .Docs {
   width: 100%;
   height: 100%;
-  /*grid-template-columns:
-    minmax(var(--sidebar-min-width), calc(25% - var(--sidebar-width)))
-    var(--content-width) 1fr;*/
-  grid-template-columns: minmax(
-      var(--sidebar-min-width),
-      calc(25% - var(--sidebar-width))
-    ) 1fr;
 }

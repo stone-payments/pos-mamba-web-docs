@@ -1,3 +1,4 @@
 [submodule "mamba-sdk"]
 	path = mamba-sdk
 	url = https://github.com/stone-payments/pos-mamba-sdk.git
+  branch = 231700-gcp-migration-docs

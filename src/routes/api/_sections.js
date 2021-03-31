@@ -103,6 +103,10 @@ export default function(path, options = {}) {
       return `<div class="code-block code-block-container">${source}</div>`;;
     }
 
+    renderer.table = (header, body) => {
+      return `<div class="table-wrapper"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
+    }
+
     // Process markdown with marked
     let html = marked(content, { renderer });
 

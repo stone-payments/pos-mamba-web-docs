@@ -14,12 +14,14 @@
   line-height: 20px;
   margin-top: 1.5rem;
 
-  + table {
+  + table,
+  + .table-wrapper table {
     margin-top: 0;
   }
 
   &,
-  table {
+  table,
+  .table-wrapper {
     transition: all 0.3s ease-out;
   }
 
@@ -58,5 +60,5 @@ h3 ~ ul li p ~ p {
 
 h2[id] + ul,
 p + .code-block {
-  margin-top: 5px;
+  margin-top: 15px;
 }

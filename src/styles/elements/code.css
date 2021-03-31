@@ -53,7 +53,7 @@ pre[class*='language-'] {
   font-family: var(--code-font) !important;
   color: color-mod(#000c1d alpha(80%));
   font-weight: 500;
-  font-size: 13px !important;
+  font-size: 12px;
   line-height: 18px;
   text-shadow: none !important;
 }
@@ -85,8 +85,17 @@ pre[class*='language-'] {
   color: var(--code-color);
 }
 
-.Source-wrapper .code-block.code-block-container pre.code-block {
-  margin: 0 !important;
+.Source-wrapper {
+  overflow: hidden;
+
+  code[class*='language-'],
+  code pre {
+    white-space: pre-wrap !important;
+  }
+
+  .code-block.code-block-container pre.code-block {
+    margin: 0 !important;
+  }
 }
 
 .token.property,

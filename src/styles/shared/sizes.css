@@ -5,7 +5,7 @@
 :root {
   /* Content */
   --content-width: 100%;
-  --content-pad-left: calc(25% + 2rem);
+  --content-pad-left: calc(var(--sidebar-width) + 5rem);
   --content-pad-right: 4rem;
 
   /* Sidebar */

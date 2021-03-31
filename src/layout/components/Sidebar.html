@@ -1,6 +1,9 @@
-<div class="SideBar Flex--flex Flex--grow Flex-direction--column Flex-alignItems--flexEnd">
+<div class:open="menuOpen" class="SideBar Flex--flex Flex--grow Flex-direction--column Flex-alignItems--flexEnd">
 
   <div class="SideBar-logo" class:change-logo-bg="$changeHeader">
+    <button aria-label="Open menu" title="Open menu" type="button" class="hamburguer" class:active="menuOpen" on:click="set({ menuOpen: !menuOpen })">
+      <i class="fas fa-bars"></i>
+    </button>
     <a href="/" title="Mamba">
       {#if $changeHeader}
         <img src="images/logoMamba.svg" alt="mamba SDK">
@@ -16,7 +19,7 @@
     </select>
   </div> -->
   <div class="SideBar-border"></div>
-  <nav>
+  <nav aria-label="Side navigation" aria-hidden="{!menuOpen}">
 
     <div class="guide-sections" ref:guides>
     {#each $guide_contents as section, idx}
@@ -27,6 +30,7 @@
       >
         <a
           href='guide#{section.slug}'
+          on:mouseup="set({ menuOpen: false })"
           on:click="select(path.slice(1) !== 'guide')">
             {section.metadata.title}
             {#if section.subsections && section.subsections.length > 0}
@@ -37,8 +41,14 @@
       <ul class='guide-toc'>
         {#each section.subsections as subsection}
           {#if subsection.title}
-            <li class="subsection">
-              <a href="guide#{subsection.slug}" data-parent="{section.slug}">
+            <li
+              class="subsection"
+              on:click="set({ menuOpen: false })"
+            >
+              <a
+                href="guide#{subsection.slug}"
+                data-parent="{section.slug}"
+              >
                 {subsection.title}
               </a>
             </li>
@@ -54,7 +64,7 @@
         </ul>
       {:else}
         <h1 class='{item.icon ? "has-icon": ""}'>
-          <a href={item.to}>
+          <a href={item.to} on:click="set({ menuOpen: false })">
             {#if item.icon}
               <i class="{item.icon}"></i>
             {/if}
@@ -68,7 +78,7 @@
                 <li class="SideBar-static-label"><small>{sub.description}</small></li>
               {:elseif sub.title}
                 <li class='{(path === sub.to || path === (item.to + sub.to)) ? "active": ""}'>
-                  <a href='{sub.to !== item.to ? item.to : ""}{sub.to}'>
+                  <a href='{sub.to !== item.to ? item.to : ""}{sub.to}' on:click="set({ menuOpen: false })">
                     {#if path === sub.to || path === item.to + sub.to}
                       <i class="fas fa-chevron-right"></i>
                     {/if}
@@ -105,6 +115,7 @@
       return {
         contents: [],
         navigation: navigation,
+        menuOpen: false,
       }
     },
 
@@ -116,7 +127,6 @@
       };
 
       window.addEventListener( 'hashchange', onhashchange, false );
-      this.on('destroy', () => window.removeEventListener( 'hashchange', onhashchange, false ));
 
       onhashchange();
 
@@ -127,6 +137,17 @@
       }, 1000);
 
       postProcess();
+
+      const popstate = () => {
+        this.set({ menuOpen: false });
+      }
+
+      window.addEventListener('popstate', popstate);
+
+      this.on('destroy', () => {
+        window.removeEventListener( 'hashchange', onhashchange, false );
+        window.removeEventListener( 'popstate', popstate, false );
+      });
     },
     methods: {
       select(must = true) {
@@ -186,6 +207,42 @@
 
     + ul {
       height: auto;
+    }
+  }
+
+  .hamburguer {
+    border: 0;
+    cursor: pointer;
+    padding: 8px 12px;
+    background-color: color-mod($neutral500 alpha(20%));
+    color: white;
+    transition: 0.3s cubic-bezier(0.15, 1, 0.33, 1);
+    transition-property: transform, background-color;
+
+    &.active {
+      background-color: $neutral50;
+      color: $neutral500;
+    }
+
+    &:not(.active):hover {
+      background-color: $green500;
+    }
+
+    .fas {
+      font-size: 23px;
+    }
+  }
+
+  button.hamburguer {
+    &:focus {
+      outline: 1px solid color-mod(#fff alpha(80%));
+      outline-offset: -1px;
+    }
+  }
+
+  @media screen and (min-width: 980px) {
+    .hamburguer {
+      display: none;
     }
   }
 </style>

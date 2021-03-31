@@ -16,8 +16,14 @@
   export default {
     components: { RouteTemplate },
     oncreate() {
+      let id;
       const onscroll = () => {
-        this.store.set({ changeHeader: window.scrollY > 0 });
+        if(id) clearTimeout(id);
+        setTimeout(() => {
+          if(window.innerWidth > 980) {
+            this.store.set({ changeHeader: window.scrollY > 0 });
+          }
+        }, 200);
       };
 
       window.addEventListener('scroll', onscroll, true);

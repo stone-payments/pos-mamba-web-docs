@@ -116,6 +116,12 @@
     position: relative;
   }
 
+  @media screen and (min-width: 412px) {
+    :global(.Component > *:not(header)) {
+      max-width: 99rem;
+    }
+  }
+
   h1 {
     font-size: 31px;
     color: inherit;
@@ -217,7 +223,6 @@
   }
 
   .Component :global(.code-block.code-block-container pre.code-block) {
-    max-height: 350px;
     overflow: auto;
   }
 

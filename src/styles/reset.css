@@ -20,7 +20,7 @@ input[type='radio'] {
 }
 
 *:focus {
-  outline: none !important;
+  outline: none;
 }
 
 html {

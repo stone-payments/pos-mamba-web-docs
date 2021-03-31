@@ -56,29 +56,30 @@
       <p></p>
     {:then data}
     <section class="Examples">
-      {#each data.examples as { title, path, source, ih }}
-
-      <div class="Example">
-        <div class="Example-title">{title}</div>
-        <div class="iframe-wrapper" style="max-height: {ih}px;">
-          <iframe title="{data.slug}" src="/framed/{path}?slug={data.package}"></iframe>
-        </div>
-        <div class="Source-wrapper">
-          <div class='Source-wrapper-header'>
-            <a
-              class='filename'
-              href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{data.package}/{path}'
-            >
-              <span>Source</span>
-              <i class="fas fa-external-link-alt"></i>
-            </a>
+      {#if data.examples && data.examples.length > 0}
+        {#each data.examples as { title, path, source, ih }}
+          <div class="Example">
+            <div class="Example-title">{title}</div>
+            <div class="iframe-wrapper" style="max-height: {ih}px;">
+              <iframe title="{data.slug}" src="/framed/{path}?slug={data.package}"></iframe>
+            </div>
+            <div class="Source-wrapper">
+              <div class='Source-wrapper-header'>
+                <a
+                  class='filename'
+                  href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{data.package}/{path}'
+                >
+                  <span>Source</span>
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </div>
+              <div class="Source-wrapper-content">
+                {@html source}
+              </div>
+            </div>
           </div>
-          <div class="Source-wrapper-content">
-            {@html source}
-          </div>
-        </div>
-      </div>
-      {/each}
+        {/each}
+      {/if}
     </section>
     {:catch error}
       <p></p>
@@ -101,14 +102,14 @@
         const { docs: { html } } = manifest;
         const propsHeadings = html.indexOf('<h2 class="props-heading');
         if(propsHeadings !== -1) return html.slice(0, propsHeadings);
-        return html.slice(0, html.indexOf('<table'));
+        return html.slice(0, html.indexOf('<div class="table-wrapper"'));
       },
       lastHtml({ manifest }) {
         if(!manifest) return '';
         const { docs: { html } } = manifest;
         const propsHeadings = html.indexOf('<h2 class="props-heading');
         if(propsHeadings !== -1) return html.slice(propsHeadings);
-        return html.slice(html.indexOf('<table'));
+        return html.slice(html.indexOf('<div class="table-wrapper"'));
       }
     },
     data() {
@@ -174,13 +175,6 @@
     color: inherit;
     font-weight: 500;
   }
-
-  /* small:not(.unique) {
-    opacity: 0.2;
-    float: right;
-    line-height: 3.4rem;
-    pointer-events: all;
-  } */
 
   .Source-wrapper {
     background-color: #fff;
@@ -296,11 +290,15 @@
   }
 
   .Examples {
-    margin-bottom: 20px;
+    overflow: hidden;
+    max-width: calc(100vw - var(--content-pad-right));
+    margin-bottom: 60px;
   }
 
-  :global(.Component > *:not(header)) {
-    max-width: 99rem;
+  @media screen and (min-width: 412px) {
+    :global(.Component > *:not(header)) {
+      max-width: 99rem;
+    }
   }
 
   .Example {
@@ -342,7 +340,7 @@
       right: 0;
       top: 0;
       position: absolute;
-      padding: 10px 16px;
+      padding: 8px 8px;
       text-align: right;
 
       a {
@@ -354,7 +352,11 @@
 
     &-content {
       opacity: 0.9;
-      padding: 18px 24px;
+      padding: 18px 96px 18px 24px;
+
+      :global(.code-block) {
+        line-height: 18px;
+      }
     }
 
     pre {

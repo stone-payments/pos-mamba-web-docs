@@ -1,21 +1,11 @@
 /* layout/navigation */
-
 .SideBar {
-  background: var(--sidebar-bg-color);
   position: var(--sidebar-position);
   user-select: none;
   top: 0;
   z-index: 5;
   width: var(--sidebar-width);
   height: 100vh;
-
-  /* @media screen and (max-width: 600px) {
-    .Content {
-      &-wrapper {
-        transform: translateX(--sidebar-width);
-      }
-    }
-  } */
 
   &::before,
   &::after {
@@ -37,18 +27,47 @@
     position: absolute;
   }
 
+  @media screen and (min-width: 412px) {
+    & {
+      width: var(--sidebar-width);
+    }
+  }
+
+  @media screen and (max-width: 412px) {
+    & {
+      width: 100vw;
+    }
+
+    &-logo {
+      a {
+        margin-left: 0;
+      }
+
+      .hamburguer {
+        position: absolute;
+        right: 50px;
+      }
+    }
+
+    nav {
+      left: 0;
+      max-width: 60vw;
+    }
+  }
+
   &-logo {
     transition: all 0.3s cubic-bezier(0.15, 1, 0.33, 1);
     display: flex;
     align-items: center;
     top: 0;
+    z-index: 3;
     right: 0;
-    height: calc(var(--nav-top-position));
-    width: var(--logo-container-size);
+    height: var(--nav-top-position);
     margin-left: 0;
     left: 0;
     padding-left: var(--nav-left);
     border-right: 1px solid rgba(56, 56, 75, 0.15);
+    background: #fff;
 
     &:not(.change-logo-bg) {
       background: color-mod(var(--headers-bg) lightness(11%));
@@ -93,17 +112,24 @@
   }
 
   nav {
+    transition: 0.1s cubic-bezier(0.15, 1, 0.33, 1);
+    transition-property: transform, width, left;
+    background: var(--sidebar-bg-color);
     border-right: 1px solid #e0e0e0;
     bottom: 0;
     right: 0;
     padding-left: 0;
     width: var(--nav-width);
     top: var(--nav-top-position);
-    overflow-y: auto;
+    overflow-x: hidden;
     padding-top: 15px;
     padding-bottom: 25px;
     z-index: 1;
     -webkit-overflow-scrolling: touch;
+
+    @media screen and (min-width: 980px) {
+      border-top: 1px solid #e0e0e0;
+    }
 
     h1 {
       margin: 0;
@@ -148,6 +174,35 @@
         color: var(--primary) !important;
         font-weight: 600;
         background-color: #00a96214;
+      }
+    }
+  }
+
+  @media screen and (max-width: 980px) {
+    & {
+      z-index: 300;
+    }
+
+    &:not(.open) {
+      height: calc(var(--nav-top-position));
+
+      nav {
+        width: 0px;
+        border: none;
+        transform: translateX(calc(var(--sidebar-width) * -1));
+      }
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 980px) and (min-width: 412px) {
+    &-border,
+    &-logo {
+      a {
+        margin-left: 22px;
       }
     }
   }

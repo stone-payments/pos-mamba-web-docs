@@ -1,6 +1,8 @@
 table {
-  margin-top: 3rem;
+  margin-top: 1em;
   font-size: 14px;
+  border-spacing: 0;
+  /* max-width: calc(100vw - var(--content-pad-right)); */
 
   tr td:first-child {
     color: $green600;
@@ -14,7 +16,6 @@ table {
   td {
     font-family: var(--code-font);
     border-bottom: 1px solid color-mod(black alpha(5%));
-    padding: 8px 8px;
     text-align: left;
   }
 

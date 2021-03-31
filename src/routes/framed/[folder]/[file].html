@@ -13,7 +13,6 @@
       const path = [folder, file].join('/');
       import(`@components/${slug}/${path}`)
         .then(mod => {
-          console.log(mod);
           this.set({ Example: mod.default })
         })
         .catch((e) => {

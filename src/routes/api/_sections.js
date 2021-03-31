@@ -57,7 +57,6 @@ export const demos = new Map()
     anchorPath; String
     mambaSlub: String
     examplePath: String
-    examples: Array<String>
     toFile: Boolean
   }
 */
@@ -80,10 +79,9 @@ export default function(path, options = {}) {
 
     const markdown = fs.readFileSync(filePath, 'utf-8');
 
-    const { content, metadata, examples } = processMarkdown(
+    const { content, metadata } = processMarkdown(
       markdown,
       `${options.examplePath}`,
-      options.examples,
     )
 
     const groups = []
@@ -199,7 +197,6 @@ export default function(path, options = {}) {
       filePath: options.toFile ? path : `${path}/${file}`,
       metadata,
       subsections,
-      examples,
     }
   })
 }

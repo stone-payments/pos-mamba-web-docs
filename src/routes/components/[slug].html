@@ -49,43 +49,42 @@
     </div>
   </header>
   <div class="sections-wrapper">
-    {#if manifest.docs.html}
-    <section>
-      <div class="part">
-        {@html manifest.docs.html}
-      </div>
-    </section>
+    {#if startHtml !== ''}
+      {@html startHtml}
     {/if}
-
-    {#if example}
+    {#await examplesPromise}
+      <p></p>
+    {:then data}
     <section class="Examples">
-      <div class="Examples-boxes">
-        <div class="Examples-example">
-          <div class="iframe-wrapper">
-            <iframe title="{slug}" src="/framed/{slug}"></iframe>
-          </div>
-          <div class="Source-wrapper">
-            {@html example.source}
-          </div>
-          <div class='source-header'>
-            <i class="fas fa-external-link-alt"></i>
+      {#each data.examples as { title, path, source, ih }}
+
+      <div class="Example">
+        <div class="Example-title">{title}</div>
+        <div class="iframe-wrapper" style="max-height: {ih}px;">
+          <iframe title="{data.slug}" src="/framed/{path}?slug={data.package}"></iframe>
+        </div>
+        <div class="Source-wrapper">
+          <div class='Source-wrapper-header'>
             <a
               class='filename'
-              href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{example.filePath}'
+              href='https://github.com/stone-payments/pos-mamba-sdk/blob/master/packages/components/{data.package}/{path}'
             >
-              <span>Código fonte dos exemplos</span>
+              <span>Source</span>
+              <i class="fas fa-external-link-alt"></i>
             </a>
+          </div>
+          <div class="Source-wrapper-content">
+            {@html source}
           </div>
         </div>
       </div>
+      {/each}
     </section>
-    {/if}
-    {#if manifest.docs.paramsHtml}
-    <section class="Params-html">
-      <div class="part">
-        {@html manifest.docs.paramsHtml}
-      </div>
-    </section>
+    {:catch error}
+      <p></p>
+    {/await}
+    {#if lastHtml !== ''}
+      {@html lastHtml}
     {/if}
   </div>
 </div>
@@ -96,52 +95,64 @@
   import capitalize from 'lodash.capitalize'
 
   export default {
+    computed: {
+      startHtml({ manifest }) {
+        if(!manifest) return '';
+        const { docs: { html } } = manifest;
+        const propsHeadings = html.indexOf('<h2 class="props-heading');
+        if(propsHeadings !== -1) return html.slice(0, propsHeadings);
+        return html.slice(0, html.indexOf('<table'));
+      },
+      lastHtml({ manifest }) {
+        if(!manifest) return '';
+        const { docs: { html } } = manifest;
+        const propsHeadings = html.indexOf('<h2 class="props-heading');
+        if(propsHeadings !== -1) return html.slice(propsHeadings);
+        return html.slice(html.indexOf('<table'));
+      }
+    },
     data() {
       return {
         isLoading: true,
         title: 'Carregando',
+        examplesPromise: undefined,
       }
     },
+    oncreate() {
+      const { params: { slug } } = this.get();
+      console.log(slug);
 
-    async oncreate() {
-      const { params: { slug } } = this.get()
-      NProgress.start()
-      this.set({ slug });
-      await fetch(`api/components/${slug}`)
+      NProgress.start();
+      this.set({
+        slug,
+        examplesPromise: new Promise((resolve, reject) => {
+          fetch(`api/examples/${slug}`)
+          .then(r => r.json())
+          .then(resolve)
+          .catch(reject);
+        }),
+      });
+
+      fetch(`api/components/${slug}`)
         .then(r => r.json())
-        .then(async manifest => {
-          const docs = manifest && manifest.docs
+        .then(manifest => {
+          const { hasExamples, docs } = manifest;
 
-          import(
-            `@components/${(manifest.docs.examples &&
-              manifest.docs.examples[0] &&
-              manifest.docs.examples[0].filePath) ||
-              manifest.info.slug.concat('/example/Example.html')}`
-          )
-            .then(mod => {
-              NProgress.done()
-              this.set({ Example: mod.default })
-            })
-            .catch(NProgress.done)
-
-          const example = (docs.examples.length && docs.examples[0]) || false;
-          console.log(example);
           this.set({
             isLoading: false,
+            hasExamples,
             manifest,
-            example,
             title: (docs && docs.metadata.title) || capitalize(slug),
-          })
+          });
 
-          NProgress.inc()
         })
         .catch(() => {
-          NProgress.done()
           this.set({
             isLoading: false,
             manifest: { error: 'Falha ao carregar o component.' },
           })
         })
+        .finally(() => NProgress.done());
     },
   }
 </script>
@@ -285,22 +296,66 @@
     margin: 0 0 35px 0;
   }
 
-  /* .Code-run {
-    margin: 20px 0 0 0;
-    padding-bottom: 40px;
+  .Examples {
+    margin-bottom: 20px;
+  }
 
-    :global(.container) {
-      width: 100%;
-      max-width: 100%;
-      margin: 0 !important;
+  .Example {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    .iframe-wrapper {
+      display: flex;
+      flex: 1;
+      height: 300px;
     }
-  } */
 
-  /* .Examples-example {
-    header {
-      h2 {
-        margin-bottom: 0;
+    iframe {
+      display: flex;
+      flex: 1;
+      border: none;
+      background-color: transparent;
+    }
+
+    &-title {
+      margin-top: 33px;
+      line-height: 58px;
+      font-size: 28px;
+    }
+  }
+
+  .Source-wrapper {
+    display: flex;
+    flex: 1;
+    border: 1px solid $neutral200;
+    border-top: none;
+    background: color-mod(var(--headers-bg) lightness(14%));
+    flex-direction: column;
+    position: relative;
+
+    &-header {
+      right: 0;
+      top: 0;
+      position: absolute;
+      padding: 10px 16px;
+      text-align: right;
+
+      a {
+        font-weight: 400;
+        text-shadow: none;
+        color: $gray100;
       }
     }
-  } */
+
+    &-content {
+      opacity: 0.9;
+      padding: 18px 24px;
+    }
+
+    pre {
+      width: 100%;
+    }
+  }
 </style>

@@ -122,7 +122,6 @@
 
       const postProcess = () => setTimeout(() => {
         const { guides } = this.refs;
-        console.log(guides);
         if(!guides || guides.children.length === 0) return postProcess();
         guides.children[0].classList.add("open");
       }, 1000);

@@ -29,9 +29,11 @@ module.exports = function createWebpackConfig(type) {
         path.resolve(__dirname, '../mamba-sdk/packages'),
         path.resolve(__dirname, '../mamba-sdk/packages/components/Icon'),
         path.resolve(__dirname, '../node_modules'),
+        path.resolve(__dirname, '../node_modules/svelte'),
         'node_modules',
       ],
       alias: {
+        'svelte': path.resolve(__dirname, '../node_modules/svelte'),
         '@components': path.resolve(__dirname, '../mamba-sdk/packages/components/'),
         '@mamba/pos': path.resolve(__dirname, '../mamba-sdk/packages/pos/'),
         '@mamba/icon': path.resolve(__dirname, '../mamba-sdk/packages/components/Icon'),

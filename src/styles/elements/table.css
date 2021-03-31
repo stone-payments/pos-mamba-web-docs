@@ -1,6 +1,6 @@
 table {
   margin-top: 3rem;
-  font-size: 13px;
+  font-size: 14px;
 
   tr td:first-child {
     color: $green600;
